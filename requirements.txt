@@ -1,0 +1,7 @@
+# Rotina do briefing diário em áudio
+anthropic>=0.40          # OCR/visão dos prints (modelo de visão)
+gTTS>=2.5                # síntese de voz (texto -> fala)
+pydub>=0.25              # manipulação de áudio (anexar silêncio, exportar)
+imageio-ffmpeg>=0.5      # binário ffmpeg empacotado (usado pelo pydub)
+requests>=2.31           # envio do áudio pela API do Telegram
+pytest>=8.0              # testes

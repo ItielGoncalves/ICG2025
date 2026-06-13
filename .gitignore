@@ -1,0 +1,19 @@
+# Áudios gerados
+/output/
+*.mp3
+*.wav
+*.ogg
+
+# Prints/capturas (conteúdo pessoal) — mantém só o README
+/prints/*
+!/prints/README.md
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# Segredos
+.env
