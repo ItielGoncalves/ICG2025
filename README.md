@@ -3,6 +3,12 @@
 Rotina que gera o áudio do briefing diário, agora com **leitura dos prints**
 (e-mail, agenda, WhatsApp) e com o **encerramento do áudio corrigido**.
 
+> O briefing roda como **Rotina local do Claude Code** (`Briefing dirio local
+> clickupplaud` + `Leitura fluida briefing`), com áudio pelo **ElevenLabs** e
+> envio no **Telegram**. O texto exato para colar em cada rotina está em
+> [`ROTINAS.md`](ROTINAS.md). Este repositório fornece o helper local que as
+> rotinas chamam (leitura de prints e correção do encerramento do áudio).
+
 ## O que a rotina faz
 
 1. **Lê a pasta de prints** (OCR/visão) — capturas de e-mail, agenda e WhatsApp.
@@ -42,7 +48,13 @@ python run_briefing.py                 # briefing do dia (prints + áudio + Tele
 python run_briefing.py --base hoje.txt # injeta o conteúdo de ClickUp/atas/anotações
 python run_briefing.py --no-telegram   # só gera o áudio
 python run_briefing.py --test          # teste rápido, sem ler prints
+
+# Só corrigir o encerramento de um áudio já pronto (ex.: saída do ElevenLabs):
+python run_briefing.py --finalize audio.mp3 --out briefing_final.mp3
 ```
+
+Motor de TTS padrão: **ElevenLabs** (`ELEVENLABS_API_KEY` + `ELEVENLABS_VOICE_ID`).
+Fallback: gTTS com `BRIEFING_TTS_ENGINE=gtts`.
 
 ## Testes
 

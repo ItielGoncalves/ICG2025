@@ -36,8 +36,15 @@ class Config:
     anthropic_model: str = field(default_factory=lambda: os.getenv("BRIEFING_MODEL", "claude-opus-4-8"))
 
     # --- Síntese de voz (TTS) -----------------------------------------------
+    # Motor de TTS: "elevenlabs" (padrão, usado pela rotina) ou "gtts" (fallback).
+    tts_engine: str = field(default_factory=lambda: os.getenv("BRIEFING_TTS_ENGINE", "elevenlabs"))
+    # gTTS (fallback)
     tts_lang: str = field(default_factory=lambda: os.getenv("BRIEFING_TTS_LANG", "pt"))
     tts_tld: str = field(default_factory=lambda: os.getenv("BRIEFING_TTS_TLD", "com.br"))
+    # ElevenLabs
+    elevenlabs_api_key: str | None = field(default_factory=lambda: os.getenv("ELEVENLABS_API_KEY"))
+    elevenlabs_voice_id: str | None = field(default_factory=lambda: os.getenv("ELEVENLABS_VOICE_ID"))
+    elevenlabs_model: str = field(default_factory=lambda: os.getenv("ELEVENLABS_MODEL", "eleven_multilingual_v2"))
 
     # --- Telegram ------------------------------------------------------------
     telegram_bot_token: str | None = field(default_factory=lambda: os.getenv("TELEGRAM_BOT_TOKEN"))

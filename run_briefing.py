@@ -40,10 +40,39 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--no-telegram", action="store_true", help="Não envia pelo Telegram.")
     parser.add_argument("--test", action="store_true", help="Teste rápido: não lê prints, usa um texto curto.")
     parser.add_argument("--out", type=Path, help="Caminho do arquivo de áudio de saída (.mp3).")
+    parser.add_argument(
+        "--finalize",
+        type=Path,
+        metavar="AUDIO",
+        help="Corrige o encerramento de um áudio já existente (frase + 5s de silêncio) e sai.",
+    )
+    parser.add_argument(
+        "--no-closing",
+        action="store_true",
+        help="Com --finalize: não sintetiza a frase de encerramento (só anexa os 5s de silêncio).",
+    )
     args = parser.parse_args(argv)
 
     cfg = Config()
     cfg.ensure_dirs()
+
+    # Modo encerramento: pega um áudio pronto (ex.: do plugin ElevenLabs) e
+    # garante a frase final + 5s de silêncio antes do envio.
+    if args.finalize:
+        out_path = args.out or (cfg.output_dir / f"briefing-final-{_today_stamp()}.mp3")
+        result = audio_mod.finalize_audio_file(
+            args.finalize, out_path, cfg, add_closing_phrase=not args.no_closing
+        )
+        print(
+            f"Áudio finalizado: {result.path}\n"
+            f"  duração total: {result.total_ms/1000:.1f}s "
+            f"(+{result.trailing_silence_ms/1000:.0f}s de silêncio)\n"
+            f"  silêncio final confirmado: {'sim' if result.tail_is_silent else 'NÃO'}"
+        )
+        if not args.no_telegram and cfg.telegram_configured:
+            telegram_mod.send_audio(cfg, result.path, caption=f"Briefing diário — {_today_stamp()}")
+            print("Áudio enviado pelo Telegram.")
+        return 0
 
     print(f"Pasta de prints configurada: {cfg.prints_dir}")
 
