@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Recuperação Sistema de Grãos Sinop 2026</title>
+<style>
+  :root{
+    --bg:#0f172a; --panel:#1e293b; --panel2:#273449; --line:#334155;
+    --txt:#e2e8f0; --muted:#94a3b8;
+    --ct03:#3b82f6; --ct04:#10b981; --elev:#f59e0b; --marco:#a855f7;
+    --crit:#ef4444;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);padding:24px}
+  h1{font-size:24px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:14px;margin-bottom:20px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:24px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .kpi .v{font-size:26px;font-weight:700}
+  .kpi .l{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:14px;font-size:13px;align-items:center}
+  .dot{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:middle}
+  .section-title{font-size:18px;margin:28px 0 12px;display:flex;align-items:center;gap:10px}
+
+  /* GANTT */
+  .gantt{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:0;overflow-x:auto}
+  .grid-head{display:grid;grid-template-columns:330px 1fr;border-bottom:2px solid var(--line);position:sticky;top:0;background:var(--panel2);z-index:5}
+  .grid-head .name{padding:10px 14px;font-weight:600;font-size:13px;color:var(--muted)}
+  .days{display:grid;grid-template-columns:repeat(5,1fr);font-size:12px}
+  .day{padding:10px 8px;text-align:center;border-left:1px solid var(--line);color:var(--muted);font-weight:600}
+  .row{display:grid;grid-template-columns:330px 1fr;border-bottom:1px solid #2a3850;min-height:34px;align-items:center}
+  .row:hover{background:#22304a}
+  .row.group{background:#243049;font-weight:700}
+  .tname{padding:6px 14px;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tname .id{color:var(--muted);font-size:11px;margin-right:6px}
+  .track{position:relative;height:34px;border-left:1px solid var(--line)}
+  .track .colgrid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);pointer-events:none}
+  .track .colgrid div{border-left:1px solid #2a3850}
+  .bar{position:absolute;top:7px;height:20px;border-radius:6px;font-size:10.5px;color:#fff;display:flex;align-items:center;padding:0 6px;white-space:nowrap;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+  .bar.ct03{background:linear-gradient(90deg,#2563eb,#3b82f6)}
+  .bar.ct04{background:linear-gradient(90deg,#059669,#10b981)}
+  .bar.elev{background:linear-gradient(90deg,#d97706,#f59e0b)}
+  .bar.grp{top:5px;height:24px;border-radius:7px;font-weight:700;opacity:.95}
+  .milestone{position:absolute;top:6px;width:22px;height:22px;background:var(--marco);transform:rotate(45deg);border-radius:4px;box-shadow:0 0 0 2px #0f172a}
+  .marco-row .track{height:34px}
+
+  /* CARDS */
+  .frente{margin-bottom:26px}
+  .frente-head{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:14px 14px 0 0;color:#fff;font-weight:700;font-size:17px}
+  .frente-head.ct03{background:linear-gradient(90deg,#1d4ed8,#3b82f6)}
+  .frente-head.ct04{background:linear-gradient(90deg,#047857,#10b981)}
+  .frente-head.elev{background:linear-gradient(90deg,#b45309,#f59e0b)}
+  .frente-head .meta{margin-left:auto;font-weight:500;font-size:13px;opacity:.95}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;background:var(--panel);border:1px solid var(--line);border-top:none;border-radius:0 0 14px 14px;padding:16px}
+  .card{background:var(--panel2);border:1px solid var(--line);border-left-width:4px;border-radius:10px;padding:12px 14px}
+  .card.ct03{border-left-color:var(--ct03)}
+  .card.ct04{border-left-color:var(--ct04)}
+  .card.elev{border-left-color:var(--elev)}
+  .card .cid{font-size:11px;color:var(--muted);font-weight:700}
+  .card .cname{font-size:13.5px;font-weight:600;margin:4px 0 10px;line-height:1.35}
+  .card .crow{display:flex;justify-content:space-between;font-size:12px;margin-top:5px}
+  .card .crow span:first-child{color:var(--muted)}
+  .tag{display:inline-block;background:#0f172a;border:1px solid var(--line);color:#cbd5e1;font-size:10.5px;padding:2px 7px;border-radius:20px;margin-top:8px}
+  .tag.ext{border-color:#f59e0b;color:#fcd34d}
+  .note{background:#1e293b;border:1px solid var(--line);border-left:4px solid var(--marco);border-radius:10px;padding:14px 16px;font-size:13.5px;line-height:1.5;margin:20px 0}
+  .dur{font-weight:700}
+</style>
+</head>
+<body>
+  <h1>🌾 Recuperação do Sistema de Grãos — Sinop 2026</h1>
+  <div class="sub">Cronograma R.0 &nbsp;•&nbsp; Parada de <strong>90 horas</strong> &nbsp;•&nbsp; Ter 16/06/26 13:00 → Sáb 20/06/26 07:00 &nbsp;•&nbsp; 39 linhas / 32 entregas</div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">90<span style="font-size:15px"> h</span></div><div class="l">Duração total</div></div>
+    <div class="kpi"><div class="v">3</div><div class="l">Frentes (CT03 · CT04 · Elev. F)</div></div>
+    <div class="kpi"><div class="v">32</div><div class="l">Entregas / tarefas</div></div>
+    <div class="kpi"><div class="v">~3,75</div><div class="l">Dias corridos (24h)</div></div>
+    <div class="kpi"><div class="v">60 h</div><div class="l">Maior tarefa (Reforma estrutural)</div></div>
+  </div>
+
+  <div class="legend">
+    <span><span class="dot" style="background:var(--ct03)"></span>CT 03 (frente principal)</span>
+    <span><span class="dot" style="background:var(--ct04)"></span>CT 04</span>
+    <span><span class="dot" style="background:var(--elev)"></span>Elevador F</span>
+    <span><span class="dot" style="background:var(--marco);transform:rotate(45deg)"></span>Marco (início/fim)</span>
+  </div>
+
+  <div class="section-title">📊 Linha do tempo (Gantt)</div>
+  <div class="gantt">
+    <div class="grid-head">
+      <div class="name">Tarefa</div>
+      <div class="days">
+        <div class="day">Ter 16/06</div>
+        <div class="day">Qua 17/06</div>
+        <div class="day">Qui 18/06</div>
+        <div class="day">Sex 19/06</div>
+        <div class="day">Sáb 20/06</div>
+      </div>
+    </div>
+    <div id="ganttBody"></div>
+  </div>
+
+  <div class="section-title">🗂️ Entregas por frente</div>
+  <div id="cards"></div>
+
+  <div class="note">
+    <strong>⚠️ Responsável:</strong> o cronograma <strong>não possui coluna de responsável</strong> — só traz Id, Modo, Nome da tarefa, Duração, Início e Término.
+    O que dá para identificar são os <strong>terceiros/locais envolvidos</strong> em algumas entregas, destacados nos cards com a etiqueta laranja:
+    <strong>SUMEK Sorriso</strong> (refilamento de correia), <strong>Vitale</strong> (rolo de contrapeso),
+    <strong>RAETEC / RAETES</strong> (revisão dos motorredutores A e B). Recomendo adicionar a coluna "Responsável" no MS Project para fechar a governança da parada.
+  </div>
+
+<script>
+const PROJ_START = new Date(2026,5,16,13,0);   // 16/06/26 13:00
+const TOTAL_H = 90;
+const hoursFrom = d => (d - PROJ_START)/3600000;
+const D = (mo,dy,h,mi=0)=>new Date(2026,mo-1,dy,h,mi);
+
+const tasks = [
+ {id:2, name:"INÍCIO DAS DEMANDAS", g:"marco", s:D(6,16,13), e:D(6,16,13), dur:0, milestone:true},
+ // ===== CT 03 =====
+ {id:4, name:"CT 03", g:"ct03", s:D(6,16,13), e:D(6,20,7), dur:90, group:true},
+ {id:5, name:"Envio de correia 42 pol p/ refilar", g:"ct03", s:D(6,16,13), e:D(6,16,17), dur:4, ext:"SUMEK Sorriso"},
+ {id:6, name:"Refilamento de correia", g:"ct03", s:D(6,16,17), e:D(6,17,5), dur:12, ext:"SUMEK Sorriso"},
+ {id:7, name:"Retorno de correia refilada em 36 pol", g:"ct03", s:D(6,17,5), e:D(6,17,9), dur:4},
+ {id:8, name:"Aquisição de rolamentos, mancais, buchas e vedações", g:"ct03", s:D(6,16,13), e:D(6,17,1), dur:12},
+ {id:9, name:"Chegada dos rolamentos, mancais, buchas e vedações", g:"ct03", s:D(6,17,1), e:D(6,17,13), dur:12},
+ {id:10, name:"Tambor tração — usinar tambor 65 mm", g:"ct03", s:D(6,16,13), e:D(6,16,19), dur:6},
+ {id:11, name:"Montagem dos rolamentos e peças no tambor de tração", g:"ct03", s:D(6,17,13), e:D(6,18,1), dur:12},
+ {id:12, name:"Rolo de contrapeso — coletar", g:"ct03", s:D(6,16,13), e:D(6,16,19), dur:6, ext:"Vitale"},
+ {id:13, name:"Montagem dos rolos de contrapeso após reforma estrutural", g:"ct03", s:D(6,19,1), e:D(6,19,9), dur:8},
+ {id:14, name:"Instalar roletes retorno s/ mancal (módulos preservados)", g:"ct03", s:D(6,16,13), e:D(6,17,1), dur:12},
+ {id:15, name:"Instalar roletes retorno s/ mancal (módulos substituídos)", g:"ct03", s:D(6,18,19), e:D(6,19,1), dur:6},
+ {id:16, name:"Instalar rolete retorno com mancal", g:"ct03", s:D(6,18,19), e:D(6,19,1), dur:6},
+ {id:17, name:"Chegada de roletes de carga", g:"ct03", s:D(6,16,13), e:D(6,18,5), dur:40},
+ {id:18, name:"Instalação de rolete carga — 270 unidades", g:"ct03", s:D(6,18,17), e:D(6,19,1), dur:8},
+ {id:19, name:"Revisão de motorredutor A", g:"ct03", s:D(6,16,13), e:D(6,18,13), dur:48, ext:"RAETEC"},
+ {id:20, name:"Revisão de motorredutor B", g:"ct03", s:D(6,16,13), e:D(6,18,13), dur:48, ext:"RAETES"},
+ {id:21, name:"Emenda dos cabos elétricos", g:"ct03", s:D(6,16,13), e:D(6,18,1), dur:36},
+ {id:22, name:"Substituição de sensores, PT 100, desalinhamento", g:"ct03", s:D(6,16,13), e:D(6,18,5), dur:40},
+ {id:23, name:"Reforma estrutural (substituição de 16 módulos)", g:"ct03", s:D(6,16,13), e:D(6,19,1), dur:60},
+ {id:24, name:"Emenda a quente da correia", g:"ct03", s:D(6,19,19), e:D(6,20,7), dur:12},
+ {id:25, name:"Passagem da correia após montagem dos 270 roletes", g:"ct03", s:D(6,19,1), e:D(6,19,19), dur:18},
+ {id:26, name:"Duto da CT 03 para CT 04", g:"ct03", s:D(6,17,13), e:D(6,19,1), dur:36},
+ {id:27, name:"Coleta e entrega módulos completos (estrutura lateral + cavaletes)", g:"ct03", s:D(6,16,13), e:D(6,16,19), dur:6},
+ // ===== CT 04 =====
+ {id:28, name:"CT 04", g:"ct04", s:D(6,16,13), e:D(6,17,19), dur:30, group:true},
+ {id:29, name:"Corte de correia e passagem de novo trecho 15 metros", g:"ct04", s:D(6,16,13), e:D(6,17,7), dur:18},
+ {id:30, name:"Instalar roletes retorno s/ mancal (módulos preservados)", g:"ct04", s:D(6,16,13), e:D(6,16,19), dur:6},
+ {id:31, name:"Instalar roletes retorno s/ mancal (módulos substituídos)", g:"ct04", s:D(6,16,13), e:D(6,16,19), dur:6},
+ {id:32, name:"Instalar rolete retorno com mancal", g:"ct04", s:D(6,16,13), e:D(6,16,15), dur:2},
+ {id:33, name:"Emenda de 15 metros da correia", g:"ct04", s:D(6,17,7), e:D(6,17,19), dur:12},
+ {id:34, name:"Aquisição de rolamentos, mancais, buchas e vedações", g:"ct04", s:D(6,16,13), e:D(6,17,1), dur:12},
+ {id:35, name:"Chegada dos rolamentos, mancais, buchas e vedações", g:"ct04", s:D(6,17,1), e:D(6,17,13), dur:12},
+ {id:36, name:"Emborrachamento de tambor de retorno", g:"ct04", s:D(6,17,7), e:D(6,17,17), dur:10},
+ // ===== ELEVADOR F =====
+ {id:37, name:"Elevador F (possível reformulação — em inspeção)", g:"elev", s:D(6,16,19), e:D(6,18,11), dur:40, group:true},
+ {id:38, name:"Substituir 30 canecas", g:"elev", s:D(6,16,19), e:D(6,17,13), dur:18},
+ {id:39, name:"Revestimento dutos dos elevadores (Rhynoride)", g:"elev", s:D(6,16,23), e:D(6,18,11), dur:36},
+ // fim
+ {id:3, name:"FINALIZAÇÃO DAS DEMANDAS", g:"marco", s:D(6,20,7), e:D(6,20,7), dur:0, milestone:true},
+];
+
+// ---- Gantt ----
+const body = document.getElementById('ganttBody');
+tasks.forEach(t=>{
+  const row = document.createElement('div');
+  row.className = 'row' + (t.group?' group':'') + (t.milestone?' marco-row':'');
+  const name = document.createElement('div');
+  name.className='tname';
+  name.innerHTML = `<span class="id">#${t.id}</span>${t.name}`;
+  name.title = t.name;
+  const track = document.createElement('div');
+  track.className='track';
+  track.innerHTML = '<div class="colgrid"><div></div><div></div><div></div><div></div><div></div></div>';
+
+  if(t.milestone){
+    const m=document.createElement('div');
+    m.className='milestone';
+    m.style.left = `calc(${hoursFrom(t.s)/TOTAL_H*100}% - 11px)`;
+    m.title = `${t.name} — ${fmt(t.s)}`;
+    track.appendChild(m);
+  } else {
+    const bar=document.createElement('div');
+    bar.className='bar '+t.g+(t.group?' grp':'');
+    const left = hoursFrom(t.s)/TOTAL_H*100;
+    const width = Math.max(t.dur/TOTAL_H*100, 1.2);
+    bar.style.left=left+'%';
+    bar.style.width=width+'%';
+    bar.textContent = t.dur+'h';
+    bar.title = `#${t.id} ${t.name}\n${fmt(t.s)} → ${fmt(t.e)} (${t.dur}h)`;
+    track.appendChild(bar);
+  }
+  row.appendChild(name); row.appendChild(track);
+  body.appendChild(row);
+});
+
+function fmt(d){
+  const dd=String(d.getDate()).padStart(2,'0'),mm=String(d.getMonth()+1).padStart(2,'0');
+  const hh=String(d.getHours()).padStart(2,'0'),mi=String(d.getMinutes()).padStart(2,'0');
+  return `${dd}/${mm} ${hh}:${mi}`;
+}
+
+// ---- Cards por frente ----
+const frentes = [
+  {key:'ct03', title:'CT 03 — Frente principal', meta:'90 h · 23 tarefas'},
+  {key:'ct04', title:'CT 04', meta:'30 h · 8 tarefas'},
+  {key:'elev', title:'Elevador F', meta:'40 h · 2 tarefas · em inspeção'},
+];
+const cardsWrap = document.getElementById('cards');
+frentes.forEach(f=>{
+  const fr=document.createElement('div'); fr.className='frente';
+  fr.innerHTML = `<div class="frente-head ${f.key}"><span>${f.title}</span><span class="meta">${f.meta}</span></div>`;
+  const cards=document.createElement('div'); cards.className='cards';
+  tasks.filter(t=>t.g===f.key && !t.group).forEach(t=>{
+    const c=document.createElement('div'); c.className='card '+t.g;
+    c.innerHTML = `
+      <div class="cid">#${t.id}</div>
+      <div class="cname">${t.name}</div>
+      <div class="crow"><span>Duração</span><span class="dur">${t.dur} h</span></div>
+      <div class="crow"><span>Início</span><span>${fmt(t.s)}</span></div>
+      <div class="crow"><span>Término</span><span>${fmt(t.e)}</span></div>
+      ${t.ext?`<span class="tag ext">🏭 ${t.ext}</span>`:''}`;
+    cards.appendChild(c);
+  });
+  fr.appendChild(cards); cardsWrap.appendChild(fr);
+});
+</script>
+</body>
+</html>
