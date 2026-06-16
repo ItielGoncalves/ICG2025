@@ -63,13 +63,6 @@ def lbl(xy,s,txtcol,border,fnt,anchor="lm",dd=d):
     rr((x-pad,y-h/2-pad,x+w+pad,y+h/2+pad),8,WHITE,border,3,dd=dd)
     dd.text((x,y),s,font=fnt,fill=txtcol,anchor="lm",dd=dd) if False else dd.text((x,y-h/2),s,font=fnt,fill=txtcol)
 
-# logo Inpasa
-lx2=W-50; lw=300; lh=92; lx1=lx2-lw; ly1=40; ly2=ly1+lh
-rr((lx1,ly1,lx2,ly2),16,INPASA)
-cx=lx1+44; cyl=(ly1+ly2)//2
-d.polygon([(cx-14,cyl+16),(cx+18,cyl-18),(cx+20,cyl+8),(cx-2,cyl+18)],fill=(190,242,200))
-t((lx1+78,cyl-10),"INPASA",F(34),WHITE,anchor="lm"); t((lx1+78,cyl+22),"Agroindustrial",F(15,False),(200,240,210),anchor="lm")
-
 # header
 t((50,52),"QUADRO POR EQUIPAMENTO — LIBERAÇÃO DOS CIRCUITOS",F(44),INK)
 t((50,104),"Recuperação Sistema de Grãos — Sinop 2026 (R.0)   •   atividades pequenas suprimidas",F(23,False),MUTED)
