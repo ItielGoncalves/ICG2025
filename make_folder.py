@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Folder do TechDay Dourados em JPEG — visual tech (Inpasa verde + azul).
+"""Folder do TechDay Dourados em JPEG — visual tech preenchido (Inpasa verde+azul).
 
-Elementos: cabeçalho com circuito/nós e glow, ícones desenhados por tema,
-tiles em degradê, paleta Inpasa verde+azul com acento dourado.
+Fontes maiores, fundo com textura de circuito, ícones por tema e faixa de
+tecnologias/parceiros. Paleta Inpasa verde + azul com acento dourado.
 """
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import random
@@ -15,13 +15,14 @@ VERDE_ESC = (4, 54, 32)
 VERDE = (16, 140, 70)
 AZUL = (18, 78, 145)
 AZUL_ESC = (7, 30, 66)
-VERDE_NEON = (90, 230, 150)
-AZUL_NEON = (90, 200, 255)
+VERDE_NEON = (95, 235, 155)
+AZUL_NEON = (95, 205, 255)
 DOURADO = (244, 187, 32)
 DOURADO_CLR = (253, 224, 140)
 BRANCO = (255, 255, 255)
-CINZA_CLARO = (242, 246, 245)
-TEXTO = (44, 56, 54)
+CINZA_CLARO = (243, 247, 246)
+WM = (228, 238, 234)        # watermark suave
+TEXTO = (40, 52, 50)
 TITULO = (8, 58, 40)
 
 F = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
@@ -64,107 +65,123 @@ def wrap(text, fnt, max_w):
     return lines
 
 
+# ===== textura de circuito de fundo (corpo) =====
+random.seed(99)
+bn = [(random.randint(20, W - 20), random.randint(540, H - 120)) for _ in range(60)]
+for i, (x1, y1) in enumerate(bn):
+    for x2, y2 in bn[i + 1:]:
+        if abs(x1 - x2) + abs(y1 - y2) < 170:
+            d.line([(x1, y1), (x2, y2)], fill=WM, width=1)
+for (x, y) in bn:
+    d.ellipse((x - 3, y - 3, x + 3, y + 3), fill=WM)
+# hexágonos decorativos suaves
+def hexagon(cx, cy, r, col, w=2):
+    pts = [(cx + r * math.cos(math.radians(60 * k - 30)),
+            cy + r * math.sin(math.radians(60 * k - 30))) for k in range(6)]
+    d.line(pts + [pts[0]], fill=col, width=w)
+for (hx, hy, hr) in [(1130, 720, 70), (90, 1180, 90), (1150, 1460, 60)]:
+    hexagon(hx, hy, hr, WM, 2)
+    hexagon(hx, hy, hr - 16, WM, 1)
+
 # ================= CABEÇALHO =================
-HEAD = 500
+HEAD = 520
 grad_h((0, 0, W, HEAD), VERDE_ESC, AZUL_ESC)
 
-# --- camada de glow + circuito (RGBA, depois blur) ---
+# camada glow + circuito
 glow = Image.new("RGBA", (W, HEAD), (0, 0, 0, 0))
 gd = ImageDraw.Draw(glow)
 random.seed(21)
-nodes = [(random.randint(40, W - 40), random.randint(30, HEAD - 90)) for _ in range(26)]
-# traços de circuito ligando nós próximos
+nodes = [(random.randint(40, W - 40), random.randint(28, HEAD - 80)) for _ in range(30)]
 for i, (x1, y1) in enumerate(nodes):
     for x2, y2 in nodes[i + 1:]:
-        if abs(x1 - x2) + abs(y1 - y2) < 230:
-            gd.line([(x1, y1), (x2, y2)], fill=(90, 180, 230, 60), width=2)
-# nós brilhantes
+        if abs(x1 - x2) + abs(y1 - y2) < 240:
+            gd.line([(x1, y1), (x2, y2)], fill=(95, 185, 235, 65), width=2)
 for (x, y) in nodes:
     col = random.choice([VERDE_NEON, AZUL_NEON, DOURADO])
-    gd.ellipse((x - 5, y - 5, x + 5, y + 5), fill=col + (180,))
+    gd.ellipse((x - 5, y - 5, x + 5, y + 5), fill=col + (190,))
+# grande hexágono tech à direita
+for rr in (150, 120):
+    pts = [(1080 + rr * math.cos(math.radians(60 * k - 30)),
+            150 + rr * math.sin(math.radians(60 * k - 30))) for k in range(6)]
+    gd.line(pts + [pts[0]], fill=(120, 200, 240, 70), width=3)
 glow = glow.filter(ImageFilter.GaussianBlur(3))
 img.paste(Image.alpha_composite(
     img.crop((0, 0, W, HEAD)).convert("RGBA"), glow).convert("RGB"), (0, 0))
 d = ImageDraw.Draw(img)
-
-# nós nítidos por cima
 for (x, y) in nodes:
-    d.ellipse((x - 2, y - 2, x + 2, y + 2), fill=(220, 240, 255))
+    d.ellipse((x - 2, y - 2, x + 2, y + 2), fill=(225, 242, 255))
 
-# linha neon de dados na base do cabeçalho
-ny = HEAD - 46
+# linha de dados neon
+ny = HEAD - 52
 d.line([(0, ny), (W, ny)], fill=AZUL_NEON, width=2)
-for gx in range(0, W, 6):
-    a = 120 + int(100 * math.sin(gx / 40.0))
-    d.point((gx, ny), fill=(min(255, a + 120),) * 3)
-# faixa diagonal dourada fina
-d.polygon([(0, HEAD), (W, HEAD - 26), (W, HEAD), (0, HEAD)], fill=DOURADO)
-d.polygon([(0, HEAD - 4), (W, HEAD - 30), (W, HEAD - 24), (0, HEAD + 2)], fill=AZUL_ESC)
+# faixa diagonal dourada
+d.polygon([(0, HEAD), (W, HEAD - 30), (W, HEAD), (0, HEAD)], fill=DOURADO)
+d.polygon([(0, HEAD - 5), (W, HEAD - 35), (W, HEAD - 28), (0, HEAD + 2)], fill=AZUL_ESC)
 
-# marca + título com glow
+# título com glow (fontes maiores)
 tglow = Image.new("RGBA", (W, HEAD), (0, 0, 0, 0))
 tg = ImageDraw.Draw(tglow)
-tg.text((70, 130), "TECH DAY", font=font(True, 108), fill=AZUL_NEON + (255,))
-tglow = tglow.filter(ImageFilter.GaussianBlur(10))
+tg.text((68, 124), "TECH DAY", font=font(True, 132), fill=AZUL_NEON + (255,))
+tglow = tglow.filter(ImageFilter.GaussianBlur(12))
 img.paste(Image.alpha_composite(
     img.crop((0, 0, W, HEAD)).convert("RGBA"), tglow).convert("RGB"), (0, 0))
 d = ImageDraw.Draw(img)
 
-d.text((70, 56), "inpasa", font=font(True, 60), fill=BRANCO)
-d.ellipse((268, 66, 298, 96), fill=DOURADO)
-d.text((70, 130), "TECH DAY", font=font(True, 108), fill=BRANCO)
-d.text((74, 252), "DOURADOS", font=font(True, 56), fill=VERDE_NEON)
+d.text((70, 46), "inpasa", font=font(True, 66), fill=BRANCO)
+d.ellipse((296, 56, 330, 90), fill=DOURADO)
+d.text((68, 124), "TECH DAY", font=font(True, 132), fill=BRANCO)
+d.text((72, 270), "DOURADOS", font=font(True, 66), fill=VERDE_NEON)
 
-d.rounded_rectangle((70, 326, 522, 398), radius=16, fill=DOURADO)
-d.text((92, 342), "18 e 19 de JUNHO", font=font(True, 38), fill=AZUL_ESC)
-d.text((74, 412), "Inovação, automação e IA aplicada à indústria",
-       font=font(False, 24), fill=DOURADO_CLR)
+d.rounded_rectangle((70, 350, 558, 426), radius=18, fill=DOURADO)
+d.text((92, 364), "18 e 19 de JUNHO", font=font(True, 46), fill=AZUL_ESC)
+d.text((74, 440), "Inovação, automação e IA aplicada à indústria",
+       font=font(False, 27), fill=DOURADO_CLR)
 
 # ================= ÍCONES =================
-def ic_screen(cx, cy, col):  # COI — central de operações
-    d.rounded_rectangle((cx - 30, cy - 24, cx + 30, cy + 14), radius=5,
+def ic_screen(cx, cy, col):
+    d.rounded_rectangle((cx - 36, cy - 28, cx + 36, cy + 18), radius=6,
+                        outline=col, width=5)
+    pts = [(cx - 28, cy - 2), (cx - 16, cy - 2), (cx - 9, cy - 17),
+           (cx, cy + 8), (cx + 9, cy - 10), (cx + 16, cy - 2), (cx + 28, cy - 2)]
+    d.line(pts, fill=col, width=4, joint="curve")
+    d.rectangle((cx - 12, cy + 18, cx + 12, cy + 23), fill=col)
+    d.rectangle((cx - 22, cy + 25, cx + 22, cy + 30), fill=col)
+
+
+def ic_chip(cx, cy, col):
+    d.rounded_rectangle((cx - 28, cy - 28, cx + 28, cy + 28), radius=8,
+                        outline=col, width=5)
+    d.rounded_rectangle((cx - 12, cy - 12, cx + 12, cy + 12), radius=4,
                         outline=col, width=4)
-    pts = [(cx - 24, cy - 2), (cx - 14, cy - 2), (cx - 8, cy - 14),
-           (cx, cy + 6), (cx + 8, cy - 8), (cx + 14, cy - 2), (cx + 24, cy - 2)]
-    d.line(pts, fill=col, width=3, joint="curve")
-    d.rectangle((cx - 10, cy + 14, cx + 10, cy + 18), fill=col)
-    d.rectangle((cx - 18, cy + 20, cx + 18, cy + 24), fill=col)
+    for o in (-15, 0, 15):
+        d.line([(cx + o, cy - 28), (cx + o, cy - 38)], fill=col, width=4)
+        d.line([(cx + o, cy + 28), (cx + o, cy + 38)], fill=col, width=4)
+        d.line([(cx - 28, cy + o), (cx - 38, cy + o)], fill=col, width=4)
+        d.line([(cx + 28, cy + o), (cx + 38, cy + o)], fill=col, width=4)
 
 
-def ic_chip(cx, cy, col):  # controle avançado & IA
-    d.rounded_rectangle((cx - 22, cy - 22, cx + 22, cy + 22), radius=6,
-                        outline=col, width=4)
-    d.rounded_rectangle((cx - 9, cy - 9, cx + 9, cy + 9), radius=3,
-                        outline=col, width=3)
-    for o in (-12, 0, 12):
-        d.line([(cx + o, cy - 22), (cx + o, cy - 30)], fill=col, width=3)
-        d.line([(cx + o, cy + 22), (cx + o, cy + 30)], fill=col, width=3)
-        d.line([(cx - 22, cy + o), (cx - 30, cy + o)], fill=col, width=3)
-        d.line([(cx + 22, cy + o), (cx + 30, cy + o)], fill=col, width=3)
-
-
-def ic_db(cx, cy, col):  # dataops
-    w, h = 24, 9
-    for off in (-22, -4, 14):
+def ic_db(cx, cy, col):
+    w, h = 30, 11
+    for off in (-28, -6, 16):
         d.ellipse((cx - w, cy + off - h, cx + w, cy + off + h),
-                  outline=col, width=3)
-    d.line([(cx - w, cy - 22), (cx - w, cy + 14)], fill=col, width=3)
-    d.line([(cx + w, cy - 22), (cx + w, cy + 14)], fill=col, width=3)
-    d.arc((cx - w, cy + 14 - h, cx + w, cy + 14 + h), 0, 180, fill=col, width=3)
+                  outline=col, width=4)
+    d.line([(cx - w, cy - 28), (cx - w, cy + 16)], fill=col, width=4)
+    d.line([(cx + w, cy - 28), (cx + w, cy + 16)], fill=col, width=4)
+    d.arc((cx - w, cy + 16 - h, cx + w, cy + 16 + h), 0, 180, fill=col, width=4)
 
 
-def ic_neural(cx, cy, col):  # logix ai
-    L = [(cx - 24, cy - 16), (cx - 24, cy + 16)]
-    Mi = [(cx, cy - 22), (cx, cy), (cx, cy + 22)]
-    R = [(cx + 24, cy - 10), (cx + 24, cy + 10)]
+def ic_neural(cx, cy, col):
+    L = [(cx - 30, cy - 20), (cx - 30, cy + 20)]
+    Mi = [(cx, cy - 28), (cx, cy), (cx, cy + 28)]
+    R = [(cx + 30, cy - 13), (cx + 30, cy + 13)]
     for a in L:
         for b in Mi:
-            d.line([a, b], fill=col, width=2)
+            d.line([a, b], fill=col, width=3)
     for b in Mi:
         for c in R:
-            d.line([b, c], fill=col, width=2)
+            d.line([b, c], fill=col, width=3)
     for (x, y) in L + Mi + R:
-        d.ellipse((x - 6, y - 6, x + 6, y + 6), fill=col)
+        d.ellipse((x - 8, y - 8, x + 8, y + 8), fill=col)
 
 
 ICONS = {"screen": ic_screen, "chip": ic_chip, "db": ic_db, "neural": ic_neural}
@@ -173,14 +190,14 @@ ICONS = {"screen": ic_screen, "chip": ic_chip, "db": ic_db, "neural": ic_neural}
 def tile(size, c):
     t = Image.new("RGB", (size, size))
     td = ImageDraw.Draw(t)
-    c2 = darker(c, 0.6)
+    c2 = darker(c, 0.58)
     for i in range(size):
         k = i / (size - 1)
         col = tuple(int(c[j] + (c2[j] - c[j]) * k) for j in range(3))
         td.line([(0, i), (size, i)], fill=col)
     mask = Image.new("L", (size, size), 0)
     ImageDraw.Draw(mask).rounded_rectangle((0, 0, size - 1, size - 1),
-                                           radius=22, fill=255)
+                                           radius=26, fill=255)
     return t, mask
 
 
@@ -193,63 +210,85 @@ cards = [
     ("02", AZUL, "chip", "Controle Avançado & IA",
      "Malhas de PID, forces, bypass, simulações e cruzamento de informações, "
      "com aplicação de IA no controle avançado dos processos."),
-    ("03", VERDE, "db", "Operacionalização e Arquitetura de Dados (DataOps)",
-     "Coleta, historização (PI System / InfluxDB) e análise de dados "
-     "operacionais. PyPoint Builder para varredura automática de "
-     "controladores e benchmarking entre plantas."),
+    ("03", VERDE, "db", "Operacionalização e Arquitetura de Dados",
+     "DataOps: coleta, historização (PI System / InfluxDB) e análise de dados. "
+     "PyPoint Builder para varredura automática de controladores e "
+     "benchmarking entre plantas."),
     ("04", AZUL, "neural", "Logix AI — IA no controle industrial",
      "Otimização de código, predição de resultados, configuração autônoma e "
      "insights para operadores, na evolução rumo a controles autônomos."),
 ]
 
-x0, x1 = 60, W - 60
-TS = 104  # tile size
-y = HEAD + 46
-for num, cor, ikind, titulo, corpo in cards:
-    tlines = wrap(titulo, font(True, 31), x1 - x0 - 190)
-    blines = wrap(corpo, font(False, 24), x1 - x0 - 190)
-    body_h = 36 + len(tlines) * 38 + 6 + len(blines) * 33
-    ch = max(TS + 36, body_h + 30)
-    # cartão com borda sutil
-    d.rounded_rectangle((x0, y, x1, y + ch), radius=22, fill=CINZA_CLARO)
-    d.rounded_rectangle((x0, y, x1, y + ch), radius=22, outline=darker(cor, 0.9),
-                        width=2)
-    # tile com ícone
-    tx_, ty_ = x0 + 28, y + (ch - TS) // 2
+x0, x1 = 56, W - 56
+TS = 120
+TITLE_FS, BODY_FS = 34, 26
+
+FY = H - 100                 # topo do rodapé
+SY = FY - 178                # topo da faixa de tecnologias
+region_top = HEAD + 26
+region_bot = SY - 26
+gap = 18
+CH = int((region_bot - region_top - gap * (len(cards) + 1)) / len(cards))
+
+y = region_top + gap
+for num, cor, ik, titulo, corpo in cards:
+    tl = wrap(titulo, font(True, TITLE_FS), x1 - x0 - 30 - TS - 30 - 20)
+    bl = wrap(corpo, font(False, BODY_FS), x1 - x0 - 30 - TS - 30 - 20)
+    d.rounded_rectangle((x0, y, x1, y + CH), radius=24, fill=CINZA_CLARO)
+    d.rounded_rectangle((x0, y, x1, y + CH), radius=24, outline=darker(cor, 0.85),
+                        width=3)
+    tx_, ty_ = x0 + 30, int(y + (CH - TS) // 2)
     t_img, t_mask = tile(TS, cor)
     img.paste(t_img, (tx_, ty_), t_mask)
-    ICONS[ikind](tx_ + TS // 2, ty_ + TS // 2, BRANCO)
-    # número (badge dourado)
-    d.ellipse((tx_ - 6, ty_ - 6, tx_ + 32, ty_ + 32), fill=DOURADO)
-    nb = font(True, 24)
+    ICONS[ik](tx_ + TS // 2, ty_ + TS // 2, BRANCO)
+    d.ellipse((tx_ - 8, ty_ - 8, tx_ + 38, ty_ + 38), fill=DOURADO)
+    nb = font(True, 28)
     nw = d.textlength(num, font=nb)
-    d.text((tx_ + 13 - nw / 2, ty_ + 1), num, font=nb, fill=AZUL_ESC)
-    # textos
-    tx = x0 + 28 + TS + 26
-    ty = y + (ch - body_h) // 2 + 6
-    for ln in tlines:
-        d.text((tx, ty), ln, font=font(True, 31), fill=TITULO)
-        ty += 38
-    ty += 6
-    for ln in blines:
-        d.text((tx, ty), ln, font=font(False, 24), fill=TEXTO)
-        ty += 33
-    y += ch + 22
+    d.text((tx_ + 15 - nw / 2, ty_ + 1), num, font=nb, fill=AZUL_ESC)
+    bh = len(tl) * 44 + 10 + len(bl) * 36
+    tx = x0 + 30 + TS + 30
+    ty = int(y + (CH - bh) // 2)
+    for ln in tl:
+        d.text((tx, ty), ln, font=font(True, TITLE_FS), fill=TITULO)
+        ty += 44
+    ty += 10
+    for ln in bl:
+        d.text((tx, ty), ln, font=font(False, BODY_FS), fill=TEXTO)
+        ty += 36
+    y += CH + gap
+
+# ================= FAIXA TECNOLOGIAS & PARCEIROS =================
+d.text((x0, SY), "TECNOLOGIAS & PARCEIROS", font=font(True, 30), fill=TITULO)
+d.line([(x0, SY + 44), (x1, SY + 44)], fill=VERDE, width=3)
+
+tags = [("Rockwell", VERDE), ("PI System", AZUL), ("InfluxDB", VERDE),
+        ("Logix AI", AZUL), ("PyPoint Builder", VERDE), ("IA / ML", AZUL)]
+px, py = x0, SY + 60
+for txt, cor in tags:
+    tw = d.textlength(txt, font=font(True, 26))
+    pw = tw + 80
+    if px + pw > x1:
+        px = x0
+        py += 68
+    d.rounded_rectangle((px, py, px + pw, py + 56), radius=28, fill=BRANCO,
+                        outline=cor, width=3)
+    d.ellipse((px + 16, py + 16, px + 40, py + 40), fill=cor)
+    d.ellipse((px + 24, py + 24, px + 32, py + 32), fill=BRANCO)
+    d.text((px + 56, py + 13), txt, font=font(True, 26), fill=darker(cor, 0.8))
+    px += pw + 18
 
 # ================= RODAPÉ =================
-FY = H - 96
 grad_h((0, FY, W, H), VERDE, AZUL)
-d.rectangle((0, FY, W, FY + 5), fill=DOURADO)
-# nós no rodapé
+d.rectangle((0, FY, W, FY + 6), fill=DOURADO)
 random.seed(5)
-for _ in range(18):
+for _ in range(22):
     fx = random.randint(40, W - 40)
-    fy = random.randint(FY + 12, H - 12)
-    d.ellipse((fx, fy, fx + 3, fy + 3), fill=(180, 220, 255))
-d.text((70, FY + 28), "Dourados • 18 e 19/06", font=font(True, 30), fill=BRANCO)
-rt = "Rockwell • COI • DataOps • Logix AI"
-rw = d.textlength(rt, font=font(False, 24))
-d.text((W - 70 - rw, FY + 34), rt, font=font(False, 24), fill=DOURADO_CLR)
+    fy = random.randint(FY + 12, H - 14)
+    d.ellipse((fx, fy, fx + 3, fy + 3), fill=(185, 222, 255))
+d.text((70, FY + 30), "Dourados • 18 e 19/06", font=font(True, 34), fill=BRANCO)
+rt = "COI • DataOps • Logix AI • IA"
+rw = d.textlength(rt, font=font(True, 26))
+d.text((W - 70 - rw, FY + 36), rt, font=font(True, 26), fill=DOURADO_CLR)
 
 img.save("folder_techday_dourados.jpg", "JPEG", quality=93)
 print("OK -> folder_techday_dourados.jpg", img.size)
