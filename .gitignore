@@ -17,3 +17,6 @@ venv/
 
 # Segredos
 .env
+
+# imagens temporárias de extração
+/tmp/
