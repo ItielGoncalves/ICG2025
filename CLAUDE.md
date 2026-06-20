@@ -1,3 +1,12 @@
+# Atuação no ClickUp (Gestão de Demandas)
+
+> Para **qualquer** tarefa que envolva o ClickUp do Itiel (buscar, atualizar,
+> comentar, alterar datas/responsável/progresso/unidade em cards), leia
+> **[`CLICKUP.md`](./CLICKUP.md)** ANTES de agir. Lá estão a lista principal,
+> os IDs dos campos customizados, os UUIDs das pessoas/labels e as regras
+> operacionais (ex.: "data" = atualizar `due_date` + campo "Quando?"; nunca usar
+> `assignees`; nunca mostrar cards "feito"; aprovar antes de alterar).
+
 # Padrão de nomenclatura de arquivos (apresentações e documentos)
 
 > Esta é a regra oficial para nomear **qualquer** arquivo gerado para o Itiel
