@@ -56,6 +56,24 @@ python run_briefing.py --finalize audio.mp3 --out briefing_final.mp3
 Motor de TTS padrão: **ElevenLabs** (`ELEVENLABS_API_KEY` + `ELEVENLABS_VOICE_ID`).
 Fallback: gTTS com `BRIEFING_TTS_ENGINE=gtts`.
 
+## Apresentações e documentos (padrão do Itiel)
+
+O padrão de nomes e a regra de versionamento estão em [`CLAUDE.md`](CLAUDE.md).
+O helper `gestao_arquivos.py` aplica esse padrão **localmente** (precisa de
+acesso ao disco; o PDF usa LibreOffice headless):
+
+```bash
+# Gerar o vFINAL (.pptx + .pdf) a partir de um .pptx:
+python gestao_arquivos.py finalize "2026.06.10 - MULTI - Gestão Tática de Obras v11.pptx"
+
+# Podar versões de uma pasta — mantém 3 distribuídas + vFINAL (dry-run por padrão):
+python gestao_arquivos.py prune "/caminho/da/pasta"
+python gestao_arquivos.py prune "/caminho/da/pasta" --apply   # apaga de verdade
+```
+
+> PDF precisa do LibreOffice (Mac: `brew install --cask libreoffice`), ou defina
+> `LIBREOFFICE_BIN`. A poda só funciona em superfície local.
+
 ## Testes
 
 ```bash

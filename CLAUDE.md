@@ -30,7 +30,7 @@ por nome fique em ordem cronológica automaticamente.
 | Código | Unidade |
 |---|---|
 | `MULTI` | Todas as unidades / assunto geral |
-| `SNP` / `SNOP` | Sinop *(confirmar qual é o código canônico)* |
+| `SNP` | Sinop |
 | `MTU` | Nova Mutum |
 | `BLS` | Balsas |
 | `LEM` | Luís Eduardo Magalhães |

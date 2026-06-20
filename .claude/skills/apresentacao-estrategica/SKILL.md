@@ -35,7 +35,7 @@ AAAA.MM.DD - UNIDADE - Título com espaços naturais [vN].ext
 | Código | Unidade |
 |---|---|
 | `MULTI` | Todas as unidades / geral |
-| `SNP` / `SNOP` | Sinop |
+| `SNP` | Sinop |
 | `MTU` | Nova Mutum |
 | `BLS` | Balsas |
 | `LEM` | Luís Eduardo Magalhães |
@@ -73,3 +73,13 @@ Quando o Itiel disser que **a versão ficou boa / é a final**:
 
 > A **poda/remoção** de arquivos só funciona em superfície local. No Claude Code
 > web não há como apagar arquivos do Mac.
+
+## Helper local
+
+Numa superfície local, o repo `ICG2025` traz o `gestao_arquivos.py`, que
+automatiza a finalização e a poda:
+
+```bash
+python gestao_arquivos.py finalize "AAAA.MM.DD - UNIDADE - Título vNN.pptx"  # gera vFINAL .pptx + .pdf
+python gestao_arquivos.py prune "/caminho/da/pasta" --apply                  # poda mantendo 3 + vFINAL
+```
