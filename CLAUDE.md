@@ -44,6 +44,29 @@ por nome fique em ordem cronológica automaticamente.
 2026.06.19 - DRD - Plano de Ações Supervisório v01.pptx
 ```
 
+## Versionamento e finalização
+
+Quando o Itiel disser que **a versão ficou boa / é a final**:
+
+1. Gerar o arquivo final em **`.pptx`** (editável) **e** exportar o **`.pdf`**
+   correspondente, com o **mesmo nome** e marcado como `vFINAL`.
+2. Manter **no máximo 3 versões** por arquivo. Se houver mais de 3 (ex.: a
+   numeração chegou a `v10`), **podar de forma alternada** — descartando
+   versões intermediárias espalhadas pelo histórico — até sobrar 3.
+3. **Sempre preservar** a versão **mais recente** e a **`vFINAL`** (quando
+   existir). A poda só remove versões intermediárias.
+
+Exemplo de poda:
+
+```
+v01 … v10  →  manter v01, v05 e v10 (as pontas + uma do meio); apagar o resto
+```
+
+> **Limitação por superfície:** a **poda/remoção** de arquivos antigos só
+> funciona em superfícies **locais** (Cowork / Claude Desktop com acesso ao
+> disco). No Claude Code na web (container isolado) não há como apagar arquivos
+> do Mac — nesse caso, apenas nomear/gerar no padrão correto.
+
 ## Onde salvar (assuntos estratégicos)
 
 Apresentações e documentos estratégicos (diretoria, gerências, equipe de gestão)
