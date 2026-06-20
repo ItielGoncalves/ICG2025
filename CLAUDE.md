@@ -30,10 +30,19 @@ por nome fique em ordem cronológica automaticamente.
 | Código | Unidade |
 |---|---|
 | `MULTI` | Todas as unidades / assunto geral |
+| `SNP` / `SNOP` | Sinop *(confirmar qual é o código canônico)* |
+| `MTU` | Nova Mutum |
+| `BLS` | Balsas |
+| `LEM` | Luís Eduardo Magalhães |
+| `RVD` | Rio Verde |
+| `RND` | Rondonópolis |
+| `SDR` | Sidrolândia |
+| `SPD` | São Pedro |
+| `LRL` | Laurel |
 | `DRD` | Dourados |
 
-> Outras unidades a confirmar com o Itiel e acrescentar aqui conforme o padrão
-> interno já usado.
+> Se aparecer uma unidade nova, confirmar o código com o Itiel e acrescentar
+> aqui no mesmo padrão.
 
 ## Exemplos
 
@@ -44,22 +53,41 @@ por nome fique em ordem cronológica automaticamente.
 2026.06.19 - DRD - Plano de Ações Supervisório v01.pptx
 ```
 
+## Fluxo ao criar uma apresentação ou documento
+
+Sempre que o Itiel pedir para **criar uma apresentação ou documento**, antes de
+gerar, **perguntar o destino**:
+
+> "Isso é para a pasta de **Gestão Estratégica** (diretoria / gerências / equipe
+> de gestão) ou só para **Downloads**?"
+
+- **Gestão Estratégica** → nomear no padrão `AAAA.MM.DD - UNIDADE - Título [vN]`,
+  confirmar a **unidade** quando não estiver clara, e **salvar direto** na pasta
+  estratégica (ver "Onde salvar"). Na finalização, aplicar a regra de
+  versionamento abaixo.
+- **Downloads** → gerar normalmente, sem a obrigação do padrão/pasta (mas o
+  padrão de nome continua recomendado).
+
+> Em superfícies locais (Cowork / Desktop) dá para salvar direto na pasta certa.
+> No Claude Code web, apenas nomear no padrão e o Itiel move o arquivo.
+
 ## Versionamento e finalização
 
 Quando o Itiel disser que **a versão ficou boa / é a final**:
 
 1. Gerar o arquivo final em **`.pptx`** (editável) **e** exportar o **`.pdf`**
    correspondente, com o **mesmo nome** e marcado como `vFINAL`.
-2. Manter **no máximo 3 versões** por arquivo. Se houver mais de 3 (ex.: a
-   numeração chegou a `v10`), **podar de forma alternada** — descartando
-   versões intermediárias espalhadas pelo histórico — até sobrar 3.
-3. **Sempre preservar** a versão **mais recente** e a **`vFINAL`** (quando
-   existir). A poda só remove versões intermediárias.
+2. Manter **no máximo 3 versões distribuídas** por arquivo, **além da
+   `vFINAL`**. Quando houver muitas versões, escolher 3 espalhadas
+   **uniformemente** pelo histórico (sempre incluindo a mais recente) e
+   **descartar as intermediárias** entre elas.
+3. **Sempre preservar** a **`vFINAL`** (à parte, não conta nas 3) e a versão
+   **mais recente**.
 
-Exemplo de poda:
+Exemplo de poda (distribuída):
 
 ```
-v01 … v10  →  manter v01, v05 e v10 (as pontas + uma do meio); apagar o resto
+v01 … v30  →  manter v10, v20 e v30 (distribuídas) + vFINAL; apagar o resto
 ```
 
 > **Limitação por superfície:** a **poda/remoção** de arquivos antigos só
