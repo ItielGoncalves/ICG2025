@@ -56,6 +56,33 @@ python run_briefing.py --finalize audio.mp3 --out briefing_final.mp3
 Motor de TTS padrão: **ElevenLabs** (`ELEVENLABS_API_KEY` + `ELEVENLABS_VOICE_ID`).
 Fallback: gTTS com `BRIEFING_TTS_ENGINE=gtts`.
 
+## Conector Automia (API Hub)
+
+Cliente autenticado para o [API Hub da Automia](https://apihub.automia.com.br/docs),
+via OAuth 2.0 (*Client Credentials*). Ele obtém o `access_token`, anexa o
+`Authorization: Bearer` em cada chamada e **renova o token automaticamente**
+quando ele expira (~5 min) ou quando uma chamada volta `401`.
+
+Variáveis de ambiente:
+
+| Variável | Para quê | Obrigatória |
+|---|---|---|
+| `AUTOMIA_CLIENT_SECRET` | Segredo do client (canal seguro) | Sim |
+| `AUTOMIA_CLIENT_ID` | ID do client | Não (default: `backend-api`) |
+| `AUTOMIA_BASE_URL` | Base do API Hub | Não (default: `https://apihub.automia.com.br`) |
+| `AUTOMIA_TOKEN_URL` | Endpoint de token (IdP) | Não (default: realm `master` da Automia) |
+
+> **Nunca** coloque a `client_secret` no código ou no repositório — use a
+> variável de ambiente `AUTOMIA_CLIENT_SECRET`.
+
+```python
+from briefing import Config, AutomiaClient
+
+client = AutomiaClient.from_config(Config())
+dados = client.get("/algum/endpoint")            # GET autenticado (JSON)
+novo = client.post("/outro/endpoint", json={...})  # POST autenticado (JSON)
+```
+
 ## Apresentações e documentos (padrão do Itiel)
 
 O padrão de nomes e a regra de versionamento estão em [`CLAUDE.md`](CLAUDE.md).

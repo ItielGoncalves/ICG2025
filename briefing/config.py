@@ -50,6 +50,17 @@ class Config:
     telegram_bot_token: str | None = field(default_factory=lambda: os.getenv("TELEGRAM_BOT_TOKEN"))
     telegram_chat_id: str | None = field(default_factory=lambda: os.getenv("TELEGRAM_CHAT_ID"))
 
+    # --- Automia (API Hub, OAuth2 Client Credentials) ------------------------
+    automia_client_secret: str | None = field(default_factory=lambda: os.getenv("AUTOMIA_CLIENT_SECRET"))
+    automia_client_id: str = field(default_factory=lambda: os.getenv("AUTOMIA_CLIENT_ID", "backend-api"))
+    automia_base_url: str = field(default_factory=lambda: os.getenv("AUTOMIA_BASE_URL", "https://apihub.automia.com.br"))
+    automia_token_url: str = field(
+        default_factory=lambda: os.getenv(
+            "AUTOMIA_TOKEN_URL",
+            "https://idp.automia.com.br/realms/master/protocol/openid-connect/token",
+        )
+    )
+
     # --- Saída ---------------------------------------------------------------
     output_dir: Path = field(default_factory=lambda: _env_path("BRIEFING_OUTPUT_DIR", DEFAULT_OUTPUT_DIR))
 
@@ -60,3 +71,7 @@ class Config:
     @property
     def telegram_configured(self) -> bool:
         return bool(self.telegram_bot_token and self.telegram_chat_id)
+
+    @property
+    def automia_configured(self) -> bool:
+        return bool(self.automia_client_secret)
