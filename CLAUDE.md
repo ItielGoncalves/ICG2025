@@ -1,3 +1,123 @@
+# Estilo de escrita (regra global, vale para TODA mensagem e documento)
+
+> **Nunca usar traço/travessão** ("—" ou " - ") como pontuação de frase.
+> **Sempre substituir por vírgula** (ou, quando couber, ponto, dois-pontos ou
+> parênteses). Vale para mensagens, textos, apresentações e qualquer conteúdo
+> gerado para o Itiel, e também para as respostas no chat.
+>
+> Exceção: o separador " - " do **padrão de nomenclatura de arquivos**
+> (`AAAA.MM.DD - UNIDADE - Título`) continua válido, pois ali é separador de
+> nome, não pontuação de frase.
+
+---
+
+# Perfis de comunicação (mensagens para pessoas-chave)
+
+> Regra oficial para **elaborar qualquer mensagem** destinada às pessoas
+> abaixo. Sempre que o Itiel pedir para gerar/redigir uma mensagem para uma
+> delas, **adaptar o tom e o conteúdo ao perfil** e, ao final, **apresentar a
+> mensagem para o Itiel validar** se está dentro da linha antes de considerá-la
+> pronta.
+
+> **Atenção — não confundir as pessoas:**
+> - **Sr. José = José Lopez** (chefe do Itiel; **presidente e dono da Inpasa**).
+> - **Éder** (filho do Sr. José / José Lopez; há ~1 ano **CEO da Inpasa**).
+> - **José Luís** é o **mentor** do Itiel — pessoa **distinta** do Sr. José.
+
+> **Regra de ouro (resumo do mentor):** Sr. José e Éder são **duas mentalidades
+> opostas**. A mesma mensagem tem que sair em **duas direções diferentes**. O
+> segredo não é o conteúdo, é **como se ativa cada um**.
+
+## Sr. José (José Lopes) — presidente e dono da Inpasa; chefe do Itiel
+
+**Mentalidade.** Pessoa de **resultado e de visão**. Visão **sistêmica** — conecta
+muita coisa na cabeça, processa/mentaliza o negócio inteiro. Multitarefa e
+multiempresário; carrega as estratégias na mente. Aparência **simplista** na
+fala e na abordagem, mas é **extremamente esperto** — inteligência estratégica,
+social e cognitiva altíssimas. Construiu um ecossistema/"império". "Muito
+parecido com o Itiel": gente de resultado.
+
+**O que valoriza.**
+- **Resultado** e **objetividade** acima de tudo.
+- Perceber que estão **cuidando bem do negócio e do dinheiro dele**.
+- Velocidade: **não tem problema em investir/gastar pesado** para acelerar o que
+  faz sentido para o negócio (e fica bravo se algo que faz sentido **não** anda).
+
+**Como comunicar (do's).**
+- **Direto ao ponto**, assertivo, **sem rodeios**. Resultado/número/conclusão
+  primeiro.
+- **Pode ser cru e forte** — ele respeita assertividade e decisão; suavizar
+  demais soa como insegurança. Velocidade e clareza ganham dele.
+- Enquadrar tudo em "isto **cuida do negócio / protege o dinheiro / acelera**".
+- Cortar floreio e contexto desnecessário. Ele preenche o resto sozinho.
+- Ele é o **cérebro estratégico** da operação (muito superior ao Éder em leitura
+  de negócio): falar com ele é falar de igual para igual sobre resultado.
+
+**Evitar (gatilhos observados — Notion).** Palavras que disparam reação ruim:
+**"HH / homem-hora"**, **"locação de equipamentos"**, **"metal-mecânica"** (abre
+debate de desorganização). Trocar por títulos neutros (ex.: "preparo de acessos
+/ período climático"). Ele tem **memória longa** — não esconder problema nem
+deixá-lo descobrir tarde.
+
+## Éder — filho do Sr. José; CEO da Inpasa (há ~1 ano)
+
+**Mentalidade.** O **oposto** do pai. **Não** tem visão sistêmica e muitas vezes
+está **desconectado** da Inpasa. Cabeça de **herdeiro, não de sucessor** —
+foco no dinheiro, não em fazer a empresa evoluir. O que ele quer é **não ter
+problema**: que tudo aconteça e siga acontecendo sem que ele precise lidar com
+nada. Quanto mais a empresa em "voo de cruzeiro", melhor para ele.
+
+- Ao falar de **negócio/técnico/melhoria**, ele **perde o interesse rápido**
+  (traços de atenção dispersa / TDAH: fala muito, mas ao ouvir se distrai, vai
+  pro celular).
+- **Altamente influenciável**, pouca opinião própria — costuma pedir contexto.
+  (Ex.: o Fernando o "ativa" com muito status e ocupação, e o convence.)
+- **Indeciso**; quando decide, é por critério **pessoal** ("não acho certo"),
+  sem a lente de ecossistema/multinacional.
+
+**O que valoriza (as alavancas de ativação).**
+- **Status e poder** — validar-se perto de grandes empresas, presidentes,
+  diretores de peso. Isso "é bonito" para ele.
+- **Posicionamento** e imagem.
+- **Família e bem-estar** — sair cedo, fim de semana com a família, desligar.
+
+**Como comunicar (do's).**
+- **Empatia SEMPRE antes do ponto.** Nunca entrar direto no assunto — abrir com
+  empatia genuína (como ele está, descanso, família) e só depois caminhar para o
+  conteúdo. Esta é a regra inegociável com o Éder.
+- **Primeiro ativar, depois introduzir.** Nunca abrir por resultado/técnica — ele
+  se perde. Entrar pelo interesse dele (família/descanso ou status/poder), e só
+  quando ele "entra no fluxo" ir colocando o assunto.
+- **Pouca profundidade.** Quase "informar" mais do que detalhar; trazer o assunto
+  o suficiente para ele se inteirar (é CEO), sem mergulho técnico.
+- Enquadrar com **posicionamento/status**; converter o "ruim" em "bom" e deixar a
+  justificativa pronta (a "porta de saída"). Ele lê **desastre** no número cru.
+- **Presencial:** abrir por família/bem-estar. **E-mail:** isso é mais difícil —
+  ir por **posição/status/algo que desperte atenção**.
+
+**Modelo de "ativação" (exemplo do mentor, presencial):**
+> "Éder, e aí? Final de semana, tudo bem? Conseguiu descansar com tranquilidade?
+> … Eu aproveitei que estava nos Estados Unidos e já conversei com [uma pessoa de
+> tremenda responsabilidade global]…" → traz status/poder → ele para para te
+> ouvir → aí você vai introduzindo os assuntos.
+
+## José Luís — mentor do Itiel
+
+- Pessoa **distinta** do Sr. José. **Perfil de comunicação dele não é foco** (não
+  precisa adaptar mensagens a ele). É a **fonte** das orientações acima.
+
+## Fluxo obrigatório ao gerar mensagem para um deles
+
+1. Identificar o destinatário e aplicar o perfil correspondente.
+2. Para o **Sr. José**: abrir por resultado, direto, sem gatilhos.
+   Para o **Éder**: ativar primeiro (família/status), depois introduzir raso.
+3. **Sempre apresentar ao Itiel para validação** ("essa mensagem está na linha
+   do [Sr. José / Éder]?") antes de tratar como final.
+
+> Esta seção pode ser refinada conforme o Itiel trouxer novos exemplos ou ajustes.
+
+---
+
 # Padrão de nomenclatura de arquivos (apresentações e documentos)
 
 > Esta é a regra oficial para nomear **qualquer** arquivo gerado para o Itiel
