@@ -179,11 +179,9 @@ txt(s, Inches(0.92), Inches(3.95), Inches(11.0), Inches(1.0),
       R("PlantPAx + TracOS", 19, AMBER, True)]])
 # linha divisoria
 rect(s, Inches(0.95), Inches(5.15), Inches(6.4), Pt(1.5), fill=RGBColor(0x35,0x52,0x70))
-txt(s, Inches(0.95), Inches(5.2), Inches(11.6), Inches(1.5),
-    [[R("Apresentado a:  ", 14, GRAY, False), R("Sr. José  e  Éder", 14, WHITE, True),
-      R("      por  ", 14, GRAY, False), R("Itiel Gonçalves · VP Automação & Elétrica", 14, WHITE, True)],
-     [R("Centro de Operações Integradas (COI)  ·  Benchmarking entre plantas  ·  Manutenção prescritiva", 13, GRAY, False)],
-     [R("Base: sessão estratégica Inpasa × Rockwell  ·  Mayfield Heights, OH  ·  26/06/2026", 12.5, RGBColor(0x8F,0xA9,0xC2), False)]])
+txt(s, Inches(0.95), Inches(5.35), Inches(11.6), Inches(1.2),
+    [[R("Automação inteligente  ·  Inteligência Artificial  ·  Manutenção prescritiva", 14.5, RGBColor(0xCD,0xDA,0xE8), False)],
+     [R("Base: sessão estratégica Inpasa × Rockwell  ·  Cleveland, OH  ·  26/06/2026", 12.5, RGBColor(0x8F,0xA9,0xC2), False)]])
 txt(s, Inches(9.8), Inches(6.75), Inches(2.7), Inches(0.4),
     [[R("2026.06.28  ·  MULTI  ·  vFINAL", 12, GRAY, True)]], align=PP_ALIGN.RIGHT)
 

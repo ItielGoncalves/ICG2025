@@ -161,10 +161,9 @@ paras(0.92, 3.95, 11.0, 1.0,
         R("  vs.  ", 19, COVER_SUB),
         R("PlantPAx + TracOS", 19, AMBER, True)]])
 rect(0.95, 5.15, 6.4, 1.5/IN, fill=DIVIDER)
-paras(0.95, 5.2, 11.6, 1.5,
-      [[R("Apresentado a:  ", 14, GRAY), R("Sr. José  e  Éder", 14, WHITE, True), R("      por  ", 14, GRAY), R("Itiel Gonçalves · VP Automação & Elétrica", 14, WHITE, True)],
-       [R("Centro de Operações Integradas (COI)  ·  Benchmarking entre plantas  ·  Manutenção prescritiva", 13, GRAY)],
-       [R("Base: sessão estratégica Inpasa × Rockwell  ·  Mayfield Heights, OH  ·  26/06/2026", 12.5, "#8FA9C2")]],
+paras(0.95, 5.35, 11.6, 1.2,
+      [[R("Automação inteligente  ·  Inteligência Artificial  ·  Manutenção prescritiva", 14.5, COVER_SUB)],
+       [R("Base: sessão estratégica Inpasa × Rockwell  ·  Cleveland, OH  ·  26/06/2026", 12.5, "#8FA9C2")]],
       space_after=5)
 paras(9.6, 6.75, 2.9, 0.4, [[R("2026.06.28  ·  MULTI  ·  vFINAL", 12, GRAY, True)]], align=TA_RIGHT)
 c.showPage()
