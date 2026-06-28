@@ -198,7 +198,7 @@ txt(s, Inches(0.85), Inches(1.55), Inches(11.6), Inches(0.9),
 cards = [
     ("Reunião estratégica", "Encontro Inpasa x Rockwell (26/06) sobre parceria de tecnologia e inovação. Contato: Dan DeYoung (VP & GM, Design & Control).", OPTIX),
     ("Dados em silos", "Cada unidade tem seu PlantPAx adaptado às necessidades e padrões da Inpasa. Não há visão única, nem comparação direta entre as plantas.", AMBER),
-    ("Decisão reativa", "Manutenção parcialmente reativa (TracOS cobre rotativos) e alarmes acima da norma — falta prescritivo e não rotativos.", RED),
+    ("Decisão reativa", "Manutenção parcialmente reativa: o TracOS cobre os rotativos com insight prescritivo. Faltam os alarmes acima da norma e o prescritivo dos equipamentos não rotativos.", RED),
     ("Janela de oportunidade", "Optix e DataMosaix amadureceram em 2026 (SCADA multi-site + Industrial DataOps).", GREEN),
 ]
 cw = Inches(2.85); gap = Inches(0.2); x0 = Inches(0.85); y0 = Inches(2.75); ch = Inches(3.0)
@@ -219,19 +219,19 @@ page_num(s)
 # 2b. REUNIAO ESTRATEGICA INPASA x ROCKWELL
 # ----------------------------------------------------------------------------
 s = slide(); bg(s, LIGHT)
-header(s, "Parceria estratégica", "Inpasa × Rockwell — leitura da sessão de 26/06/2026", OPTIX)
+header(s, "Strategic partnership", "Inpasa × Rockwell — June 26, 2026 session readout", OPTIX)
 txt(s, Inches(0.85), Inches(1.5), Inches(11.6), Inches(0.55),
-    [[R("Encontro executivo no campus da Rockwell (Mayfield Heights, OH). A Inpasa apresentou seus objetivos de automação; a Rockwell trouxe a visão de COI, DataOps e IA industrial.", 14, SLATE, False)]])
+    [[R("Executive session at Rockwell's campus (Cleveland, OH). Inpasa presented its automation goals; Rockwell shared its vision for the COI, DataOps and industrial AI.", 14, SLATE, False)]])
 _x=Inches(0.85); _y=Inches(2.2); _cw=Inches(5.75); _ch=Inches(4.3); _g=Inches(0.35)
 rect(s, _x, _y, _cw, _ch, fill=CARD, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
 rect(s, _x, _y, _cw, Inches(0.62), fill=OPTIX, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
-txt(s, _x+Inches(0.3), _y+Inches(0.13), _cw-Inches(0.6), Inches(0.4), [[R("Agenda da sessão", 16, WHITE, True)]])
+txt(s, _x+Inches(0.3), _y+Inches(0.13), _cw-Inches(0.6), Inches(0.4), [[R("Session agenda", 16, WHITE, True)]])
 bullets(s, _x+Inches(0.35), _y+Inches(0.85), _cw-Inches(0.7), Inches(3.3), [('Inpasa Goals & Objectives ', '— Itiel Gonçalves'), ('Trusted Partnership & Ecosystem ', "— Andrew D'Souza"), ('Process Characterization & Lab Tour ', '— Ed Walsh'), ('Software Leadership: COI & DataOps ', '— JP Wright'), ('Hardware Leadership: Process Initiative ', '— Brian Widman'), ('Strategic Plan & Executive Wrap-up ', "— Andrew D'Souza")], size=13, marker_col=OPTIX, gap=10)
 _x1=_x+_cw+_g
 rect(s, _x1, _y, _cw, _ch, fill=CARD, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
 rect(s, _x1, _y, _cw, Inches(0.62), fill=NAVY, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
-txt(s, _x1+Inches(0.3), _y+Inches(0.13), _cw-Inches(0.6), Inches(0.4), [[R("Quem participou", 16, WHITE, True)]])
-bullets(s, _x1+Inches(0.35), _y+Inches(0.85), _cw-Inches(0.7), Inches(3.3), [('Itiel Gonçalves ', '— VP Automação & Elétrica (Inpasa)'), ('Dan DeYoung ', '— VP & GM, Design & Control'), ("Andrew D'Souza ", '— Diretor Software & Control, LATAM'), ('JP Wright ', '— Diretor Visualization & Production Data'), ('Brian Widman ', '— PM Controllers · Chris Stearns — PlantPAx PM'), ('Lúcio Granato ', '— Solution Architect (time Brasil)')], size=13, marker_col=NAVY, gap=10)
+txt(s, _x1+Inches(0.3), _y+Inches(0.13), _cw-Inches(0.6), Inches(0.4), [[R("Attendees", 16, WHITE, True)]])
+bullets(s, _x1+Inches(0.35), _y+Inches(0.85), _cw-Inches(0.7), Inches(3.3), [('Itiel Gonçalves ', '— VP, Automation & Electrical (Inpasa)'), ('Dan DeYoung ', '— VP & GM, Design & Control'), ("Andrew D'Souza ", '— Director, Software & Control, LATAM'), ('JP Wright ', '— Director, Visualization & Production Data'), ('Brian Widman ', '— PM, Controllers · Chris Stearns — PlantPAx PM'), ('Lúcio Granato ', '— Solution Architect (Brazil team)')], size=13, marker_col=NAVY, gap=10)
 page_num(s)
 
 # ----------------------------------------------------------------------------

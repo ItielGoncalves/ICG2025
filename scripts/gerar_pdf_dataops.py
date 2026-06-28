@@ -181,7 +181,7 @@ paras(0.85, 1.55, 11.6, 0.9,
 cards2 = [
     ("Reunião estratégica", "Encontro Inpasa x Rockwell (26/06) sobre parceria de tecnologia e inovação. Contato: Dan DeYoung (VP & GM, Design & Control).", OPTIX),
     ("Dados em silos", "Cada unidade tem seu PlantPAx adaptado às necessidades e padrões da Inpasa. Não há visão única, nem comparação direta entre as plantas.", AMBER),
-    ("Decisão reativa", "Manutenção parcialmente reativa (TracOS cobre rotativos) e alarmes acima da norma — falta prescritivo e não rotativos.", RED),
+    ("Decisão reativa", "Manutenção parcialmente reativa: o TracOS cobre os rotativos com insight prescritivo. Faltam os alarmes acima da norma e o prescritivo dos equipamentos não rotativos.", RED),
     ("Janela de oportunidade", "Optix e DataMosaix amadureceram em 2026 (SCADA multi-site + Industrial DataOps).", GREEN),
 ]
 cw=2.85; gap=0.2; x0=0.85; y0=2.75; ch=3.0
@@ -200,18 +200,18 @@ page_num(); c.showPage()
 # 2b. REUNIAO ROCKWELL
 # ----------------------------------------------------------------------------
 page_bg(LIGHT)
-header("Parceria estratégica", "Inpasa × Rockwell — leitura da sessão de 26/06/2026", OPTIX)
-paras(0.85, 1.5, 11.6, 0.55, [[R("Encontro executivo no campus da Rockwell (Mayfield Heights, OH). A Inpasa apresentou seus objetivos de automação; a Rockwell trouxe a visão de COI, DataOps e IA industrial.", 14, SLATE)]])
+header("Strategic partnership", "Inpasa × Rockwell — June 26, 2026 session readout", OPTIX)
+paras(0.85, 1.5, 11.6, 0.55, [[R("Executive session at Rockwell's campus (Cleveland, OH). Inpasa presented its automation goals; Rockwell shared its vision for the COI, DataOps and industrial AI.", 14, SLATE)]])
 _x=0.85; _y=2.2; _cw=5.75; _ch=4.3; _g=0.35
 card(_x, _y, _cw, _ch)
 rect(_x, _y, _cw, 0.62, fill=OPTIX, rounded=True, radius=8); rect(_x, _y+0.3, _cw, 0.32, fill=OPTIX)
-paras(_x+0.3, _y+0.13, _cw-0.6, 0.4, [[R("Agenda da sessão", 16, WHITE, True)]])
+paras(_x+0.3, _y+0.13, _cw-0.6, 0.4, [[R("Session agenda", 16, WHITE, True)]])
 bullets(_x+0.35, _y+0.85, _cw-0.7, 3.3, [('Inpasa Goals & Objectives ', '— Itiel Gonçalves'), ('Trusted Partnership & Ecosystem ', "— Andrew D'Souza"), ('Process Characterization & Lab Tour ', '— Ed Walsh'), ('Software Leadership: COI & DataOps ', '— JP Wright'), ('Hardware Leadership: Process Initiative ', '— Brian Widman'), ('Strategic Plan & Executive Wrap-up ', "— Andrew D'Souza")], size=13, marker=OPTIX, gap=10)
 _x1=_x+_cw+_g
 card(_x1, _y, _cw, _ch)
 rect(_x1, _y, _cw, 0.62, fill=NAVY, rounded=True, radius=8); rect(_x1, _y+0.3, _cw, 0.32, fill=NAVY)
-paras(_x1+0.3, _y+0.13, _cw-0.6, 0.4, [[R("Quem participou", 16, WHITE, True)]])
-bullets(_x1+0.35, _y+0.85, _cw-0.7, 3.3, [('Itiel Gonçalves ', '— VP Automação & Elétrica (Inpasa)'), ('Dan DeYoung ', '— VP & GM, Design & Control'), ("Andrew D'Souza ", '— Diretor Software & Control, LATAM'), ('JP Wright ', '— Diretor Visualization & Production Data'), ('Brian Widman ', '— PM Controllers · Chris Stearns — PlantPAx PM'), ('Lúcio Granato ', '— Solution Architect (time Brasil)')], size=13, marker=NAVY, gap=10)
+paras(_x1+0.3, _y+0.13, _cw-0.6, 0.4, [[R("Attendees", 16, WHITE, True)]])
+bullets(_x1+0.35, _y+0.85, _cw-0.7, 3.3, [('Itiel Gonçalves ', '— VP, Automation & Electrical (Inpasa)'), ('Dan DeYoung ', '— VP & GM, Design & Control'), ("Andrew D'Souza ", '— Director, Software & Control, LATAM'), ('JP Wright ', '— Director, Visualization & Production Data'), ('Brian Widman ', '— PM, Controllers · Chris Stearns — PlantPAx PM'), ('Lúcio Granato ', '— Solution Architect (Brazil team)')], size=13, marker=NAVY, gap=10)
 page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
