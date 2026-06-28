@@ -181,7 +181,7 @@ paras(0.85, 1.55, 11.6, 0.9,
         R("Os dados existem — mas vivem isolados dentro de cada planta.", 16, NAVY, True)]])
 cards2 = [
     ("Reunião estratégica", "Encontro Inpasa x Rockwell (26/06) sobre parceria de tecnologia e inovação. Contato: Dan DeYoung (VP & GM, Design & Control).", OPTIX),
-    ("Dados em silos", "Cada unidade tem seu PlantPAx. Não há visão única nem comparação direta entre plantas.", AMBER),
+    ("Dados em silos", "Cada unidade tem seu PlantPAx adaptado às necessidades e padrões da Inpasa. Não há visão única, nem comparação direta entre as plantas.", AMBER),
     ("Decisão reativa", "Manutenção parcialmente reativa (TracOS cobre rotativos) e alarmes acima da norma — falta prescritivo e não rotativos.", RED),
     ("Janela de oportunidade", "Optix e DataMosaix amadureceram em 2026 (SCADA multi-site + Industrial DataOps).", GREEN),
 ]
