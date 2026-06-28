@@ -6,30 +6,41 @@
 > mensagem para o Itiel validar** se está dentro da linha antes de considerá-la
 > pronta.
 
-## José Luís ("Senhor José")
+> **Atenção — não confundir as pessoas:**
+> - **Sr. José = José Lopez** (chefe do Itiel; **presidente e dono da Inpasa**).
+> - **Éder** (filho do Sr. José / José Lopez; há ~1 ano **CEO da Inpasa**).
+> - **José Luís** é o **mentor** do Itiel — pessoa **distinta** do Sr. José.
+
+## Sr. José (José Lopez) — presidente e dono da Inpasa; chefe do Itiel
 
 - **Estilo:** objetivo e voltado a **resultado**.
 - **O que valoriza:** entender o **resultado** de forma clara; **objetividade**.
 - **Como escrever:** direto ao ponto, foco em números/resultados/conclusão,
   sem rodeios. Cortar floreios e contexto desnecessário.
 
-## Éder
+## Éder — filho do Sr. José; CEO da Inpasa (há ~1 ano)
 
 - **Estilo:** sensível a **relacionamento** e **posicionamento**.
 - **O que valoriza:** **status**, **posicionamento**, e **valores** como
   **família** (e assuntos relacionados).
 - **Como escrever:** cuidar do tom e do posicionamento, reconhecer status,
-  abrir espaço para valores pessoais/familiares; menos cru que para o José.
+  abrir espaço para valores pessoais/familiares; menos cru que para o Sr. José.
+
+## José Luís — mentor do Itiel
+
+- Pessoa **distinta** do Sr. José. Perfil de comunicação ainda **em aberto**.
+- O Itiel vai conversar com ele e trazer detalhes para definir o perfil aqui.
 
 ## Fluxo obrigatório ao gerar mensagem para um deles
 
 1. Identificar o destinatário e aplicar o perfil correspondente.
 2. Redigir a mensagem na linha do perfil.
 3. **Sempre apresentar ao Itiel para validação** ("essa mensagem está na linha
-   do [José Luís / Éder]?") antes de tratar como final.
+   do [Sr. José / Éder / José Luís]?") antes de tratar como final.
 
-> Perfis em aberto: o Itiel pode acrescentar mais detalhes (vai conversar com o
-> José Luís e avisa). Atualizar esta seção quando trouxer novas informações.
+> Perfis em aberto: o Itiel pode acrescentar mais detalhes (ex.: vai conversar
+> com o José Luís e avisa). Atualizar esta seção quando trouxer novas
+> informações.
 
 ---
 
