@@ -43,8 +43,13 @@ BLANK = prs.slide_layouts[6]
 # ----------------------------------------------------------------------------
 # Helpers
 # ----------------------------------------------------------------------------
+PG=[0]
 def slide():
+    PG[0]+=1
     return prs.slides.add_slide(BLANK)
+
+def picture(s, path, x, y, w, h):
+    return s.shapes.add_picture(path, x, y, width=w, height=h)
 
 def bg(s, color):
     s.background.fill.solid()
@@ -127,9 +132,9 @@ def header(s, kicker, title, accent=GREEN):
     txt(s, Inches(0.85), Inches(0.55), Inches(11.9), Inches(0.6),
         [[R(title, 25, NAVY, True)]])
 
-def page_num(s, n):
+def page_num(s):
     txt(s, Inches(12.4), Inches(7.05), Inches(0.8), Inches(0.3),
-        [[R(str(n), 10, GRAY, False)]], align=PP_ALIGN.RIGHT)
+        [[R(str(PG[0]), 10, GRAY, False)]], align=PP_ALIGN.RIGHT)
     txt(s, Inches(0.85), Inches(7.05), Inches(6), Inches(0.3),
         [[R("Inpasa  ·  Gestão Estratégica de Automação", 9, GRAY, False)]])
 
@@ -163,9 +168,11 @@ txt(s, Inches(0.92), Inches(3.95), Inches(11.0), Inches(1.0),
       R("PlantPAx + TracOS", 19, AMBER, True)]])
 # linha divisoria
 rect(s, Inches(0.95), Inches(5.15), Inches(6.4), Pt(1.5), fill=RGBColor(0x35,0x52,0x70))
-txt(s, Inches(0.95), Inches(5.35), Inches(11), Inches(1.2),
-    [[R("Apresentado a:  ", 14, GRAY, False), R("Sr. José  e  Éder", 14, WHITE, True)],
-     [R("Centro de Operações Integradas (COI)  ·  Benchmarking entre plantas  ·  Manutenção prescritiva", 13, GRAY, False)]])
+txt(s, Inches(0.95), Inches(5.2), Inches(11.6), Inches(1.5),
+    [[R("Apresentado a:  ", 14, GRAY, False), R("Sr. José  e  Éder", 14, WHITE, True),
+      R("      por  ", 14, GRAY, False), R("Itiel Gonçalves · VP Automação & Elétrica", 14, WHITE, True)],
+     [R("Centro de Operações Integradas (COI)  ·  Benchmarking entre plantas  ·  Manutenção prescritiva", 13, GRAY, False)],
+     [R("Base: sessão estratégica Inpasa × Rockwell  ·  Mayfield Heights, OH  ·  26/06/2026", 12.5, RGBColor(0x8F,0xA9,0xC2), False)]])
 txt(s, Inches(9.8), Inches(6.75), Inches(2.7), Inches(0.4),
     [[R("2026.06.28  ·  MULTI  ·  v02", 12, GRAY, True)]], align=PP_ALIGN.RIGHT)
 
@@ -180,7 +187,7 @@ txt(s, Inches(0.85), Inches(1.55), Inches(11.6), Inches(0.9),
       R(" (Sinop, Nova Mutum, Dourados, Balsas, Sidrolândia e novas plantas). ", 16, SLATE, False),
       R("Os dados existem — mas vivem isolados dentro de cada planta.", 16, NAVY, True)]])
 cards = [
-    ("Reunião estratégica", "Encontro Inpasa x Rockwell (26/06) sobre parceria de tecnologia e inovação. Contato: Dan DeYoung (VP executivo).", OPTIX),
+    ("Reunião estratégica", "Encontro Inpasa x Rockwell (26/06) sobre parceria de tecnologia e inovação. Contato: Dan DeYoung (VP & GM, Design & Control).", OPTIX),
     ("Dados em silos", "Cada unidade tem seu PlantPAx. Não há visão única nem comparação direta entre plantas.", AMBER),
     ("Decisão reativa", "Manutenção parcialmente reativa (TracOS cobre rotativos) e alarmes acima da norma — falta prescritivo e não rotativos.", RED),
     ("Janela de oportunidade", "Optix e DataMosaix amadureceram em 2026 (SCADA multi-site + Industrial DataOps).", GREEN),
@@ -197,7 +204,26 @@ for i,(t,d,c) in enumerate(cards):
 txt(s, Inches(0.85), Inches(6.1), Inches(11.6), Inches(0.7),
     [[R("Pergunta central:  ", 15, NAVY, True),
       R("como transformar o dado que já geramos em decisão executiva, comparável entre plantas e antecipada por IA?", 15, SLATE, False, True)]])
-page_num(s, 2)
+page_num(s)
+
+# ----------------------------------------------------------------------------
+# 2b. REUNIAO ESTRATEGICA INPASA x ROCKWELL
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Parceria estratégica", "Inpasa × Rockwell — leitura da sessão de 26/06/2026", OPTIX)
+txt(s, Inches(0.85), Inches(1.5), Inches(11.6), Inches(0.55),
+    [[R("Encontro executivo no campus da Rockwell (Mayfield Heights, OH). A Inpasa apresentou seus objetivos de automação; a Rockwell trouxe a visão de COI, DataOps e IA industrial.", 14, SLATE, False)]])
+_x=Inches(0.85); _y=Inches(2.2); _cw=Inches(5.75); _ch=Inches(4.3); _g=Inches(0.35)
+rect(s, _x, _y, _cw, _ch, fill=CARD, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
+rect(s, _x, _y, _cw, Inches(0.62), fill=OPTIX, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+txt(s, _x+Inches(0.3), _y+Inches(0.13), _cw-Inches(0.6), Inches(0.4), [[R("Agenda da sessão", 16, WHITE, True)]])
+bullets(s, _x+Inches(0.35), _y+Inches(0.85), _cw-Inches(0.7), Inches(3.3), [('Inpasa Goals & Objectives ', '— Itiel Gonçalves'), ('Trusted Partnership & Ecosystem ', "— Andrew D'Souza"), ('Process Characterization & Lab Tour ', '— Ed Walsh'), ('Software Leadership: COI & DataOps ', '— JP Wright'), ('Hardware Leadership: Process Initiative ', '— Brian Widman'), ('Strategic Plan & Executive Wrap-up ', "— Andrew D'Souza")], size=13, marker_col=OPTIX, gap=10)
+_x1=_x+_cw+_g
+rect(s, _x1, _y, _cw, _ch, fill=CARD, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
+rect(s, _x1, _y, _cw, Inches(0.62), fill=NAVY, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+txt(s, _x1+Inches(0.3), _y+Inches(0.13), _cw-Inches(0.6), Inches(0.4), [[R("Quem participou", 16, WHITE, True)]])
+bullets(s, _x1+Inches(0.35), _y+Inches(0.85), _cw-Inches(0.7), Inches(3.3), [('Itiel Gonçalves ', '— VP Automação & Elétrica (Inpasa)'), ('Dan DeYoung ', '— VP & GM, Design & Control'), ("Andrew D'Souza ", '— Diretor Software & Control, LATAM'), ('JP Wright ', '— Diretor Visualization & Production Data'), ('Brian Widman ', '— PM Controllers · Chris Stearns — PlantPAx PM'), ('Lúcio Granato ', '— Solution Architect (time Brasil)')], size=13, marker_col=NAVY, gap=10)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 3. ONDE ESTAMOS HOJE (PlantPAx + TracOS)
@@ -233,7 +259,7 @@ txt(s, Inches(0.85), Inches(5.7), Inches(11.6), Inches(1.0),
     [[R("Resumo:  ", 15, NAVY, True),
       R("temos dados ricos e uma base Rockwell robusta. O que falta não é coletar — e ", 14.5, SLATE, False),
       R("contextualizar, comparar entre plantas e antecipar com IA.", 14.5, NAVY, True)]])
-page_num(s, 3)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 4. A LACUNA
@@ -259,7 +285,7 @@ for i,(t,d) in enumerate(gaps):
         [[R(t, 18, NAVY, True)]])
     txt(s, x+Inches(0.32), y+Inches(1.05), cw-Inches(0.64), Inches(1.2),
         [[R(d, 13.5, SLATE, False)]])
-page_num(s, 4)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 5. ARQUITETURA PROPOSTA (camadas)
@@ -291,7 +317,7 @@ for i,(n,t,d,c) in enumerate(layers):
 arrow = rect(s, x0+lw+Inches(0.25), y0, Inches(0.7), lh*4+gap*3, fill=GREEN, shape=MSO_SHAPE.UP_ARROW)
 txt(s, x0+lw+Inches(0.05), y0+lh*4+gap*3+Inches(0.05), Inches(1.1), Inches(0.4),
     [[R("valor", 11, GREEN, True)]], align=PP_ALIGN.CENTER)
-page_num(s, 5)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 6. FACTORYTALK OPTIX + RESILIENTEDGE
@@ -317,7 +343,20 @@ for i,(t,d) in enumerate(feats):
     txt(s,x+Inches(0.32),y+Inches(0.72),cw-Inches(0.6),Inches(0.95),[[R(d,13,SLATE,False)]])
 chip(s, Inches(0.85), Inches(6.35), "Para a Inpasa: o caminho natural do COI centralizado multi-planta",
      fill=OPTIX, w=Inches(7.6), h=Inches(0.5), size=13)
-page_num(s, 6)
+page_num(s)
+
+# ----------------------------------------------------------------------------
+# 6b. OPTIX AI DESIGN ASSISTANCE (imagem)
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Camada de execução · FactoryTalk Optix", "Optix AI Design Assistance — HMI assistido por IA", OPTIX)
+txt(s, Inches(0.85), Inches(1.45), Inches(11.6), Inches(0.45),
+    [[R("Projetar e implantar telas com apoio de IA: do rascunho à aplicação funcional.", 14, SLATE, False)]])
+rect(s, Inches(2.66), Inches(1.87), Inches(8.02), Inches(4.56), fill=WHITE, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
+picture(s, "assets/optix_ai_design.png", Inches(2.76), Inches(1.95), Inches(7.82), Inches(4.4))
+txt(s, Inches(0.85), Inches(6.55), Inches(11.6), Inches(0.5),
+    [[R("Gera telas a partir de Figma, foto ou rascunho à mão; conteúdo por texto conversacional; auto-geração de modelos e conectividade — releases v1.8 a v1.9 (2026).", 12.5, GRAY, False)]], align=PP_ALIGN.CENTER)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 7. FACTORYTALK DATAMOSAIX + ATLAS AI
@@ -346,7 +385,20 @@ for i,(t,d,ex) in enumerate(feats):
     txt(s,x0+Inches(0.32),y+Inches(0.45),w-Inches(0.7),Inches(0.26),[[R(d,12.5,SLATE,False)]])
     txt(s,x0+Inches(0.32),y+Inches(0.72),w-Inches(0.7),Inches(0.38),
         [[R("Ex. Inpasa:  ", 12, AMBER_DK, True, True), R(ex, 12, SLATE, False, True)]])
-page_num(s, 7)
+page_num(s)
+
+# ----------------------------------------------------------------------------
+# 7b. DATAMOSAIX ATLAS AI (imagem)
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Camada de DataOps + IA · FactoryTalk DataMosaix", "DataMosaix Atlas AI — agentes autônomos na operação", AMBER)
+txt(s, Inches(0.85), Inches(1.45), Inches(11.6), Inches(0.45),
+    [[R("Inteligência humana e agentes autônomos atuando em conjunto na operação industrial.", 14, SLATE, False)]])
+rect(s, Inches(2.66), Inches(1.87), Inches(8.02), Inches(4.56), fill=WHITE, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
+picture(s, "assets/datamosaix_atlas_ai.png", Inches(2.76), Inches(1.95), Inches(7.82), Inches(4.4))
+txt(s, Inches(0.85), Inches(6.55), Inches(11.6), Inches(0.5),
+    [[R("Agentes que decidem e agem com base em metas de negócio para aumentar produção e eliminar paradas, desperdício e risco; gêmeo digital que se aprimora continuamente.", 12.5, GRAY, False)]], align=PP_ALIGN.CENTER)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 8. COMPARATIVO HOJE vs PROPOSTO (tabela)
@@ -389,7 +441,7 @@ for ri,row in enumerate(rows):
         rr.font.name="Calibri"
         x += colw[ci]
     y += rh
-page_num(s, 8)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 9. ALARMES ISA-18.2 (grafico)
@@ -431,7 +483,7 @@ bullets(s, Inches(7.55), Inches(2.65), Inches(5.0), Inches(3.2), [
     "~70% dos alarmes em DCS/SCADA típicos são nuisance (não exigem ação).",
     ("Grafana (já implantado) ", "trata nuisance alarms, bad actors e alarm floods sobre o PlantPAx adaptado — base que já operamos hoje."),
 ], size=13.5, marker_col=RED, gap=11)
-page_num(s, 9)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 10. KPIs DE BENCHMARKING (tabela)
@@ -472,7 +524,7 @@ for ri,row in enumerate(rows):
     y+=rh
 txt(s, Inches(0.85), Inches(6.75), Inches(11.6), Inches(0.4),
     [[R("Quase tudo já existe no dado atual — falta a camada que agrega e compara: o DataMosaix.", 13, GRAY, False, True)]])
-page_num(s, 10)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 11. O QUE O DATAMOSAIX ADICIONA
@@ -500,7 +552,7 @@ for i,(t,d) in enumerate(adds):
     rect(s,x,y0,cw,Inches(0.1),fill=AMBER,shape=MSO_SHAPE.ROUNDED_RECTANGLE)
     txt(s,x+Inches(0.25),y0+Inches(0.38),cw-Inches(0.5),Inches(0.85),[[R(t,16.5,WHITE,True)]])
     txt(s,x+Inches(0.25),y0+Inches(1.2),cw-Inches(0.5),Inches(1.6),[[R(d,12.5,RGBColor(0xB9,0xCA,0xDB),False)]])
-page_num(s, 11)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 12. CASOS DE USO NO COI (Inpasa)
@@ -523,7 +575,7 @@ for i,(t,d,c) in enumerate(cases):
     rb=tfb.paragraphs[0].add_run(); rb.text=str(i+1); rb.font.bold=True; rb.font.size=Pt(20); rb.font.color.rgb=WHITE; rb.font.name="Calibri"
     txt(s,x+Inches(1.1),y+Inches(0.35),cw-Inches(1.45),Inches(0.9),[[R(t,17,NAVY,True)]])
     txt(s,x+Inches(0.32),y+Inches(1.08),cw-Inches(0.64),Inches(1.15),[[R(d,12.5,SLATE,False)]])
-page_num(s, 12)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 13. ROADMAP / DISPONIBILIDADE
@@ -546,7 +598,7 @@ for i,(l1,l2,d,c) in enumerate(phases):
         rect(s,x+cw-Inches(0.05),y0+ch/2-Inches(0.2),Inches(0.4),Inches(0.4),fill=c,shape=MSO_SHAPE.CHEVRON)
 chip(s, Inches(0.85), Inches(5.7), "ResilientEdge: disponível global desde 18/06/2026  ·  SCADA multi-site em rollout 2026",
      fill=NAVY, w=Inches(9.0), h=Inches(0.5), size=13)
-page_num(s, 13)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 14. PROXIMOS PASSOS
@@ -556,7 +608,7 @@ header(s, "Decisão", "O que pedimos para avançar", GREEN)
 steps = [
     ("Aprovar o piloto", """Começar por 1–2 indicadores em todas as plantas (ex.: controles em automático e índice de alarmes/operador·hora), ampliando depois para os demais. Estimativa: ~4–6 semanas para os 2 primeiros, conforme o volume de tags por unidade."""),
     ("Sequência de indicadores", """Controles em automático e índice de alarmes primeiro; depois blocos em programa, interlocks desabilitados e variáveis simuladas."""),
-    ("Interlocutores Rockwell", """Dan DeYoung — VP executivo; Lúcio — gerente de sistemas avançados (Brasil); Devair — gerente de atendimento Inpasa; Marcel — eng. sênior de sistemas avançados."""),
+    ("Interlocutores Rockwell", """Time EUA: Andrew D'Souza (Software & Control LATAM), JP Wright (Visualization & Production Data), Brian Widman (Controllers), Chris Stearns (PlantPAx). Time Brasil: Lúcio Granato e Marcel. Anfitrião: Dan DeYoung (VP & GM, Design & Control)."""),
     ("Designar squad interno", """Gestores e equipe do Hub de Automação conduzindo os fluxos no-code do DataMosaix."""),
 ]
 y0=Inches(1.7); rh=Inches(1.24); x0=Inches(0.85); w=Inches(11.6)
@@ -568,7 +620,7 @@ for i,(t,d) in enumerate(steps):
     rb=tfb.paragraphs[0].add_run(); rb.text=str(i+1); rb.font.bold=True; rb.font.size=Pt(18); rb.font.color.rgb=WHITE; rb.font.name="Calibri"
     txt(s,x0+Inches(1.1),y+Inches(0.16),w-Inches(1.4),Inches(0.45),[[R(t,16,NAVY,True)]])
     txt(s,x0+Inches(1.1),y+Inches(0.6),w-Inches(1.4),Inches(0.6),[[R(d,12,SLATE,False)]])
-page_num(s, 14)
+page_num(s)
 
 # ----------------------------------------------------------------------------
 # 15. ENCERRAMENTO

@@ -13,6 +13,7 @@ from reportlab.platypus import Paragraph, Frame
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
 from reportlab.lib.colors import HexColor
+from reportlab.lib.utils import ImageReader
 
 IN = 72.0
 PW, PH = 13.333, 7.5            # polegadas
@@ -119,16 +120,21 @@ def header(kicker, title, accent=GREEN):
     paras(0.85, 0.30, 11.6, 0.3, [[R(kicker.upper(), 11.5, accent, True)]])
     paras(0.85, 0.55, 11.9, 0.6, [[R(title, 25, NAVY, True)]])
 
-def page_num(n):
-    paras(11.6, 7.05, 0.93, 0.3, [[R(str(n), 10, GRAY)]], align=TA_RIGHT)
+def page_num():
+    paras(11.6, 7.05, 0.93, 0.3, [[R(str(PG[0]), 10, GRAY)]], align=TA_RIGHT)
     paras(0.85, 7.05, 7, 0.3, [[R("Inpasa  ·  Gestão Estratégica de Automação", 9, GRAY)]])
 
 def chip(x, y, label, fill, tcol=WHITE, w=1.9, h=0.34, size=11):
     rect(x, y, w, h, fill=fill, rounded=True, radius=h*IN/2)
     paras(x, y, w, h, [[R(label, size, tcol, True)]], align=TA_CENTER, anchor='middle')
 
+PG=[0]
 def page_bg(color):
+    PG[0]+=1
     rect(0, 0, PW, PH, fill=color)
+
+def picture(path, x, y, w, h):
+    c.drawImage(ImageReader(path), x*IN, (PH-y-h)*IN, w*IN, h*IN, mask='auto')
 
 # ----------------------------------------------------------------------------
 # 1. CAPA
@@ -146,9 +152,10 @@ paras(0.92, 3.95, 11.0, 1.0,
         R("  vs.  ", 19, COVER_SUB),
         R("PlantPAx + TracOS", 19, AMBER, True)]])
 rect(0.95, 5.15, 6.4, 1.5/IN, fill=DIVIDER)
-paras(0.95, 5.35, 11, 1.2,
-      [[R("Apresentado a:  ", 14, GRAY), R("Sr. José  e  Éder", 14, WHITE, True)],
-       [R("Centro de Operações Integradas (COI)  ·  Benchmarking entre plantas  ·  Manutenção prescritiva", 13, GRAY)]],
+paras(0.95, 5.2, 11.6, 1.5,
+      [[R("Apresentado a:  ", 14, GRAY), R("Sr. José  e  Éder", 14, WHITE, True), R("      por  ", 14, GRAY), R("Itiel Gonçalves · VP Automação & Elétrica", 14, WHITE, True)],
+       [R("Centro de Operações Integradas (COI)  ·  Benchmarking entre plantas  ·  Manutenção prescritiva", 13, GRAY)],
+       [R("Base: sessão estratégica Inpasa × Rockwell  ·  Mayfield Heights, OH  ·  26/06/2026", 12.5, "#8FA9C2")]],
       space_after=5)
 paras(9.6, 6.75, 2.9, 0.4, [[R("2026.06.28  ·  MULTI  ·  v02", 12, GRAY, True)]], align=TA_RIGHT)
 c.showPage()
@@ -164,7 +171,7 @@ paras(0.85, 1.55, 11.6, 0.9,
         R(" (Sinop, Nova Mutum, Dourados, Balsas, Sidrolândia e novas plantas). ", 16, SLATE),
         R("Os dados existem — mas vivem isolados dentro de cada planta.", 16, NAVY, True)]])
 cards2 = [
-    ("Reunião estratégica", "Encontro Inpasa x Rockwell (26/06) sobre parceria de tecnologia e inovação. Contato: Dan DeYoung (VP executivo).", OPTIX),
+    ("Reunião estratégica", "Encontro Inpasa x Rockwell (26/06) sobre parceria de tecnologia e inovação. Contato: Dan DeYoung (VP & GM, Design & Control).", OPTIX),
     ("Dados em silos", "Cada unidade tem seu PlantPAx. Não há visão única nem comparação direta entre plantas.", AMBER),
     ("Decisão reativa", "Manutenção parcialmente reativa (TracOS cobre rotativos) e alarmes acima da norma — falta prescritivo e não rotativos.", RED),
     ("Janela de oportunidade", "Optix e DataMosaix amadureceram em 2026 (SCADA multi-site + Industrial DataOps).", GREEN),
@@ -179,7 +186,25 @@ for i,(t,d,col) in enumerate(cards2):
 paras(0.85, 6.1, 11.6, 0.7,
       [[R("Pergunta central:  ", 15, NAVY, True),
         R("como transformar o dado que já geramos em decisão executiva, comparável entre plantas e antecipada por IA?", 15, SLATE, False, True)]])
-page_num(2); c.showPage()
+page_num(); c.showPage()
+
+# ----------------------------------------------------------------------------
+# 2b. REUNIAO ROCKWELL
+# ----------------------------------------------------------------------------
+page_bg(LIGHT)
+header("Parceria estratégica", "Inpasa × Rockwell — leitura da sessão de 26/06/2026", OPTIX)
+paras(0.85, 1.5, 11.6, 0.55, [[R("Encontro executivo no campus da Rockwell (Mayfield Heights, OH). A Inpasa apresentou seus objetivos de automação; a Rockwell trouxe a visão de COI, DataOps e IA industrial.", 14, SLATE)]])
+_x=0.85; _y=2.2; _cw=5.75; _ch=4.3; _g=0.35
+card(_x, _y, _cw, _ch)
+rect(_x, _y, _cw, 0.62, fill=OPTIX, rounded=True, radius=8); rect(_x, _y+0.3, _cw, 0.32, fill=OPTIX)
+paras(_x+0.3, _y+0.13, _cw-0.6, 0.4, [[R("Agenda da sessão", 16, WHITE, True)]])
+bullets(_x+0.35, _y+0.85, _cw-0.7, 3.3, [('Inpasa Goals & Objectives ', '— Itiel Gonçalves'), ('Trusted Partnership & Ecosystem ', "— Andrew D'Souza"), ('Process Characterization & Lab Tour ', '— Ed Walsh'), ('Software Leadership: COI & DataOps ', '— JP Wright'), ('Hardware Leadership: Process Initiative ', '— Brian Widman'), ('Strategic Plan & Executive Wrap-up ', "— Andrew D'Souza")], size=13, marker=OPTIX, gap=10)
+_x1=_x+_cw+_g
+card(_x1, _y, _cw, _ch)
+rect(_x1, _y, _cw, 0.62, fill=NAVY, rounded=True, radius=8); rect(_x1, _y+0.3, _cw, 0.32, fill=NAVY)
+paras(_x1+0.3, _y+0.13, _cw-0.6, 0.4, [[R("Quem participou", 16, WHITE, True)]])
+bullets(_x1+0.35, _y+0.85, _cw-0.7, 3.3, [('Itiel Gonçalves ', '— VP Automação & Elétrica (Inpasa)'), ('Dan DeYoung ', '— VP & GM, Design & Control'), ("Andrew D'Souza ", '— Diretor Software & Control, LATAM'), ('JP Wright ', '— Diretor Visualization & Production Data'), ('Brian Widman ', '— PM Controllers · Chris Stearns — PlantPAx PM'), ('Lúcio Granato ', '— Solution Architect (time Brasil)')], size=13, marker=NAVY, gap=10)
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 3. HOJE
@@ -212,7 +237,7 @@ paras(0.85, 5.7, 11.6, 1.0,
       [[R("Resumo:  ", 15, NAVY, True),
         R("temos dados ricos e uma base Rockwell robusta. O que falta não é coletar — e ", 14.5, SLATE),
         R("contextualizar, comparar entre plantas e antecipar com IA.", 14.5, NAVY, True)]])
-page_num(3); c.showPage()
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 4. LACUNAS
@@ -233,7 +258,7 @@ for i,(t,d) in enumerate(gaps):
     paras(x+0.3, y+0.3, 0.55, 0.55, [[R(str(i+1), 18, WHITE, True)]], align=TA_CENTER, anchor='middle')
     paras(x+1.05, y+0.33, cw-1.4, 0.5, [[R(t, 18, NAVY, True)]])
     paras(x+0.32, y+1.05, cw-0.64, 1.2, [[R(d, 13.5, SLATE)]])
-page_num(4); c.showPage()
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 5. ARQUITETURA
@@ -269,7 +294,7 @@ for (xx,yy) in pts[1:]:
 p.close()
 c.setFillColor(HexColor(GREEN)); c.drawPath(p, stroke=0, fill=1)
 paras(x0+lw+0.05, y0+ah+0.05, 1.1, 0.4, [[R("valor", 11, GREEN, True)]], align=TA_CENTER)
-page_num(5); c.showPage()
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 6. OPTIX
@@ -293,7 +318,18 @@ for i,(t,d) in enumerate(feats6):
     paras(x+0.32, y+0.2, cw-0.6, 0.5, [[R(t, 16, OPTIX_DK, True)]])
     paras(x+0.32, y+0.72, cw-0.6, 0.95, [[R(d, 13, SLATE)]])
 chip(0.85, 6.35, "Para a Inpasa: o caminho natural do COI centralizado multi-planta", fill=OPTIX, w=7.6, h=0.5, size=13)
-page_num(6); c.showPage()
+page_num(); c.showPage()
+
+# ----------------------------------------------------------------------------
+# 6b. OPTIX AI DESIGN (imagem)
+# ----------------------------------------------------------------------------
+page_bg(LIGHT)
+header("Camada de execução · FactoryTalk Optix", "Optix AI Design Assistance — HMI assistido por IA", OPTIX)
+paras(0.85, 1.45, 11.6, 0.45, [[R("Projetar e implantar telas com apoio de IA: do rascunho à aplicação funcional.", 14, SLATE)]])
+card(2.66, 1.87, 8.02, 4.56, fill=WHITE)
+picture("assets/optix_ai_design.png", 2.76, 1.95, 7.82, 4.4)
+paras(0.85, 6.55, 11.6, 0.5, [[R("Gera telas a partir de Figma, foto ou rascunho à mão; conteúdo por texto conversacional; auto-geração de modelos e conectividade — releases v1.8 a v1.9 (2026).", 12.5, GRAY)]], align=TA_CENTER)
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 7. DATAMOSAIX
@@ -321,7 +357,18 @@ for i,(t,d,ex) in enumerate(feats7):
     paras(x0d+0.32, y+0.12, wd-0.7, 0.32, [[R(t, 16, AMBER_DK, True)]])
     paras(x0d+0.32, y+0.45, wd-0.7, 0.26, [[R(d, 12.5, SLATE)]])
     paras(x0d+0.32, y+0.72, wd-0.7, 0.40, [[R("Ex. Inpasa:  ", 12, AMBER_DK, True, True), R(ex, 12, SLATE, False, True)]])
-page_num(7); c.showPage()
+page_num(); c.showPage()
+
+# ----------------------------------------------------------------------------
+# 7b. DATAMOSAIX ATLAS AI (imagem)
+# ----------------------------------------------------------------------------
+page_bg(LIGHT)
+header("Camada de DataOps + IA · FactoryTalk DataMosaix", "DataMosaix Atlas AI — agentes autônomos na operação", AMBER)
+paras(0.85, 1.45, 11.6, 0.45, [[R("Inteligência humana e agentes autônomos atuando em conjunto na operação industrial.", 14, SLATE)]])
+card(2.66, 1.87, 8.02, 4.56, fill=WHITE)
+picture("assets/datamosaix_atlas_ai.png", 2.76, 1.95, 7.82, 4.4)
+paras(0.85, 6.55, 11.6, 0.5, [[R("Agentes que decidem e agem com base em metas de negócio para aumentar produção e eliminar paradas, desperdício e risco; gêmeo digital que se aprimora continuamente.", 12.5, GRAY)]], align=TA_CENTER)
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 8. COMPARATIVO (tabela)
@@ -356,7 +403,7 @@ for ri,row in enumerate(rows):
               [[R(cell, 13.5 if head else 13, tcol, bold)]], anchor='middle')
         x+=colw[ci]
     y+=rh
-page_num(8); c.showPage()
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 9. ALARMES ISA-18.2 (grafico desenhado)
@@ -392,7 +439,7 @@ bullets(7.55, 2.65, 5.0, 3.2, [
     "~70% dos alarmes em DCS/SCADA típicos são nuisance (não exigem ação).",
     ("Grafana (já implantado) ", "trata nuisance alarms, bad actors e alarm floods sobre o PlantPAx adaptado — base que já operamos hoje."),
 ], size=13.5, marker=RED, gap=11)
-page_num(9); c.showPage()
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 10. KPIs (tabela)
@@ -428,7 +475,7 @@ for ri,row in enumerate(rows):
     y+=rh
 paras(0.85, 6.75, 11.6, 0.4,
       [[R("Quase tudo já existe no dado atual — falta a camada que agrega e compara: o DataMosaix.", 13, GRAY, False, True)]])
-page_num(10); c.showPage()
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 11. O DELTA
@@ -454,7 +501,7 @@ for i,(t,d) in enumerate(adds):
     rect(x, y0, cw, 0.1, fill=AMBER, rounded=True, radius=3)
     paras(x+0.25, y0+0.38, cw-0.5, 0.85, [[R(t, 16.5, WHITE, True)]])
     paras(x+0.25, y0+1.2, cw-0.5, 1.6, [[R(d, 12.5, LAYER_DESC)]])
-page_num(11); c.showPage()
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 12. CASOS DE USO COI
@@ -475,7 +522,7 @@ for i,(t,d,col) in enumerate(cases):
     paras(x+0.3, y+0.3, 0.6, 0.6, [[R(str(i+1), 20, WHITE, True)]], align=TA_CENTER, anchor='middle')
     paras(x+1.1, y+0.35, cw-1.45, 0.9, [[R(t, 17, NAVY, True)]])
     paras(x+0.32, y+1.08, cw-0.64, 1.15, [[R(d, 12.5, SLATE)]])
-page_num(12); c.showPage()
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 13. ROADMAP
@@ -502,7 +549,7 @@ for i,(l1,l2,d,col) in enumerate(phases):
         pth.lineTo((mx+0.28)*IN,(PH-my)*IN); pth.close()
         c.setFillColor(HexColor(col)); c.drawPath(pth, stroke=0, fill=1)
 chip(0.85, 5.7, "ResilientEdge: disponível global desde 18/06/2026  ·  SCADA multi-site em rollout 2026", fill=NAVY, w=9.0, h=0.5, size=13)
-page_num(13); c.showPage()
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 14. PROXIMOS PASSOS
@@ -512,7 +559,7 @@ header("Decisão", "O que pedimos para avançar", GREEN)
 steps = [
     ("Aprovar o piloto", """Começar por 1–2 indicadores em todas as plantas (ex.: controles em automático e índice de alarmes/operador·hora), ampliando depois para os demais. Estimativa: ~4–6 semanas para os 2 primeiros, conforme o volume de tags por unidade."""),
     ("Sequência de indicadores", """Controles em automático e índice de alarmes primeiro; depois blocos em programa, interlocks desabilitados e variáveis simuladas."""),
-    ("Interlocutores Rockwell", """Dan DeYoung — VP executivo; Lúcio — gerente de sistemas avançados (Brasil); Devair — gerente de atendimento Inpasa; Marcel — eng. sênior de sistemas avançados."""),
+    ("Interlocutores Rockwell", """Time EUA: Andrew D'Souza (Software & Control LATAM), JP Wright (Visualization & Production Data), Brian Widman (Controllers), Chris Stearns (PlantPAx). Time Brasil: Lúcio Granato e Marcel. Anfitrião: Dan DeYoung (VP & GM, Design & Control)."""),
     ("Designar squad interno", """Gestores e equipe do Hub de Automação conduzindo os fluxos no-code do DataMosaix."""),
 ]
 y0=1.7; rh=1.24; x0=0.85; w=11.6
@@ -523,7 +570,7 @@ for i,(t,d) in enumerate(steps):
     paras(x0+0.3, y+0.34, 0.55, 0.55, [[R(str(i+1), 18, WHITE, True)]], align=TA_CENTER, anchor='middle')
     paras(x0+1.1, y+0.16, w-1.4, 0.45, [[R(t, 16, NAVY, True)]])
     paras(x0+1.1, y+0.6, w-1.4, 0.6, [[R(d, 12, SLATE)]])
-page_num(14); c.showPage()
+page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 15. ENCERRAMENTO
