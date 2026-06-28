@@ -316,9 +316,9 @@ page_bg(LIGHT)
 header("Camada de execução", "FactoryTalk Optix + ResilientEdge", OPTIX)
 paras(0.85, 1.5, 11.6, 0.7,
       [[R("De HMI para a ", 16, SLATE), R("base de execução inteligente", 16, OPTIX, True),
-        R(" da Rockwell: HMI/SCADA cloud-enabled, projetada e implantada pelo navegador.", 16, SLATE)]])
+        R(" da Rockwell: HMI e dados na borda, cloud-enabled, projetada e implantada pelo navegador.", 16, SLATE)]])
 feats6 = [
-    ("SCADA multi-site (Optix)", "O próprio FactoryTalk Optix ganha módulo SCADA: centraliza o supervisório de todas as plantas, com redundância de servidor e workstation clients."),
+    ("FactoryTalk Optix", "Plataforma aberta de HMI e dados na borda (Connect, Contextualize, Visualize, Share). Roda em painel, IPC ou cliente web (Windows/Linux) — não um SCADA multi-site com redundância."),
     ("ResilientEdge", "Execução edge resiliente + analytics em nuvem, treino de IA e orquestração corporativa. Disponível global desde 18/06/2026."),
     ("Acesso remoto", "FactoryTalk Remote Access via VPN. Hoje a Inpasa usa Citrix, que pode ser mantido."),
     ("Aberto / OPC UA", "Comunica com controladores Rockwell e de terceiros e roda em qualquer hardware — integra os equipamentos multimarca da Inpasa, sem lock-in."),
@@ -507,7 +507,7 @@ rect(0.55, 0.32, 0.14, 0.55, fill=AMBER)
 paras(0.85, 0.26, 11.6, 0.3, [[R("O DELTA", 11.5, AMBER, True)]])
 paras(0.85, 0.5, 11.9, 0.6, [[R("O que o DataMosaix adiciona ao que já temos", 25, WHITE, True)]])
 paras(0.85, 1.45, 11.6, 0.7,
-      [[R("Hoje o dado vive dentro de cada PlantPAx. O DataMosaix é a camada que ", 15.5, COVER_SUB),
+      [[R("Hoje o dado vive dentro de cada sistema de supervisão. O DataMosaix é a camada que ", 15.5, COVER_SUB),
         R("agrega, contextualiza e compara", 15.5, AMBER, True),
         R(" — uma visão única de toda a operação.", 15.5, COVER_SUB)]])
 adds = [
