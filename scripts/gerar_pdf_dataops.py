@@ -136,6 +136,15 @@ def page_bg(color):
 def picture(path, x, y, w, h):
     c.drawImage(ImageReader(path), x*IN, (PH-y-h)*IN, w*IN, h*IN, mask='auto')
 
+def image_slide(kicker, title, accent, intro, img, caption):
+    page_bg(LIGHT)
+    header(kicker, title, accent)
+    paras(0.85, 1.42, 11.6, 0.45, [[R(intro, 14, SLATE)]])
+    card(2.66, 1.87, 8.02, 4.56, fill=WHITE)
+    picture(img, 2.76, 1.95, 7.82, 4.4)
+    paras(0.85, 6.55, 11.6, 0.5, [[R(caption, 12.5, GRAY)]], align=TA_CENTER)
+    page_num(); c.showPage()
+
 # ----------------------------------------------------------------------------
 # 1. CAPA
 # ----------------------------------------------------------------------------
@@ -205,6 +214,11 @@ rect(_x1, _y, _cw, 0.62, fill=NAVY, rounded=True, radius=8); rect(_x1, _y+0.3, _
 paras(_x1+0.3, _y+0.13, _cw-0.6, 0.4, [[R("Quem participou", 16, WHITE, True)]])
 bullets(_x1+0.35, _y+0.85, _cw-0.7, 3.3, [('Itiel Gonçalves ', '— VP Automação & Elétrica (Inpasa)'), ('Dan DeYoung ', '— VP & GM, Design & Control'), ("Andrew D'Souza ", '— Diretor Software & Control, LATAM'), ('JP Wright ', '— Diretor Visualization & Production Data'), ('Brian Widman ', '— PM Controllers · Chris Stearns — PlantPAx PM'), ('Lúcio Granato ', '— Solution Architect (time Brasil)')], size=13, marker=NAVY, gap=10)
 page_num(); c.showPage()
+
+# ----------------------------------------------------------------------------
+# 3b. MUNDO MUDANDO (imagem)
+# ----------------------------------------------------------------------------
+image_slide("Por que agora · contexto de mercado", "Como o mundo da automação está mudando", OPTIX, "Da convergência IT/OT à automação definida por software e à IA — a régua subiu.", "assets/ai_progression.png", "Evolução da IA industrial: de regras e sistemas especialistas a machine learning, IA generativa, agentes de IA e frameworks agênticos — com aceleração acentuada.")
 
 # ----------------------------------------------------------------------------
 # 3. HOJE
@@ -332,6 +346,11 @@ paras(0.85, 6.55, 11.6, 0.5, [[R("Gera telas a partir de Figma, foto ou rascunho
 page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
+# 6c. INDUSTRIAL DATAOPS (imagem)
+# ----------------------------------------------------------------------------
+image_slide("Camada de DataOps + IA", "Industrial DataOps — um hub para OT, IT e ET", AMBER, "Em vez de integrações ponto a ponto, um hub central contextualiza e reaproveita o dado.", "assets/industrial_dataops_hub.png", "O hub industrial consolida dados de OT, IT e ET com contextualização, modelos, qualidade e catálogo — reutilizáveis por várias aplicações e pela IA.")
+
+# ----------------------------------------------------------------------------
 # 7. DATAMOSAIX
 # ----------------------------------------------------------------------------
 page_bg(LIGHT)
@@ -442,6 +461,11 @@ bullets(7.55, 2.65, 5.0, 3.2, [
 page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
+# 9b. ALARMES COM IA (imagem)
+# ----------------------------------------------------------------------------
+image_slide("Benchmarking de alarmes · IA", "Análise de alarmes assistida por IA", RED, "A análise histórica de alarmes que propomos já existe nas ferramentas FactoryTalk.", "assets/ftview_ai_alarms.png", "O FactoryTalk View AI responde perguntas como 'os 10 alarmes mais frequentes nos últimos 60 dias' — o tipo de insight que sustenta o ranking ISA-18.2 no COI.")
+
+# ----------------------------------------------------------------------------
 # 10. KPIs (tabela)
 # ----------------------------------------------------------------------------
 page_bg(LIGHT)
@@ -525,6 +549,11 @@ for i,(t,d,col) in enumerate(cases):
 page_num(); c.showPage()
 
 # ----------------------------------------------------------------------------
+# 12b. EVOLUCAO PLANTPAX (imagem)
+# ----------------------------------------------------------------------------
+image_slide("Modernização · plataforma", "Evolução do PlantPAx — do adaptado ao PlantPAx 2026", GREEN, "Não trocar a base: evoluir o PlantPAx adaptado de hoje para a direção 2026 da Rockwell.", "assets/plantpax_direction.png", "Direção 2026: integração com FactoryTalk Optix, arquitetura multi-node, +20 conectores, design em nuvem e Software Defined Automation — com Provisioning que reduz o deploy a 1–2 semanas.")
+
+# ----------------------------------------------------------------------------
 # 13. ROADMAP
 # ----------------------------------------------------------------------------
 page_bg(LIGHT)
@@ -550,6 +579,28 @@ for i,(l1,l2,d,col) in enumerate(phases):
         c.setFillColor(HexColor(col)); c.drawPath(pth, stroke=0, fill=1)
 chip(0.85, 5.7, "ResilientEdge: disponível global desde 18/06/2026  ·  SCADA multi-site em rollout 2026", fill=NAVY, w=9.0, h=0.5, size=13)
 page_num(); c.showPage()
+
+# ----------------------------------------------------------------------------
+# 13b. AMBICAO INPASA
+# ----------------------------------------------------------------------------
+page_bg(NAVY)
+rect(0, 0, 0.22, PH, fill=GREEN)
+rect(0.22, 0, 0.08, PH, fill=OPTIX)
+paras(0.9, 0.7, 11.6, 0.4, [[R("A AMBIÇÃO DA INPASA", 12, GREEN, True)]])
+paras(0.9, 1.15, 11.5, 1.7,
+      [[R("Ser referência em ", 34, WHITE, True), R("automação inteligente", 34, GREEN, True)],
+       [R("na América Latina.", 34, WHITE, True)]], ls=1.1, space_after=4)
+paras(0.92, 3.05, 11.3, 0.8,
+      [[R("Não por status — mas pela vontade de gerar resultado para a companhia com tecnologia de ponta: mais produção, menos perdas e decisão baseada em dado.", 15, COVER_SUB)]])
+_p=[('Otimizar produção', 'visibilidade e decisão em tempo real'), ('Empoderar pessoas', 'operação e manutenção com apoio de IA'), ('Construir resiliência', 'menos paradas, retomadas mais estáveis'), ('Acelerar a transformação', 'do dado à ação, planta a planta')]
+_x=0.9; _y=4.05; _cw=2.85; _ch=2.45; _g=0.18
+for _i,(_t,_d) in enumerate(_p):
+    _xx=_x+_i*(_cw+_g)
+    rect(_xx,_y,_cw,_ch,fill=NAVY_CARD,line=GREEN,line_w=1.2,rounded=True,radius=8)
+    rect(_xx,_y,_cw,0.1,fill=GREEN,rounded=True,radius=3)
+    paras(_xx+0.25,_y+0.35,_cw-0.5,0.9,[[R(_t,16,WHITE,True)]])
+    paras(_xx+0.25,_y+1.25,_cw-0.5,1.0,[[R(_d,12.5,LAYER_DESC)]])
+c.showPage()
 
 # ----------------------------------------------------------------------------
 # 14. PROXIMOS PASSOS

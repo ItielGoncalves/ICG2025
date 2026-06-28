@@ -51,6 +51,17 @@ def slide():
 def picture(s, path, x, y, w, h):
     return s.shapes.add_picture(path, x, y, width=w, height=h)
 
+def image_slide(kicker, title, accent, intro, img, caption):
+    s = slide(); bg(s, LIGHT)
+    header(s, kicker, title, accent)
+    txt(s, Inches(0.85), Inches(1.42), Inches(11.6), Inches(0.45),
+        [[R(intro, 14, SLATE, False)]])
+    rect(s, Inches(2.66), Inches(1.87), Inches(8.02), Inches(4.56), fill=WHITE, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
+    picture(s, img, Inches(2.76), Inches(1.95), Inches(7.82), Inches(4.4))
+    txt(s, Inches(0.85), Inches(6.55), Inches(11.6), Inches(0.5),
+        [[R(caption, 12.5, GRAY, False)]], align=PP_ALIGN.CENTER)
+    page_num(s)
+
 def bg(s, color):
     s.background.fill.solid()
     s.background.fill.fore_color.rgb = color
@@ -226,6 +237,11 @@ bullets(s, _x1+Inches(0.35), _y+Inches(0.85), _cw-Inches(0.7), Inches(3.3), [('I
 page_num(s)
 
 # ----------------------------------------------------------------------------
+# 3b. COMO O MUNDO ESTA MUDANDO (imagem)
+# ----------------------------------------------------------------------------
+image_slide("Por que agora · contexto de mercado", "Como o mundo da automação está mudando", OPTIX, "Da convergência IT/OT à automação definida por software e à IA — a régua subiu.", "assets/ai_progression.png", "Evolução da IA industrial: de regras e sistemas especialistas a machine learning, IA generativa, agentes de IA e frameworks agênticos — com aceleração acentuada.")
+
+# ----------------------------------------------------------------------------
 # 3. ONDE ESTAMOS HOJE (PlantPAx + TracOS)
 # ----------------------------------------------------------------------------
 s = slide(); bg(s, LIGHT)
@@ -359,6 +375,11 @@ txt(s, Inches(0.85), Inches(6.55), Inches(11.6), Inches(0.5),
 page_num(s)
 
 # ----------------------------------------------------------------------------
+# 6c. INDUSTRIAL DATAOPS (imagem)
+# ----------------------------------------------------------------------------
+image_slide("Camada de DataOps + IA", "Industrial DataOps — um hub para OT, IT e ET", AMBER, "Em vez de integrações ponto a ponto, um hub central contextualiza e reaproveita o dado.", "assets/industrial_dataops_hub.png", "O hub industrial consolida dados de OT, IT e ET com contextualização, modelos, qualidade e catálogo — reutilizáveis por várias aplicações e pela IA.")
+
+# ----------------------------------------------------------------------------
 # 7. FACTORYTALK DATAMOSAIX + ATLAS AI
 # ----------------------------------------------------------------------------
 s = slide(); bg(s, LIGHT)
@@ -486,6 +507,11 @@ bullets(s, Inches(7.55), Inches(2.65), Inches(5.0), Inches(3.2), [
 page_num(s)
 
 # ----------------------------------------------------------------------------
+# 9b. ANALISE DE ALARMES COM IA (imagem)
+# ----------------------------------------------------------------------------
+image_slide("Benchmarking de alarmes · IA", "Análise de alarmes assistida por IA", RED, "A análise histórica de alarmes que propomos já existe nas ferramentas FactoryTalk.", "assets/ftview_ai_alarms.png", "O FactoryTalk View AI responde perguntas como 'os 10 alarmes mais frequentes nos últimos 60 dias' — o tipo de insight que sustenta o ranking ISA-18.2 no COI.")
+
+# ----------------------------------------------------------------------------
 # 10. KPIs DE BENCHMARKING (tabela)
 # ----------------------------------------------------------------------------
 s = slide(); bg(s, LIGHT)
@@ -578,6 +604,11 @@ for i,(t,d,c) in enumerate(cases):
 page_num(s)
 
 # ----------------------------------------------------------------------------
+# 12b. EVOLUCAO DO PLANTPAX (imagem)
+# ----------------------------------------------------------------------------
+image_slide("Modernização · plataforma", "Evolução do PlantPAx — do adaptado ao PlantPAx 2026", GREEN, "Não trocar a base: evoluir o PlantPAx adaptado de hoje para a direção 2026 da Rockwell.", "assets/plantpax_direction.png", "Direção 2026: integração com FactoryTalk Optix, arquitetura multi-node, +20 conectores, design em nuvem e Software Defined Automation — com Provisioning que reduz o deploy a 1–2 semanas.")
+
+# ----------------------------------------------------------------------------
 # 13. ROADMAP / DISPONIBILIDADE
 # ----------------------------------------------------------------------------
 s = slide(); bg(s, LIGHT)
@@ -599,6 +630,27 @@ for i,(l1,l2,d,c) in enumerate(phases):
 chip(s, Inches(0.85), Inches(5.7), "ResilientEdge: disponível global desde 18/06/2026  ·  SCADA multi-site em rollout 2026",
      fill=NAVY, w=Inches(9.0), h=Inches(0.5), size=13)
 page_num(s)
+
+# ----------------------------------------------------------------------------
+# 13b. AMBICAO DA INPASA
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, NAVY)
+rect(s, 0, 0, Inches(0.22), SH, fill=GREEN)
+rect(s, Inches(0.22), 0, Inches(0.08), SH, fill=OPTIX)
+txt(s, Inches(0.9), Inches(0.7), Inches(11.6), Inches(0.4), [[R("A AMBIÇÃO DA INPASA", 12, GREEN, True)]])
+txt(s, Inches(0.9), Inches(1.15), Inches(11.5), Inches(1.7),
+    [[R("Ser referência em ", 34, WHITE, True), R("automação inteligente", 34, GREEN, True)],
+     [R("na América Latina.", 34, WHITE, True)]])
+txt(s, Inches(0.92), Inches(3.05), Inches(11.3), Inches(0.8),
+    [[R("Não por status — mas pela vontade de gerar resultado para a companhia com tecnologia de ponta: mais produção, menos perdas e decisão baseada em dado.", 15, RGBColor(0xCD,0xDA,0xE8), False)]])
+_p=[('Otimizar produção', 'visibilidade e decisão em tempo real'), ('Empoderar pessoas', 'operação e manutenção com apoio de IA'), ('Construir resiliência', 'menos paradas, retomadas mais estáveis'), ('Acelerar a transformação', 'do dado à ação, planta a planta')]
+_x=Inches(0.9); _y=Inches(4.05); _cw=Inches(2.85); _ch=Inches(2.45); _g=Inches(0.18)
+for _i,(_t,_d) in enumerate(_p):
+    _xx=_x+_i*(_cw+_g)
+    rect(s,_xx,_y,_cw,_ch,fill=RGBColor(0x17,0x33,0x4E),line=GREEN,line_w=1.2,shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+    rect(s,_xx,_y,_cw,Inches(0.1),fill=GREEN,shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+    txt(s,_xx+Inches(0.25),_y+Inches(0.35),_cw-Inches(0.5),Inches(0.9),[[R(_t,16,WHITE,True)]])
+    txt(s,_xx+Inches(0.25),_y+Inches(1.25),_cw-Inches(0.5),Inches(1.0),[[R(_d,12.5,RGBColor(0xB9,0xCA,0xDB),False)]])
 
 # ----------------------------------------------------------------------------
 # 14. PROXIMOS PASSOS
