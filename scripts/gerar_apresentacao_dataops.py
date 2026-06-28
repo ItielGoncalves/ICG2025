@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 Gerador da apresentacao executiva:
-"DataOps na Pratica: IA a Servico da Alta Gestao"
+"DataOps na Prática: IA a Serviço da Alta Gestão"
 Comparativo Optix + DataMosaix vs. PlantPAx + TracOS (Inpasa)
-Publico: Sr. Jose e Eder.
+Publico: Sr. José e Éder.
 
 Tudo nativo (formas, tabelas e graficos do PowerPoint) -> 100% editavel.
 """
@@ -131,7 +131,7 @@ def page_num(s, n):
     txt(s, Inches(12.4), Inches(7.05), Inches(0.8), Inches(0.3),
         [[R(str(n), 10, GRAY, False)]], align=PP_ALIGN.RIGHT)
     txt(s, Inches(0.85), Inches(7.05), Inches(6), Inches(0.3),
-        [[R("Inpasa  ·  Gestao Estrategica de Automacao", 9, GRAY, False)]])
+        [[R("Inpasa  ·  Gestão Estratégica de Automação", 9, GRAY, False)]])
 
 def chip(s, x, y, label, fill, tcol=WHITE, w=Inches(1.9), h=Inches(0.34), size=11):
     sp = rect(s, x, y, w, h, fill=fill, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
@@ -151,23 +151,23 @@ s = slide(); bg(s, NAVY)
 rect(s, 0, 0, Inches(0.22), SH, fill=GREEN)
 rect(s, Inches(0.22), 0, Inches(0.08), SH, fill=OPTIX)
 # selo superior
-chip(s, Inches(0.9), Inches(0.85), "GESTAO ESTRATEGICA  ·  AUTOMACAO & DADOS",
+chip(s, Inches(0.9), Inches(0.85), "GESTÃO ESTRATÉGICA  ·  AUTOMAÇÃO & DADOS",
      fill=RGBColor(0x1B,0x3A,0x57), w=Inches(4.6), h=Inches(0.42), size=12)
 txt(s, Inches(0.9), Inches(2.0), Inches(11.4), Inches(2.2),
-    [[R("DataOps na Pratica:", 46, WHITE, True)],
-     [R("IA a Servico da Alta Gestao", 46, GREEN, True)]])
+    [[R("DataOps na Prática:", 46, WHITE, True)],
+     [R("IA a Serviço da Alta Gestão", 46, GREEN, True)]])
 txt(s, Inches(0.92), Inches(3.95), Inches(11.0), Inches(1.0),
-    [[R("Evolucao da plataforma de automacao da Inpasa  —  ", 19, RGBColor(0xCD,0xDA,0xE8), False),
+    [[R("Evolução da plataforma de automação da Inpasa  —  ", 19, RGBColor(0xCD,0xDA,0xE8), False),
       R("FactoryTalk Optix + DataMosaix", 19, OPTIX, True),
       R("  vs.  ", 19, RGBColor(0xCD,0xDA,0xE8), False),
       R("PlantPAx + TracOS", 19, AMBER, True)]])
 # linha divisoria
 rect(s, Inches(0.95), Inches(5.15), Inches(6.4), Pt(1.5), fill=RGBColor(0x35,0x52,0x70))
 txt(s, Inches(0.95), Inches(5.35), Inches(11), Inches(1.2),
-    [[R("Apresentado a:  ", 14, GRAY, False), R("Sr. Jose  e  Eder", 14, WHITE, True)],
-     [R("Centro de Operacoes Integradas (COI)  ·  Benchmarking entre plantas  ·  Manutencao prescritiva", 13, GRAY, False)]])
+    [[R("Apresentado a:  ", 14, GRAY, False), R("Sr. José  e  Éder", 14, WHITE, True)],
+     [R("Centro de Operações Integradas (COI)  ·  Benchmarking entre plantas  ·  Manutenção prescritiva", 13, GRAY, False)]])
 txt(s, Inches(9.8), Inches(6.75), Inches(2.7), Inches(0.4),
-    [[R("2026.06.28  ·  MULTI  ·  v01", 12, GRAY, True)]], align=PP_ALIGN.RIGHT)
+    [[R("2026.06.28  ·  MULTI  ·  vFINAL", 12, GRAY, True)]], align=PP_ALIGN.RIGHT)
 
 # ----------------------------------------------------------------------------
 # 2. CONTEXTO / POR QUE AGORA
@@ -175,14 +175,14 @@ txt(s, Inches(9.8), Inches(6.75), Inches(2.7), Inches(0.4),
 s = slide(); bg(s, LIGHT)
 header(s, "Contexto", "Por que olhar para isso agora", GREEN)
 txt(s, Inches(0.85), Inches(1.55), Inches(11.6), Inches(0.9),
-    [[R("A Inpasa cresceu de planta unica para uma ", 16, SLATE, False),
-      R("operacao multi-unidades", 16, NAVY, True),
+    [[R("A Inpasa cresceu de planta única para uma ", 16, SLATE, False),
+      R("operação multi-unidades", 16, NAVY, True),
       R(" (Sinop, Lucas do Rio Verde, Dourados, Balsas e novas plantas). ", 16, SLATE, False),
       R("Os dados existem — mas vivem isolados dentro de cada planta.", 16, NAVY, True)]])
 cards = [
-    ("Reuniao estrategica", "Encontro Inpasa x Rockwell (26/06) sobre parceria de tecnologia e inovacao. Contato principal: Dan DeYoung.", OPTIX),
-    ("Dados em silos", "Cada unidade tem seu PlantPAx. Nao ha visao unica nem comparacao direta entre plantas.", AMBER),
-    ("Decisao reativa", "Manutencao corretiva/preventiva e alarmes acima da norma — ainda sem IA prescritiva.", RED),
+    ("Reunião estratégica", "Encontro Inpasa x Rockwell (26/06) sobre parceria de tecnologia e inovação. Contato principal: Dan DeYoung.", OPTIX),
+    ("Dados em silos", "Cada unidade tem seu PlantPAx. Não há visão única nem comparação direta entre plantas.", AMBER),
+    ("Decisão reativa", "Manutenção corretiva/preventiva e alarmes acima da norma — ainda sem IA prescritiva.", RED),
     ("Janela de oportunidade", "Optix e DataMosaix amadureceram em 2026 (SCADA multi-site + Industrial DataOps).", GREEN),
 ]
 cw = Inches(2.85); gap = Inches(0.2); x0 = Inches(0.85); y0 = Inches(2.75); ch = Inches(3.0)
@@ -196,42 +196,42 @@ for i,(t,d,c) in enumerate(cards):
         [[R(d, 13, SLATE, False)]])
 txt(s, Inches(0.85), Inches(6.1), Inches(11.6), Inches(0.7),
     [[R("Pergunta central:  ", 15, NAVY, True),
-      R("como transformar o dado que ja geramos em decisao executiva, comparavel entre plantas e antecipada por IA?", 15, SLATE, False, True)]])
+      R("como transformar o dado que já geramos em decisão executiva, comparável entre plantas e antecipada por IA?", 15, SLATE, False, True)]])
 page_num(s, 2)
 
 # ----------------------------------------------------------------------------
 # 3. ONDE ESTAMOS HOJE (PlantPAx + TracOS)
 # ----------------------------------------------------------------------------
 s = slide(); bg(s, LIGHT)
-header(s, "Cenario atual", "O que a Inpasa ja tem hoje", AMBER)
+header(s, "Cenário atual", "O que a Inpasa já tem hoje", AMBER)
 # dois cards grandes
 x0=Inches(0.85); y0=Inches(1.7); cw=Inches(5.75); ch=Inches(3.7); gap=Inches(0.35)
 # PlantPAx
 rect(s, x0, y0, cw, ch, fill=CARD, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
 rect(s, x0, y0, cw, Inches(0.7), fill=AMBER, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
 txt(s, x0+Inches(0.3), y0+Inches(0.13), cw-Inches(0.6), Inches(0.5),
-    [[R("PlantPAx", 19, WHITE, True), R("   supervisorio por planta", 13, WHITE, False)]])
+    [[R("PlantPAx", 19, WHITE, True), R("   supervisório por planta", 13, WHITE, False)]])
 bullets(s, x0+Inches(0.35), y0+Inches(0.95), cw-Inches(0.7), Inches(2.6), [
     ("DCS/SCADA Rockwell ", "rodando em cada unidade"),
     ("Blocos de processo ", "P_PID, P_VALVE, P_INTLK, Command Source"),
     ("Dados nativos ", "modo Auto/Manual, Operador/Programa, interlocks"),
-    ("Alarmes & Events ", "alarmes nao reconhecidos ja rastreados"),
+    ("Alarmes & Events ", "alarmes não reconhecidos já rastreados"),
 ], size=13.5, marker_col=AMBER, gap=9)
 # TracOS
 x1 = x0+cw+gap
 rect(s, x1, y0, cw, ch, fill=CARD, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
 rect(s, x1, y0, cw, Inches(0.7), fill=SLATE, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
 txt(s, x1+Inches(0.3), y0+Inches(0.13), cw-Inches(0.6), Inches(0.5),
-    [[R("TracOS", 19, WHITE, True), R("   gestao de manutencao", 13, WHITE, False)]])
+    [[R("TracOS", 19, WHITE, True), R("   gestão de manutenção", 13, WHITE, False)]])
 bullets(s, x1+Inches(0.35), y0+Inches(0.95), cw-Inches(0.7), Inches(2.6), [
-    ("Ordens de servico ", "e controle de ativos por unidade"),
-    ("Historico de manutencao ", "corretiva e preventiva"),
+    ("Ordens de serviço ", "e controle de ativos por unidade"),
+    ("Histórico de manutenção ", "corretiva e preventiva"),
     ("Planejamento ", "de paradas e equipes"),
     ("Base solida ", "— porem desconectada do dado de processo em tempo real"),
 ], size=13.5, marker_col=SLATE, gap=9)
 txt(s, Inches(0.85), Inches(5.7), Inches(11.6), Inches(1.0),
     [[R("Resumo:  ", 15, NAVY, True),
-      R("temos dados ricos e uma base Rockwell robusta. O que falta nao e coletar — e ", 14.5, SLATE, False),
+      R("temos dados ricos e uma base Rockwell robusta. O que falta não é coletar — e ", 14.5, SLATE, False),
       R("contextualizar, comparar entre plantas e antecipar com IA.", 14.5, NAVY, True)]])
 page_num(s, 3)
 
@@ -239,12 +239,12 @@ page_num(s, 3)
 # 4. A LACUNA
 # ----------------------------------------------------------------------------
 s = slide(); bg(s, LIGHT)
-header(s, "Diagnostico", "As 4 lacunas que travam a decisao executiva", RED)
+header(s, "Diagnóstico", "As 4 lacunas que travam a decisão executiva", RED)
 gaps = [
-    ("Silos por planta", "O dado fica preso em cada PlantPAx. Nao existe uma visao unica nem ranking entre unidades."),
-    ("Sem benchmarking", "Impossivel comparar OEE, malhas em auto e alarmes entre Sinop, LRV, Dourados e Balsas de forma direta."),
-    ("Manutencao reativa", "Agimos depois da falha. Sem analise de causa raiz automatizada nem recomendacao prescritiva."),
-    ("Excesso de alarmes", "Media do setor: 30+ alarmes/operador/hora (5x acima da ISA-18.2); ~70% sao nuisance alarms."),
+    ("Silos por planta", "O dado fica preso em cada PlantPAx. Não existe uma visão única nem ranking entre unidades."),
+    ("Sem benchmarking", "Impossível comparar OEE, malhas em auto e alarmes entre Sinop, LRV, Dourados e Balsas de forma direta."),
+    ("Manutenção reativa", "Agimos depois da falha. Sem análise de causa raiz automatizada nem recomendação prescritiva."),
+    ("Excesso de alarmes", "Média do setor: 30+ alarmes/operador/hora (5x acima da ISA-18.2); ~70% são nuisance alarms."),
 ]
 x0=Inches(0.85); y0=Inches(1.7); cw=Inches(5.75); ch=Inches(2.35); gx=Inches(0.35); gy=Inches(0.35)
 for i,(t,d) in enumerate(gaps):
@@ -268,14 +268,14 @@ s = slide(); bg(s, NAVY)
 rect(s, 0, 0, SW, Inches(1.15), fill=NAVY)
 rect(s, Inches(0.55), Inches(0.32), Inches(0.14), Inches(0.55), fill=GREEN)
 txt(s, Inches(0.85), Inches(0.26), Inches(11.6), Inches(0.3),
-    [[R("VISAO DE ARQUITETURA", 11.5, GREEN, True)]])
+    [[R("VISÃO DE ARQUITETURA", 11.5, GREEN, True)]])
 txt(s, Inches(0.85), Inches(0.5), Inches(11.9), Inches(0.6),
-    [[R("Do sensor a diretoria: as 4 camadas do dado", 25, WHITE, True)]])
+    [[R("Do sensor à diretoria: as 4 camadas do dado", 25, WHITE, True)]])
 layers = [
-    ("4", "DECISAO  ·  COI", "Dashboards unicos, benchmarking entre plantas, alertas e ranking em tempo real", GREEN),
-    ("3", "EXECUCAO INTELIGENTE  ·  FactoryTalk Optix + ResilientEdge", "HMI/SCADA multi-site, edge resiliente, loop fechado com IA, acesso remoto", OPTIX),
+    ("4", "DECISÃO  ·  COI", "Dashboards únicos, benchmarking entre plantas, alertas e ranking em tempo real", GREEN),
+    ("3", "EXECUÇÃO INTELIGENTE  ·  FactoryTalk Optix + ResilientEdge", "HMI/SCADA multi-site, edge resiliente, loop fechado com IA, acesso remoto", OPTIX),
     ("2", "DataOps + IA  ·  FactoryTalk DataMosaix + Atlas AI", "Contextualiza OT/IT/ET, RCA automatizada, agentes no-code, prescritivo", AMBER),
-    ("1", "EDGE / OT  ·  PlantPAx + sensores (o que ja temos)", "Controladores, blocos de processo, alarmes, dados em tempo real por planta", SLATE),
+    ("1", "EDGE / OT  ·  PlantPAx + sensores (o que já temos)", "Controladores, blocos de processo, alarmes, dados em tempo real por planta", SLATE),
 ]
 y0=Inches(1.5); lh=Inches(1.18); gap=Inches(0.16); x0=Inches(1.1); lw=Inches(10.2)
 for i,(n,t,d,c) in enumerate(layers):
@@ -297,15 +297,15 @@ page_num(s, 5)
 # 6. FACTORYTALK OPTIX + RESILIENTEDGE
 # ----------------------------------------------------------------------------
 s = slide(); bg(s, LIGHT)
-header(s, "Camada de execucao", "FactoryTalk Optix + ResilientEdge", OPTIX)
+header(s, "Camada de execução", "FactoryTalk Optix + ResilientEdge", OPTIX)
 txt(s, Inches(0.85), Inches(1.5), Inches(11.6), Inches(0.7),
     [[R("De HMI para a ", 16, SLATE, False),
-      R("base de execucao inteligente", 16, OPTIX, True),
+      R("base de execução inteligente", 16, OPTIX, True),
       R(" da Rockwell: HMI/SCADA cloud-enabled, projetada e implantada pelo navegador.", 16, SLATE, False)]])
 feats = [
-    ("SCADA multi-site (2026)", "Centraliza o supervisorio de todas as plantas em uma plataforma, com redundancia de servidor e workstation clients."),
-    ("ResilientEdge", "Execucao edge resiliente + analytics em nuvem, treino de IA e orquestracao corporativa. Disponivel global desde 18/06/2026."),
-    ("Acesso remoto", "FactoryTalk Remote Access via VPN: investigar e resolver antes de viajar a planta remota."),
+    ("SCADA multi-site (2026)", "Centraliza o supervisório de todas as plantas em uma plataforma, com redundância de servidor e workstation clients."),
+    ("ResilientEdge", "Execução edge resiliente + analytics em nuvem, treino de IA e orquestração corporativa. Disponível global desde 18/06/2026."),
+    ("Acesso remoto", "FactoryTalk Remote Access via VPN: investigar e resolver antes de viajar à planta remota."),
     ("Aberto / OPC UA", "Comunica nativamente com controladores Rockwell e de terceiros; roda em qualquer hardware."),
 ]
 x0=Inches(0.85); y0=Inches(2.35); cw=Inches(5.75); ch=Inches(1.75); gx=Inches(0.35); gy=Inches(0.3)
@@ -325,12 +325,12 @@ page_num(s, 6)
 s = slide(); bg(s, LIGHT)
 header(s, "Camada de DataOps + IA", "FactoryTalk DataMosaix + Atlas AI", AMBER)
 txt(s, Inches(0.85), Inches(1.5), Inches(11.6), Inches(0.7),
-    [[R("Industrial DataOps do edge a nuvem: ", 16, AMBER_DK, True),
-      R("contextualiza dados de operacao, engenharia e TI para casos de uso de IA.", 16, SLATE, False)]])
+    [[R("Industrial DataOps do edge à nuvem: ", 16, AMBER_DK, True),
+      R("contextualiza dados de operação, engenharia e TI para casos de uso de IA.", 16, SLATE, False)]])
 feats = [
-    ("RCA automatizada", "Analise de causa raiz sem precisar de um analista de dados dedicado."),
-    ("Agentes de IA contextuais", "Monitoram variaveis de processo e geram alertas — exatamente o que o Hub de Automacao esta construindo."),
-    ("Manutencao prescritiva", "Detecta desgaste precoce e recomenda a acao antes da parada custosa."),
+    ("RCA automatizada", "Análise de causa raiz sem precisar de um analista de dados dedicado."),
+    ("Agentes de IA contextuais", "Monitoram variáveis de processo e geram alertas — exatamente o que o Hub de Automação está construindo."),
+    ("Manutenção prescritiva", "Detecta desgaste precoce e recomenda a ação antes da parada custosa."),
     ("No-code", "Maicon e equipe criam fluxos e agentes seguros sem programar."),
 ]
 x0=Inches(0.85); y0=Inches(2.35); cw=Inches(5.75); ch=Inches(1.75); gx=Inches(0.35); gy=Inches(0.3)
@@ -351,13 +351,13 @@ s = slide(); bg(s, LIGHT)
 header(s, "Comparativo", "Hoje (PlantPAx + TracOS)  vs.  Proposto (Optix + DataMosaix)", GREEN)
 rows = [
     ("Capacidade", "Hoje", "Com Optix + DataMosaix"),
-    ("Supervisorio", "Por planta, isolado", "Multi-site centralizado (SCADA Optix)"),
-    ("Visao entre plantas", "Inexistente / manual", "Dashboards unicos e comparaveis"),
-    ("Manutencao", "Corretiva / preventiva", "Preditiva e prescritiva (IA)"),
-    ("Causa raiz", "Investigacao manual", "RCA automatizada por agente de IA"),
-    ("Alarmes", "Acima da ISA-18.2", "Benchmarking e reducao de nuisance"),
+    ("Supervisório", "Por planta, isolado", "Multi-site centralizado (SCADA Optix)"),
+    ("Visão entre plantas", "Inexistente / manual", "Dashboards únicos e comparáveis"),
+    ("Manutenção", "Corretiva / preventiva", "Preditiva e prescritiva (IA)"),
+    ("Causa raiz", "Investigação manual", "RCA automatizada por agente de IA"),
+    ("Alarmes", "Acima da ISA-18.2", "Benchmarking e redução de nuisance"),
     ("Acesso remoto", "Limitado", "Remote Access via VPN"),
-    ("IT / OT / ET", "Silos", "Convergencia em plataforma unica"),
+    ("IT / OT / ET", "Silos", "Convergência em plataforma única"),
 ]
 tx=Inches(0.85); ty=Inches(1.7); tw=Inches(11.6); rh=Inches(0.56)
 colw=[Inches(3.0), Inches(4.0), Inches(4.6)]
@@ -393,7 +393,7 @@ s = slide(); bg(s, LIGHT)
 header(s, "Benchmarking de alarmes", "A norma ISA-18.2 e a oportunidade imediata", RED)
 # grafico de barras
 chart_data = CategoryChartData()
-chart_data.categories = ["Limite ISA-18.2\n(maximo)", "Media do setor\n(hoje)", "Meta Inpasa\nno COI"]
+chart_data.categories = ["Limite ISA-18.2\n(máximo)", "Média do setor\n(hoje)", "Meta Inpasa\nno COI"]
 chart_data.add_series("Alarmes por operador / hora", (6, 30, 6))
 gx, gy, gw, gh = Inches(0.85), Inches(1.7), Inches(6.4), Inches(4.3)
 gf = s.shapes.add_chart(XL_CHART_TYPE.COLUMN_CLUSTERED, gx, gy, gw, gh, chart_data)
@@ -421,10 +421,10 @@ val_ax.tick_labels.font.size=Pt(10)
 txt(s, Inches(7.55), Inches(1.85), Inches(5.0), Inches(0.6),
     [[R("5x acima do recomendado", 20, RED, True)]])
 bullets(s, Inches(7.55), Inches(2.65), Inches(5.0), Inches(3.2), [
-    "Planta bem gerenciada: < 6 alarmes/operador/hora em operacao normal.",
-    "Media das plantas: 30+ por operador/hora — cinco vezes o maximo.",
-    "~70% dos alarmes em DCS/SCADA tipicos sao nuisance (nao exigem acao).",
-    ("FT VantagePoint ", "identifica nuisance alarms, bad actors e alarm floods — sobre o PlantPAx que ja temos."),
+    "Planta bem gerenciada: < 6 alarmes/operador/hora em operação normal.",
+    "Média das plantas: 30+ por operador/hora — cinco vezes o máximo.",
+    "~70% dos alarmes em DCS/SCADA típicos são nuisance (não exigem ação).",
+    ("FT VantagePoint ", "identifica nuisance alarms, bad actors e alarm floods — sobre o PlantPAx que já temos."),
 ], size=13.5, marker_col=RED, gap=11)
 page_num(s, 9)
 
@@ -432,15 +432,15 @@ page_num(s, 9)
 # 10. KPIs DE BENCHMARKING (tabela)
 # ----------------------------------------------------------------------------
 s = slide(); bg(s, LIGHT)
-header(s, "Indicadores", "KPIs de benchmarking que o ecossistema ja mede", GREEN)
+header(s, "Indicadores", "KPIs de benchmarking que o ecossistema já mede", GREEN)
 rows = [
-    ("KPI", "Ferramenta", "Disponivel hoje?"),
+    ("KPI", "Ferramenta", "Disponível hoje?"),
     ("Alarmes por operador/hora", "FT VantagePoint + DataMosaix", "Sim — com PlantPAx atual"),
-    ("Alarmes nao reconhecidos", "FT Alarms & Events", "Nativo"),
-    ("Controles em Auto / Manual", "PlantPAx P_PID, P_VALVE", "Dado ja no controlador"),
+    ("Alarmes não reconhecidos", "FT Alarms & Events", "Nativo"),
+    ("Controles em Auto / Manual", "PlantPAx P_PID, P_VALVE", "Dado já no controlador"),
     ("Blocos Operador / Programa", "PlantPAx Command Source", "Campo nativo"),
-    ("Interlocks desabilitados", "PlantPAx P_Gate + P_INTLK", "Rastreavel"),
-    ("Variaveis simuladas", "Tag audit via Studio 5000", "Possivel"),
+    ("Interlocks desabilitados", "PlantPAx P_Gate + P_INTLK", "Rastreável"),
+    ("Variáveis simuladas", "Tag audit via Studio 5000", "Possível"),
     ("Bad actors / nuisance", "FT VantagePoint", "Sim — com PlantPAx"),
     ("Benchmarking entre plantas", "DataMosaix (multi-site)", "Novidade que entra agora"),
 ]
@@ -466,7 +466,7 @@ for ri,row in enumerate(rows):
         x+=colw[ci]
     y+=rh
 txt(s, Inches(0.85), Inches(6.75), Inches(11.6), Inches(0.4),
-    [[R("Quase tudo ja existe no dado atual — falta a camada que agrega e compara: o DataMosaix.", 13, GRAY, False, True)]])
+    [[R("Quase tudo já existe no dado atual — falta a camada que agrega e compara: o DataMosaix.", 13, GRAY, False, True)]])
 page_num(s, 10)
 
 # ----------------------------------------------------------------------------
@@ -477,16 +477,16 @@ rect(s, Inches(0.55), Inches(0.32), Inches(0.14), Inches(0.55), fill=AMBER)
 txt(s, Inches(0.85), Inches(0.26), Inches(11.6), Inches(0.3),
     [[R("O DELTA", 11.5, AMBER, True)]])
 txt(s, Inches(0.85), Inches(0.5), Inches(11.9), Inches(0.6),
-    [[R("O que o DataMosaix adiciona ao que ja temos", 25, WHITE, True)]])
+    [[R("O que o DataMosaix adiciona ao que já temos", 25, WHITE, True)]])
 txt(s, Inches(0.85), Inches(1.45), Inches(11.6), Inches(0.7),
-    [[R("Hoje o dado vive dentro de cada PlantPAx. O DataMosaix e a camada que ", 15.5, RGBColor(0xC8,0xD6,0xE4), False),
+    [[R("Hoje o dado vive dentro de cada PlantPAx. O DataMosaix é a camada que ", 15.5, RGBColor(0xC8,0xD6,0xE4), False),
       R("agrega, contextualiza e compara", 15.5, AMBER, True),
-      R(" — uma visao unica de toda a operacao.", 15.5, RGBColor(0xC8,0xD6,0xE4), False)]])
+      R(" — uma visão única de toda a operação.", 15.5, RGBColor(0xC8,0xD6,0xE4), False)]])
 adds = [
-    ("OEE comparavel", "Por planta, linha e regiao — em um unico dashboard."),
-    ("Planejamento enterprise", "Decisao de producao em nivel corporativo, nao por silo."),
-    ("Visao multi-site", "Sinop, LRV, Dourados, Balsas e novas plantas lado a lado."),
-    ("Contexto OT+IT+ET", "Dado de processo + manutencao + negocio juntos."),
+    ("OEE comparável", "Por planta, linha e região — em um único dashboard."),
+    ("Planejamento enterprise", "Decisão de produção em nível corporativo, não por silo."),
+    ("Visão multi-site", "Sinop, LRV, Dourados, Balsas e novas plantas lado a lado."),
+    ("Contexto OT+IT+ET", "Dado de processo + manutenção + negócio juntos."),
 ]
 x0=Inches(0.85); y0=Inches(2.45); cw=Inches(2.85); ch=Inches(2.9); gap=Inches(0.2)
 for i,(t,d) in enumerate(adds):
@@ -501,12 +501,12 @@ page_num(s, 11)
 # 12. CASOS DE USO NO COI (Inpasa)
 # ----------------------------------------------------------------------------
 s = slide(); bg(s, LIGHT)
-header(s, "Aplicacao direta", "Como isso aparece no COI da Inpasa", GREEN)
+header(s, "Aplicação direta", "Como isso aparece no COI da Inpasa", GREEN)
 cases = [
-    ("Tela unica em tempo real", "% de malhas em automatico por planta, lado a lado, atualizado ao vivo.", GREEN),
-    ("Ranking de plantas", "Por indice de alarmes/operador/hora — quem esta dentro e fora da ISA-18.2.", OPTIX),
-    ("Alertas automaticos", "Disparo quando uma planta cruza o limite de 6 alarmes/hora.", RED),
-    ("Comparativo historico", "Identifica qual planta regrediu apos parada ou troca de turno.", AMBER),
+    ("Tela única em tempo real", "% de malhas em automático por planta, lado a lado, atualizado ao vivo.", GREEN),
+    ("Ranking de plantas", "Por índice de alarmes/operador/hora — quem está dentro e fora da ISA-18.2.", OPTIX),
+    ("Alertas automáticos", "Disparo quando uma planta cruza o limite de 6 alarmes/hora.", RED),
+    ("Comparativo histórico", "Identifica qual planta regrediu após parada ou troca de turno.", AMBER),
 ]
 x0=Inches(0.85); y0=Inches(1.75); cw=Inches(5.75); ch=Inches(2.3); gx=Inches(0.35); gy=Inches(0.35)
 for i,(t,d,c) in enumerate(cases):
@@ -524,10 +524,10 @@ page_num(s, 12)
 # 13. ROADMAP / DISPONIBILIDADE
 # ----------------------------------------------------------------------------
 s = slide(); bg(s, LIGHT)
-header(s, "Roadmap", "Como entra — em fases, comecando pelo ganho rapido", OPTIX)
+header(s, "Roadmap", "Como entra — em fases, começando pelo ganho rápido", OPTIX)
 phases = [
-    ("Fase 1\nGanho rapido", "Benchmarking de alarmes (VantagePoint) e KPIs sobre o PlantPAx atual. Valor imediato, sem trocar base.", GREEN),
-    ("Fase 2\nPreditivo", "DataMosaix agrega plantas, dashboards comparativos e deteccao precoce de desgaste.", AMBER),
+    ("Fase 1\nGanho rápido", "Benchmarking de alarmes (VantagePoint) e KPIs sobre o PlantPAx atual. Valor imediato, sem trocar base.", GREEN),
+    ("Fase 2\nPreditivo", "DataMosaix agrega plantas, dashboards comparativos e detecção precoce de desgaste.", AMBER),
     ("Fase 3\nPrescritivo + COI", "Optix SCADA multi-site + agentes de IA prescritivos alimentando o COI centralizado.", OPTIX),
 ]
 x0=Inches(0.85); y0=Inches(1.9); cw=Inches(3.75); ch=Inches(3.1); gap=Inches(0.18)
@@ -539,7 +539,7 @@ for i,(t,d,c) in enumerate(phases):
     txt(s,x+Inches(0.32),y0+Inches(1.2),cw-Inches(0.64),Inches(1.8),[[R(d,14,SLATE,False)]])
     if i<2:
         rect(s,x+cw-Inches(0.05),y0+ch/2-Inches(0.2),Inches(0.4),Inches(0.4),fill=c,shape=MSO_SHAPE.CHEVRON)
-chip(s, Inches(0.85), Inches(5.45), "ResilientEdge: disponivel global desde 18/06/2026  ·  SCADA multi-site em rollout 2026",
+chip(s, Inches(0.85), Inches(5.45), "ResilientEdge: disponível global desde 18/06/2026  ·  SCADA multi-site em rollout 2026",
      fill=NAVY, w=Inches(9.0), h=Inches(0.5), size=13)
 page_num(s, 13)
 
@@ -547,12 +547,12 @@ page_num(s, 13)
 # 14. PROXIMOS PASSOS
 # ----------------------------------------------------------------------------
 s = slide(); bg(s, LIGHT)
-header(s, "Decisao", "O que pedimos para avancar", GREEN)
+header(s, "Decisão", "O que pedimos para avançar", GREEN)
 steps = [
     ("Aprovar piloto de Fase 1", "Benchmarking de alarmes (ISA-18.2) sobre o PlantPAx atual, em 1-2 plantas, como prova de valor."),
-    ("Definir plantas-piloto", "Sugestao: Sinop + uma unidade nova, para comparar maturidades."),
+    ("Definir plantas-piloto", "Sugestão: Sinop + uma unidade nova, para comparar maturidades."),
     ("Validar interlocutores Rockwell", "Confirmar nomes/cargos dos apresentadores de Optix e DataMosaix (contato: Dan DeYoung)."),
-    ("Designar squad interno", "Maicon e equipe do Hub de Automacao conduzindo os fluxos no-code do DataMosaix."),
+    ("Designar squad interno", "Maicon e equipe do Hub de Automação conduzindo os fluxos no-code do DataMosaix."),
 ]
 y0=Inches(1.75); rh=Inches(1.12); x0=Inches(0.85); w=Inches(11.6)
 for i,(t,d) in enumerate(steps):
@@ -572,17 +572,17 @@ s = slide(); bg(s, NAVY)
 rect(s, 0, 0, Inches(0.22), SH, fill=GREEN)
 rect(s, Inches(0.22), 0, Inches(0.08), SH, fill=OPTIX)
 txt(s, Inches(1.0), Inches(2.3), Inches(11.2), Inches(2.2),
-    [[R("O dado ja existe.", 40, WHITE, True)],
-     [R("Falta transforma-lo em decisao.", 40, GREEN, True)]])
+    [[R("O dado já existe.", 40, WHITE, True)],
+     [R("Falta transformá-lo em decisão.", 40, GREEN, True)]])
 txt(s, Inches(1.02), Inches(4.4), Inches(11.0), Inches(1.0),
-    [[R("Optix + DataMosaix conectam o que a Inpasa ja tem (PlantPAx + TracOS) a um COI unico,", 17, RGBColor(0xCD,0xDA,0xE8), False)],
-     [R("com benchmarking entre plantas e IA prescritiva — comecando pelo ganho rapido.", 17, RGBColor(0xCD,0xDA,0xE8), False)]])
+    [[R("Optix + DataMosaix conectam o que a Inpasa já tem (PlantPAx + TracOS) a um COI único,", 17, RGBColor(0xCD,0xDA,0xE8), False)],
+     [R("com benchmarking entre plantas e IA prescritiva — começando pelo ganho rápido.", 17, RGBColor(0xCD,0xDA,0xE8), False)]])
 rect(s, Inches(1.05), Inches(5.7), Inches(5.5), Pt(1.5), fill=RGBColor(0x35,0x52,0x70))
 txt(s, Inches(1.05), Inches(5.9), Inches(11), Inches(0.8),
-    [[R("Gestao Estrategica de Automacao  ·  Inpasa  ·  2026.06.28", 13, GRAY, True)]])
+    [[R("Gestão Estratégica de Automação  ·  Inpasa  ·  2026.06.28", 13, GRAY, True)]])
 
 # ----------------------------------------------------------------------------
 import os
-out = "2026.06.28 - MULTI - DataOps na Pratica IA a Servico da Alta Gestao v01.pptx"
+out = "2026.06.28 - MULTI - DataOps na Prática IA a Serviço da Alta Gestão vFINAL.pptx"
 prs.save(out)
 print("OK ->", out, "| slides:", len(prs.slides._sldIdLst))
