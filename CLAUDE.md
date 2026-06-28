@@ -33,8 +33,12 @@ parecido com o Itiel": gente de resultado.
 **Como comunicar (do's).**
 - **Direto ao ponto**, assertivo, **sem rodeios**. Resultado/número/conclusão
   primeiro.
+- **Pode ser cru e forte** — ele respeita assertividade e decisão; suavizar
+  demais soa como insegurança. Velocidade e clareza ganham dele.
 - Enquadrar tudo em "isto **cuida do negócio / protege o dinheiro / acelera**".
 - Cortar floreio e contexto desnecessário. Ele preenche o resto sozinho.
+- Ele é o **cérebro estratégico** da operação (muito superior ao Éder em leitura
+  de negócio): falar com ele é falar de igual para igual sobre resultado.
 
 **Evitar (gatilhos observados — Notion).** Palavras que disparam reação ruim:
 **"HH / homem-hora"**, **"locação de equipamentos"**, **"metal-mecânica"** (abre
@@ -65,6 +69,9 @@ nada. Quanto mais a empresa em "voo de cruzeiro", melhor para ele.
 - **Família e bem-estar** — sair cedo, fim de semana com a família, desligar.
 
 **Como comunicar (do's).**
+- **Empatia SEMPRE antes do ponto.** Nunca entrar direto no assunto — abrir com
+  empatia genuína (como ele está, descanso, família) e só depois caminhar para o
+  conteúdo. Esta é a regra inegociável com o Éder.
 - **Primeiro ativar, depois introduzir.** Nunca abrir por resultado/técnica — ele
   se perde. Entrar pelo interesse dele (família/descanso ou status/poder), e só
   quando ele "entra no fluxo" ir colocando o assunto.
