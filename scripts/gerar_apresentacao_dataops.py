@@ -281,7 +281,7 @@ page_num(s)
 s = slide(); bg(s, LIGHT)
 header(s, "Diagnóstico", "As 4 lacunas que travam a decisão executiva", RED)
 gaps = [
-    ("Silos por planta", "O dado fica preso no PlantPAx parcial de cada unidade. Não existe visão única nem ranking entre as plantas."),
+    ("Silos por planta", "O dado fica preso no PlantPAx parcial de cada unidade. Em automação, não existe visão única nem ranking comparativo entre as plantas."),
     ("Sem benchmarking", "Sem comparar entre Sinop, Nova Mutum, Dourados, Balsas e Sidrolândia o índice de alarmes, de malhas em automático, de blocos em programa, de interlocks desativados e de variáveis simuladas."),
     ("Parcialmente reativa", "TracOS já evita 5–6 falhas/planta em rotativos. Falta cobrir equipamentos não rotativos e dar insight de manutenção prescritiva para eles."),
     ("Excesso de alarmes", "Média do setor: 30+ alarmes/operador/hora (5x acima da ISA-18.2); ~70% são nuisance alarms."),
