@@ -185,7 +185,7 @@ txt(s, Inches(0.95), Inches(5.2), Inches(11.6), Inches(1.5),
      [R("Centro de Operações Integradas (COI)  ·  Benchmarking entre plantas  ·  Manutenção prescritiva", 13, GRAY, False)],
      [R("Base: sessão estratégica Inpasa × Rockwell  ·  Mayfield Heights, OH  ·  26/06/2026", 12.5, RGBColor(0x8F,0xA9,0xC2), False)]])
 txt(s, Inches(9.8), Inches(6.75), Inches(2.7), Inches(0.4),
-    [[R("2026.06.28  ·  MULTI  ·  v02", 12, GRAY, True)]], align=PP_ALIGN.RIGHT)
+    [[R("2026.06.28  ·  MULTI  ·  vFINAL", 12, GRAY, True)]], align=PP_ALIGN.RIGHT)
 
 # ----------------------------------------------------------------------------
 # 2. CONTEXTO / POR QUE AGORA
@@ -692,6 +692,6 @@ txt(s, Inches(1.05), Inches(5.9), Inches(11), Inches(0.8),
 
 # ----------------------------------------------------------------------------
 import os
-out = "2026.06.28 - MULTI - DataOps na Prática IA a Serviço da Alta Gestão v02.pptx"
+out = "2026.06.28 - MULTI - DataOps na Prática IA a Serviço da Alta Gestão vFINAL.pptx"
 prs.save(out)
 print("OK ->", out, "| slides:", len(prs.slides._sldIdLst))

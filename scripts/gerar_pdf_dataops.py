@@ -166,7 +166,7 @@ paras(0.95, 5.2, 11.6, 1.5,
        [R("Centro de Operações Integradas (COI)  ·  Benchmarking entre plantas  ·  Manutenção prescritiva", 13, GRAY)],
        [R("Base: sessão estratégica Inpasa × Rockwell  ·  Mayfield Heights, OH  ·  26/06/2026", 12.5, "#8FA9C2")]],
       space_after=5)
-paras(9.6, 6.75, 2.9, 0.4, [[R("2026.06.28  ·  MULTI  ·  v02", 12, GRAY, True)]], align=TA_RIGHT)
+paras(9.6, 6.75, 2.9, 0.4, [[R("2026.06.28  ·  MULTI  ·  vFINAL", 12, GRAY, True)]], align=TA_RIGHT)
 c.showPage()
 
 # ----------------------------------------------------------------------------
