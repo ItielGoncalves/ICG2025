@@ -1,0 +1,588 @@
+# -*- coding: utf-8 -*-
+"""
+Gerador da apresentacao executiva:
+"DataOps na Pratica: IA a Servico da Alta Gestao"
+Comparativo Optix + DataMosaix vs. PlantPAx + TracOS (Inpasa)
+Publico: Sr. Jose e Eder.
+
+Tudo nativo (formas, tabelas e graficos do PowerPoint) -> 100% editavel.
+"""
+from pptx import Presentation
+from pptx.util import Inches, Pt, Emu
+from pptx.dml.color import RGBColor
+from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.chart import XL_CHART_TYPE, XL_LEGEND_POSITION, XL_LABEL_POSITION
+from pptx.chart.data import CategoryChartData
+from pptx.oxml.ns import qn
+
+# ----------------------------------------------------------------------------
+# Paleta
+# ----------------------------------------------------------------------------
+NAVY      = RGBColor(0x10, 0x2A, 0x43)   # fundo escuro / titulos
+SLATE     = RGBColor(0x33, 0x4E, 0x68)   # texto secundario
+GRAY      = RGBColor(0x62, 0x7D, 0x98)   # texto auxiliar
+LIGHT     = RGBColor(0xF4, 0xF7, 0xFA)   # fundo claro
+WHITE     = RGBColor(0xFF, 0xFF, 0xFF)
+GREEN     = RGBColor(0x16, 0x9C, 0x52)   # Inpasa / acerto
+GREEN_DK  = RGBColor(0x0E, 0x6B, 0x37)
+OPTIX     = RGBColor(0x25, 0x63, 0xEB)   # azul Optix
+OPTIX_DK  = RGBColor(0x1A, 0x44, 0xA8)
+AMBER     = RGBColor(0xF5, 0x9E, 0x0B)   # laranja DataMosaix
+AMBER_DK  = RGBColor(0xB4, 0x71, 0x05)
+RED       = RGBColor(0xD9, 0x3A, 0x3A)   # alerta / hoje
+CARD      = RGBColor(0xFF, 0xFF, 0xFF)
+LINE      = RGBColor(0xD9, 0xE2, 0xEC)
+
+prs = Presentation()
+prs.slide_width  = Inches(13.333)
+prs.slide_height = Inches(7.5)
+SW, SH = prs.slide_width, prs.slide_height
+BLANK = prs.slide_layouts[6]
+
+# ----------------------------------------------------------------------------
+# Helpers
+# ----------------------------------------------------------------------------
+def slide():
+    return prs.slides.add_slide(BLANK)
+
+def bg(s, color):
+    s.background.fill.solid()
+    s.background.fill.fore_color.rgb = color
+
+def rect(s, x, y, w, h, fill=None, line=None, line_w=0.75, shape=MSO_SHAPE.RECTANGLE,
+         shadow=False):
+    sp = s.shapes.add_shape(shape, x, y, w, h)
+    if fill is None:
+        sp.fill.background()
+    else:
+        sp.fill.solid(); sp.fill.fore_color.rgb = fill
+    if line is None:
+        sp.line.fill.background()
+    else:
+        sp.line.color.rgb = line; sp.line.width = Pt(line_w)
+    sp.shadow.inherit = False
+    if shadow:
+        el = sp._element.spPr
+        ef = el.makeelement(qn('a:effectLst'), {})
+        sh = ef.makeelement(qn('a:outerShdw'),
+                            {'blurRad':'90000','dist':'40000','dir':'5400000','rotWithShape':'0'})
+        clr = sh.makeelement(qn('a:srgbClr'), {'val':'1B2A3A'})
+        alpha = clr.makeelement(qn('a:alpha'), {'val':'24000'})
+        clr.append(alpha); sh.append(clr); ef.append(sh); el.append(ef)
+    return sp
+
+def txt(s, x, y, w, h, runs, align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP,
+        wrap=True, space_after=4):
+    """runs: list of paragraphs; each paragraph is list of (text, size, color, bold, italic)"""
+    tb = s.shapes.add_textbox(x, y, w, h)
+    tf = tb.text_frame
+    tf.word_wrap = wrap
+    tf.vertical_anchor = anchor
+    tf.margin_left = 0; tf.margin_right = 0; tf.margin_top = 0; tf.margin_bottom = 0
+    for i, para in enumerate(runs):
+        p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+        p.alignment = align
+        p.space_after = Pt(space_after); p.space_before = Pt(0)
+        for (t, sz, col, b, it) in para:
+            r = p.add_run(); r.text = t
+            r.font.size = Pt(sz); r.font.color.rgb = col
+            r.font.bold = b; r.font.italic = it
+            r.font.name = "Calibri"
+    return tb
+
+def R(t, sz, col, b=False, it=False):
+    return (t, sz, col, b, it)
+
+def bullets(s, x, y, w, h, items, size=15, color=SLATE, gap=8, marker_col=GREEN,
+            anchor=MSO_ANCHOR.TOP):
+    tb = s.shapes.add_textbox(x, y, w, h)
+    tf = tb.text_frame; tf.word_wrap = True; tf.vertical_anchor = anchor
+    tf.margin_left = 0; tf.margin_right = 0; tf.margin_top = 0; tf.margin_bottom = 0
+    for i, it in enumerate(items):
+        p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+        p.space_after = Pt(gap); p.space_before = Pt(0); p.line_spacing = 1.05
+        # marker
+        rm = p.add_run(); rm.text = "▪  "
+        rm.font.size = Pt(size); rm.font.color.rgb = marker_col; rm.font.bold = True
+        rm.font.name = "Calibri"
+        if isinstance(it, tuple):
+            head, rest = it
+            r1 = p.add_run(); r1.text = head
+            r1.font.size = Pt(size); r1.font.color.rgb = NAVY; r1.font.bold = True; r1.font.name="Calibri"
+            r2 = p.add_run(); r2.text = rest
+            r2.font.size = Pt(size); r2.font.color.rgb = color; r2.font.name="Calibri"
+        else:
+            r = p.add_run(); r.text = it
+            r.font.size = Pt(size); r.font.color.rgb = color; r.font.name="Calibri"
+    return tb
+
+def header(s, kicker, title, accent=GREEN):
+    """Cabecalho padrao de slide de conteudo (fundo claro)."""
+    rect(s, 0, 0, SW, Inches(1.25), fill=WHITE)
+    rect(s, 0, Inches(1.25), SW, Pt(2.2), fill=accent)
+    rect(s, Inches(0.55), Inches(0.34), Inches(0.14), Inches(0.62), fill=accent)
+    txt(s, Inches(0.85), Inches(0.30), Inches(11.6), Inches(0.3),
+        [[R(kicker.upper(), 11.5, accent, True)]])
+    txt(s, Inches(0.85), Inches(0.55), Inches(11.9), Inches(0.6),
+        [[R(title, 25, NAVY, True)]])
+
+def page_num(s, n):
+    txt(s, Inches(12.4), Inches(7.05), Inches(0.8), Inches(0.3),
+        [[R(str(n), 10, GRAY, False)]], align=PP_ALIGN.RIGHT)
+    txt(s, Inches(0.85), Inches(7.05), Inches(6), Inches(0.3),
+        [[R("Inpasa  ·  Gestao Estrategica de Automacao", 9, GRAY, False)]])
+
+def chip(s, x, y, label, fill, tcol=WHITE, w=Inches(1.9), h=Inches(0.34), size=11):
+    sp = rect(s, x, y, w, h, fill=fill, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+    sp.adjustments[0] = 0.5
+    tf = sp.text_frame; tf.word_wrap = True
+    tf.margin_top=Pt(1); tf.margin_bottom=Pt(1)
+    p = tf.paragraphs[0]; p.alignment = PP_ALIGN.CENTER
+    r = p.add_run(); r.text = label; r.font.size = Pt(size); r.font.bold = True
+    r.font.color.rgb = tcol; r.font.name = "Calibri"
+    return sp
+
+# ----------------------------------------------------------------------------
+# 1. CAPA
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, NAVY)
+# faixa decorativa
+rect(s, 0, 0, Inches(0.22), SH, fill=GREEN)
+rect(s, Inches(0.22), 0, Inches(0.08), SH, fill=OPTIX)
+# selo superior
+chip(s, Inches(0.9), Inches(0.85), "GESTAO ESTRATEGICA  ·  AUTOMACAO & DADOS",
+     fill=RGBColor(0x1B,0x3A,0x57), w=Inches(4.6), h=Inches(0.42), size=12)
+txt(s, Inches(0.9), Inches(2.0), Inches(11.4), Inches(2.2),
+    [[R("DataOps na Pratica:", 46, WHITE, True)],
+     [R("IA a Servico da Alta Gestao", 46, GREEN, True)]])
+txt(s, Inches(0.92), Inches(3.95), Inches(11.0), Inches(1.0),
+    [[R("Evolucao da plataforma de automacao da Inpasa  —  ", 19, RGBColor(0xCD,0xDA,0xE8), False),
+      R("FactoryTalk Optix + DataMosaix", 19, OPTIX, True),
+      R("  vs.  ", 19, RGBColor(0xCD,0xDA,0xE8), False),
+      R("PlantPAx + TracOS", 19, AMBER, True)]])
+# linha divisoria
+rect(s, Inches(0.95), Inches(5.15), Inches(6.4), Pt(1.5), fill=RGBColor(0x35,0x52,0x70))
+txt(s, Inches(0.95), Inches(5.35), Inches(11), Inches(1.2),
+    [[R("Apresentado a:  ", 14, GRAY, False), R("Sr. Jose  e  Eder", 14, WHITE, True)],
+     [R("Centro de Operacoes Integradas (COI)  ·  Benchmarking entre plantas  ·  Manutencao prescritiva", 13, GRAY, False)]])
+txt(s, Inches(9.8), Inches(6.75), Inches(2.7), Inches(0.4),
+    [[R("2026.06.28  ·  MULTI  ·  v01", 12, GRAY, True)]], align=PP_ALIGN.RIGHT)
+
+# ----------------------------------------------------------------------------
+# 2. CONTEXTO / POR QUE AGORA
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Contexto", "Por que olhar para isso agora", GREEN)
+txt(s, Inches(0.85), Inches(1.55), Inches(11.6), Inches(0.9),
+    [[R("A Inpasa cresceu de planta unica para uma ", 16, SLATE, False),
+      R("operacao multi-unidades", 16, NAVY, True),
+      R(" (Sinop, Lucas do Rio Verde, Dourados, Balsas e novas plantas). ", 16, SLATE, False),
+      R("Os dados existem — mas vivem isolados dentro de cada planta.", 16, NAVY, True)]])
+cards = [
+    ("Reuniao estrategica", "Encontro Inpasa x Rockwell (26/06) sobre parceria de tecnologia e inovacao. Contato principal: Dan DeYoung.", OPTIX),
+    ("Dados em silos", "Cada unidade tem seu PlantPAx. Nao ha visao unica nem comparacao direta entre plantas.", AMBER),
+    ("Decisao reativa", "Manutencao corretiva/preventiva e alarmes acima da norma — ainda sem IA prescritiva.", RED),
+    ("Janela de oportunidade", "Optix e DataMosaix amadureceram em 2026 (SCADA multi-site + Industrial DataOps).", GREEN),
+]
+cw = Inches(2.85); gap = Inches(0.2); x0 = Inches(0.85); y0 = Inches(2.75); ch = Inches(3.0)
+for i,(t,d,c) in enumerate(cards):
+    x = x0 + i*(cw+gap)
+    rect(s, x, y0, cw, ch, fill=CARD, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
+    rect(s, x, y0, cw, Inches(0.12), fill=c, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+    txt(s, x+Inches(0.25), y0+Inches(0.35), cw-Inches(0.5), Inches(0.7),
+        [[R(t, 16, c, True)]])
+    txt(s, x+Inches(0.25), y0+Inches(1.05), cw-Inches(0.5), Inches(1.8),
+        [[R(d, 13, SLATE, False)]])
+txt(s, Inches(0.85), Inches(6.1), Inches(11.6), Inches(0.7),
+    [[R("Pergunta central:  ", 15, NAVY, True),
+      R("como transformar o dado que ja geramos em decisao executiva, comparavel entre plantas e antecipada por IA?", 15, SLATE, False, True)]])
+page_num(s, 2)
+
+# ----------------------------------------------------------------------------
+# 3. ONDE ESTAMOS HOJE (PlantPAx + TracOS)
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Cenario atual", "O que a Inpasa ja tem hoje", AMBER)
+# dois cards grandes
+x0=Inches(0.85); y0=Inches(1.7); cw=Inches(5.75); ch=Inches(3.7); gap=Inches(0.35)
+# PlantPAx
+rect(s, x0, y0, cw, ch, fill=CARD, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
+rect(s, x0, y0, cw, Inches(0.7), fill=AMBER, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+txt(s, x0+Inches(0.3), y0+Inches(0.13), cw-Inches(0.6), Inches(0.5),
+    [[R("PlantPAx", 19, WHITE, True), R("   supervisorio por planta", 13, WHITE, False)]])
+bullets(s, x0+Inches(0.35), y0+Inches(0.95), cw-Inches(0.7), Inches(2.6), [
+    ("DCS/SCADA Rockwell ", "rodando em cada unidade"),
+    ("Blocos de processo ", "P_PID, P_VALVE, P_INTLK, Command Source"),
+    ("Dados nativos ", "modo Auto/Manual, Operador/Programa, interlocks"),
+    ("Alarmes & Events ", "alarmes nao reconhecidos ja rastreados"),
+], size=13.5, marker_col=AMBER, gap=9)
+# TracOS
+x1 = x0+cw+gap
+rect(s, x1, y0, cw, ch, fill=CARD, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
+rect(s, x1, y0, cw, Inches(0.7), fill=SLATE, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+txt(s, x1+Inches(0.3), y0+Inches(0.13), cw-Inches(0.6), Inches(0.5),
+    [[R("TracOS", 19, WHITE, True), R("   gestao de manutencao", 13, WHITE, False)]])
+bullets(s, x1+Inches(0.35), y0+Inches(0.95), cw-Inches(0.7), Inches(2.6), [
+    ("Ordens de servico ", "e controle de ativos por unidade"),
+    ("Historico de manutencao ", "corretiva e preventiva"),
+    ("Planejamento ", "de paradas e equipes"),
+    ("Base solida ", "— porem desconectada do dado de processo em tempo real"),
+], size=13.5, marker_col=SLATE, gap=9)
+txt(s, Inches(0.85), Inches(5.7), Inches(11.6), Inches(1.0),
+    [[R("Resumo:  ", 15, NAVY, True),
+      R("temos dados ricos e uma base Rockwell robusta. O que falta nao e coletar — e ", 14.5, SLATE, False),
+      R("contextualizar, comparar entre plantas e antecipar com IA.", 14.5, NAVY, True)]])
+page_num(s, 3)
+
+# ----------------------------------------------------------------------------
+# 4. A LACUNA
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Diagnostico", "As 4 lacunas que travam a decisao executiva", RED)
+gaps = [
+    ("Silos por planta", "O dado fica preso em cada PlantPAx. Nao existe uma visao unica nem ranking entre unidades."),
+    ("Sem benchmarking", "Impossivel comparar OEE, malhas em auto e alarmes entre Sinop, LRV, Dourados e Balsas de forma direta."),
+    ("Manutencao reativa", "Agimos depois da falha. Sem analise de causa raiz automatizada nem recomendacao prescritiva."),
+    ("Excesso de alarmes", "Media do setor: 30+ alarmes/operador/hora (5x acima da ISA-18.2); ~70% sao nuisance alarms."),
+]
+x0=Inches(0.85); y0=Inches(1.7); cw=Inches(5.75); ch=Inches(2.35); gx=Inches(0.35); gy=Inches(0.35)
+for i,(t,d) in enumerate(gaps):
+    r,c = divmod(i,2)
+    x = x0 + c*(cw+gx); y = y0 + r*(ch+gy)
+    rect(s, x, y, cw, ch, fill=CARD, line=LINE, line_w=1, shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True)
+    badge = rect(s, x+Inches(0.3), y+Inches(0.3), Inches(0.55), Inches(0.55),
+                 fill=RED, shape=MSO_SHAPE.OVAL)
+    tfb = badge.text_frame; tfb.paragraphs[0].alignment=PP_ALIGN.CENTER
+    rb = tfb.paragraphs[0].add_run(); rb.text=str(i+1); rb.font.bold=True; rb.font.size=Pt(18); rb.font.color.rgb=WHITE; rb.font.name="Calibri"
+    txt(s, x+Inches(1.05), y+Inches(0.33), cw-Inches(1.4), Inches(0.5),
+        [[R(t, 18, NAVY, True)]])
+    txt(s, x+Inches(0.32), y+Inches(1.05), cw-Inches(0.64), Inches(1.2),
+        [[R(d, 13.5, SLATE, False)]])
+page_num(s, 4)
+
+# ----------------------------------------------------------------------------
+# 5. ARQUITETURA PROPOSTA (camadas)
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, NAVY)
+rect(s, 0, 0, SW, Inches(1.15), fill=NAVY)
+rect(s, Inches(0.55), Inches(0.32), Inches(0.14), Inches(0.55), fill=GREEN)
+txt(s, Inches(0.85), Inches(0.26), Inches(11.6), Inches(0.3),
+    [[R("VISAO DE ARQUITETURA", 11.5, GREEN, True)]])
+txt(s, Inches(0.85), Inches(0.5), Inches(11.9), Inches(0.6),
+    [[R("Do sensor a diretoria: as 4 camadas do dado", 25, WHITE, True)]])
+layers = [
+    ("4", "DECISAO  ·  COI", "Dashboards unicos, benchmarking entre plantas, alertas e ranking em tempo real", GREEN),
+    ("3", "EXECUCAO INTELIGENTE  ·  FactoryTalk Optix + ResilientEdge", "HMI/SCADA multi-site, edge resiliente, loop fechado com IA, acesso remoto", OPTIX),
+    ("2", "DataOps + IA  ·  FactoryTalk DataMosaix + Atlas AI", "Contextualiza OT/IT/ET, RCA automatizada, agentes no-code, prescritivo", AMBER),
+    ("1", "EDGE / OT  ·  PlantPAx + sensores (o que ja temos)", "Controladores, blocos de processo, alarmes, dados em tempo real por planta", SLATE),
+]
+y0=Inches(1.5); lh=Inches(1.18); gap=Inches(0.16); x0=Inches(1.1); lw=Inches(10.2)
+for i,(n,t,d,c) in enumerate(layers):
+    y = y0 + i*(lh+gap)
+    rect(s, x0, y, lw, lh, fill=RGBColor(0x17,0x33,0x4E), line=c, line_w=1.5, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+    rect(s, x0, y, Inches(1.0), lh, fill=c, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+    txt(s, x0, y, Inches(1.0), lh, [[R(n,30,WHITE,True)]], align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    txt(s, x0+Inches(1.25), y+Inches(0.18), lw-Inches(1.5), Inches(0.45),
+        [[R(t, 16.5, WHITE, True)]])
+    txt(s, x0+Inches(1.25), y+Inches(0.62), lw-Inches(1.5), Inches(0.5),
+        [[R(d, 12.5, RGBColor(0xB9,0xCA,0xDB), False)]])
+# seta ascendente
+arrow = rect(s, x0+lw+Inches(0.25), y0, Inches(0.7), lh*4+gap*3, fill=GREEN, shape=MSO_SHAPE.UP_ARROW)
+txt(s, x0+lw+Inches(0.05), y0+lh*4+gap*3+Inches(0.05), Inches(1.1), Inches(0.4),
+    [[R("valor", 11, GREEN, True)]], align=PP_ALIGN.CENTER)
+page_num(s, 5)
+
+# ----------------------------------------------------------------------------
+# 6. FACTORYTALK OPTIX + RESILIENTEDGE
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Camada de execucao", "FactoryTalk Optix + ResilientEdge", OPTIX)
+txt(s, Inches(0.85), Inches(1.5), Inches(11.6), Inches(0.7),
+    [[R("De HMI para a ", 16, SLATE, False),
+      R("base de execucao inteligente", 16, OPTIX, True),
+      R(" da Rockwell: HMI/SCADA cloud-enabled, projetada e implantada pelo navegador.", 16, SLATE, False)]])
+feats = [
+    ("SCADA multi-site (2026)", "Centraliza o supervisorio de todas as plantas em uma plataforma, com redundancia de servidor e workstation clients."),
+    ("ResilientEdge", "Execucao edge resiliente + analytics em nuvem, treino de IA e orquestracao corporativa. Disponivel global desde 18/06/2026."),
+    ("Acesso remoto", "FactoryTalk Remote Access via VPN: investigar e resolver antes de viajar a planta remota."),
+    ("Aberto / OPC UA", "Comunica nativamente com controladores Rockwell e de terceiros; roda em qualquer hardware."),
+]
+x0=Inches(0.85); y0=Inches(2.35); cw=Inches(5.75); ch=Inches(1.75); gx=Inches(0.35); gy=Inches(0.3)
+for i,(t,d) in enumerate(feats):
+    r,c=divmod(i,2); x=x0+c*(cw+gx); y=y0+r*(ch+gy)
+    rect(s,x,y,cw,ch,fill=CARD,line=LINE,line_w=1,shape=MSO_SHAPE.ROUNDED_RECTANGLE,shadow=True)
+    rect(s,x,y,Inches(0.1),ch,fill=OPTIX)
+    txt(s,x+Inches(0.32),y+Inches(0.2),cw-Inches(0.6),Inches(0.5),[[R(t,16,OPTIX_DK,True)]])
+    txt(s,x+Inches(0.32),y+Inches(0.72),cw-Inches(0.6),Inches(0.95),[[R(d,13,SLATE,False)]])
+chip(s, Inches(0.85), Inches(6.35), "Para a Inpasa: o caminho natural do COI centralizado multi-planta",
+     fill=OPTIX, w=Inches(7.6), h=Inches(0.5), size=13)
+page_num(s, 6)
+
+# ----------------------------------------------------------------------------
+# 7. FACTORYTALK DATAMOSAIX + ATLAS AI
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Camada de DataOps + IA", "FactoryTalk DataMosaix + Atlas AI", AMBER)
+txt(s, Inches(0.85), Inches(1.5), Inches(11.6), Inches(0.7),
+    [[R("Industrial DataOps do edge a nuvem: ", 16, AMBER_DK, True),
+      R("contextualiza dados de operacao, engenharia e TI para casos de uso de IA.", 16, SLATE, False)]])
+feats = [
+    ("RCA automatizada", "Analise de causa raiz sem precisar de um analista de dados dedicado."),
+    ("Agentes de IA contextuais", "Monitoram variaveis de processo e geram alertas — exatamente o que o Hub de Automacao esta construindo."),
+    ("Manutencao prescritiva", "Detecta desgaste precoce e recomenda a acao antes da parada custosa."),
+    ("No-code", "Maicon e equipe criam fluxos e agentes seguros sem programar."),
+]
+x0=Inches(0.85); y0=Inches(2.35); cw=Inches(5.75); ch=Inches(1.75); gx=Inches(0.35); gy=Inches(0.3)
+for i,(t,d) in enumerate(feats):
+    r,c=divmod(i,2); x=x0+c*(cw+gx); y=y0+r*(ch+gy)
+    rect(s,x,y,cw,ch,fill=CARD,line=LINE,line_w=1,shape=MSO_SHAPE.ROUNDED_RECTANGLE,shadow=True)
+    rect(s,x,y,Inches(0.1),ch,fill=AMBER)
+    txt(s,x+Inches(0.32),y+Inches(0.2),cw-Inches(0.6),Inches(0.5),[[R(t,16,AMBER_DK,True)]])
+    txt(s,x+Inches(0.32),y+Inches(0.72),cw-Inches(0.6),Inches(0.95),[[R(d,13,SLATE,False)]])
+chip(s, Inches(0.85), Inches(6.35), "Para a Inpasa: integra OT + IT + ET e elimina silos entre as plantas",
+     fill=AMBER_DK, w=Inches(7.6), h=Inches(0.5), size=13)
+page_num(s, 7)
+
+# ----------------------------------------------------------------------------
+# 8. COMPARATIVO HOJE vs PROPOSTO (tabela)
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Comparativo", "Hoje (PlantPAx + TracOS)  vs.  Proposto (Optix + DataMosaix)", GREEN)
+rows = [
+    ("Capacidade", "Hoje", "Com Optix + DataMosaix"),
+    ("Supervisorio", "Por planta, isolado", "Multi-site centralizado (SCADA Optix)"),
+    ("Visao entre plantas", "Inexistente / manual", "Dashboards unicos e comparaveis"),
+    ("Manutencao", "Corretiva / preventiva", "Preditiva e prescritiva (IA)"),
+    ("Causa raiz", "Investigacao manual", "RCA automatizada por agente de IA"),
+    ("Alarmes", "Acima da ISA-18.2", "Benchmarking e reducao de nuisance"),
+    ("Acesso remoto", "Limitado", "Remote Access via VPN"),
+    ("IT / OT / ET", "Silos", "Convergencia em plataforma unica"),
+]
+tx=Inches(0.85); ty=Inches(1.7); tw=Inches(11.6); rh=Inches(0.56)
+colw=[Inches(3.0), Inches(4.0), Inches(4.6)]
+y=ty
+for ri,row in enumerate(rows):
+    x=tx
+    head = (ri==0)
+    for ci,cell in enumerate(row):
+        if head:
+            fill = NAVY if ci==0 else (RED if ci==1 else GREEN)
+        else:
+            fill = WHITE if ri%2 else RGBColor(0xEC,0xF2,0xF7)
+        cellsp = rect(s, x, y, colw[ci], rh, fill=fill, line=LINE, line_w=0.5)
+        tf=cellsp.text_frame; tf.word_wrap=True
+        tf.margin_left=Pt(8); tf.margin_right=Pt(6); tf.vertical_anchor=MSO_ANCHOR.MIDDLE
+        p=tf.paragraphs[0]; p.alignment=PP_ALIGN.LEFT
+        rr=p.add_run(); rr.text=cell
+        rr.font.size=Pt(13 if not head else 13.5)
+        rr.font.bold = head or ci==0
+        if head: rr.font.color.rgb=WHITE
+        elif ci==0: rr.font.color.rgb=NAVY
+        elif ci==1: rr.font.color.rgb=SLATE
+        else: rr.font.color.rgb=GREEN_DK
+        rr.font.name="Calibri"
+        x += colw[ci]
+    y += rh
+page_num(s, 8)
+
+# ----------------------------------------------------------------------------
+# 9. ALARMES ISA-18.2 (grafico)
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Benchmarking de alarmes", "A norma ISA-18.2 e a oportunidade imediata", RED)
+# grafico de barras
+chart_data = CategoryChartData()
+chart_data.categories = ["Limite ISA-18.2\n(maximo)", "Media do setor\n(hoje)", "Meta Inpasa\nno COI"]
+chart_data.add_series("Alarmes por operador / hora", (6, 30, 6))
+gx, gy, gw, gh = Inches(0.85), Inches(1.7), Inches(6.4), Inches(4.3)
+gf = s.shapes.add_chart(XL_CHART_TYPE.COLUMN_CLUSTERED, gx, gy, gw, gh, chart_data)
+chart = gf.chart
+chart.has_legend = False
+chart.has_title = True
+chart.chart_title.text_frame.text = "Alarmes por operador / hora"
+chart.chart_title.text_frame.paragraphs[0].runs[0].font.size = Pt(13)
+chart.chart_title.text_frame.paragraphs[0].runs[0].font.color.rgb = NAVY
+plot = chart.plots[0]
+plot.has_data_labels = True
+plot.data_labels.number_format = '0'
+plot.data_labels.number_format_is_linked = False
+plot.data_labels.font.size = Pt(14); plot.data_labels.font.bold=True
+plot.data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
+plot.gap_width = 60
+ser = plot.series[0]
+for idx, pt in enumerate(ser.points):
+    pt.format.fill.solid()
+    pt.format.fill.fore_color.rgb = GREEN if idx in (0,2) else RED
+cat_ax = chart.category_axis; cat_ax.tick_labels.font.size=Pt(11)
+val_ax = chart.value_axis; val_ax.has_major_gridlines=True
+val_ax.tick_labels.font.size=Pt(10)
+# texto lateral
+txt(s, Inches(7.55), Inches(1.85), Inches(5.0), Inches(0.6),
+    [[R("5x acima do recomendado", 20, RED, True)]])
+bullets(s, Inches(7.55), Inches(2.65), Inches(5.0), Inches(3.2), [
+    "Planta bem gerenciada: < 6 alarmes/operador/hora em operacao normal.",
+    "Media das plantas: 30+ por operador/hora — cinco vezes o maximo.",
+    "~70% dos alarmes em DCS/SCADA tipicos sao nuisance (nao exigem acao).",
+    ("FT VantagePoint ", "identifica nuisance alarms, bad actors e alarm floods — sobre o PlantPAx que ja temos."),
+], size=13.5, marker_col=RED, gap=11)
+page_num(s, 9)
+
+# ----------------------------------------------------------------------------
+# 10. KPIs DE BENCHMARKING (tabela)
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Indicadores", "KPIs de benchmarking que o ecossistema ja mede", GREEN)
+rows = [
+    ("KPI", "Ferramenta", "Disponivel hoje?"),
+    ("Alarmes por operador/hora", "FT VantagePoint + DataMosaix", "Sim — com PlantPAx atual"),
+    ("Alarmes nao reconhecidos", "FT Alarms & Events", "Nativo"),
+    ("Controles em Auto / Manual", "PlantPAx P_PID, P_VALVE", "Dado ja no controlador"),
+    ("Blocos Operador / Programa", "PlantPAx Command Source", "Campo nativo"),
+    ("Interlocks desabilitados", "PlantPAx P_Gate + P_INTLK", "Rastreavel"),
+    ("Variaveis simuladas", "Tag audit via Studio 5000", "Possivel"),
+    ("Bad actors / nuisance", "FT VantagePoint", "Sim — com PlantPAx"),
+    ("Benchmarking entre plantas", "DataMosaix (multi-site)", "Novidade que entra agora"),
+]
+tx=Inches(0.85); ty=Inches(1.62); rh=Inches(0.5)
+colw=[Inches(4.3), Inches(4.3), Inches(3.0)]
+y=ty
+for ri,row in enumerate(rows):
+    x=tx; head=(ri==0); last=(ri==len(rows)-1)
+    for ci,cell in enumerate(row):
+        if head: fill=NAVY
+        elif last: fill=GREEN
+        else: fill = WHITE if ri%2 else RGBColor(0xEC,0xF2,0xF7)
+        cellsp=rect(s,x,y,colw[ci],rh,fill=fill,line=LINE,line_w=0.5)
+        tf=cellsp.text_frame; tf.word_wrap=True
+        tf.margin_left=Pt(8); tf.margin_right=Pt(6); tf.vertical_anchor=MSO_ANCHOR.MIDDLE
+        p=tf.paragraphs[0]
+        rr=p.add_run(); rr.text=cell; rr.font.size=Pt(12.5)
+        rr.font.bold = head or ci==0 or last
+        if head or last: rr.font.color.rgb=WHITE
+        elif ci==0: rr.font.color.rgb=NAVY
+        else: rr.font.color.rgb=SLATE
+        rr.font.name="Calibri"
+        x+=colw[ci]
+    y+=rh
+txt(s, Inches(0.85), Inches(6.75), Inches(11.6), Inches(0.4),
+    [[R("Quase tudo ja existe no dado atual — falta a camada que agrega e compara: o DataMosaix.", 13, GRAY, False, True)]])
+page_num(s, 10)
+
+# ----------------------------------------------------------------------------
+# 11. O QUE O DATAMOSAIX ADICIONA
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, NAVY)
+rect(s, Inches(0.55), Inches(0.32), Inches(0.14), Inches(0.55), fill=AMBER)
+txt(s, Inches(0.85), Inches(0.26), Inches(11.6), Inches(0.3),
+    [[R("O DELTA", 11.5, AMBER, True)]])
+txt(s, Inches(0.85), Inches(0.5), Inches(11.9), Inches(0.6),
+    [[R("O que o DataMosaix adiciona ao que ja temos", 25, WHITE, True)]])
+txt(s, Inches(0.85), Inches(1.45), Inches(11.6), Inches(0.7),
+    [[R("Hoje o dado vive dentro de cada PlantPAx. O DataMosaix e a camada que ", 15.5, RGBColor(0xC8,0xD6,0xE4), False),
+      R("agrega, contextualiza e compara", 15.5, AMBER, True),
+      R(" — uma visao unica de toda a operacao.", 15.5, RGBColor(0xC8,0xD6,0xE4), False)]])
+adds = [
+    ("OEE comparavel", "Por planta, linha e regiao — em um unico dashboard."),
+    ("Planejamento enterprise", "Decisao de producao em nivel corporativo, nao por silo."),
+    ("Visao multi-site", "Sinop, LRV, Dourados, Balsas e novas plantas lado a lado."),
+    ("Contexto OT+IT+ET", "Dado de processo + manutencao + negocio juntos."),
+]
+x0=Inches(0.85); y0=Inches(2.45); cw=Inches(2.85); ch=Inches(2.9); gap=Inches(0.2)
+for i,(t,d) in enumerate(adds):
+    x=x0+i*(cw+gap)
+    rect(s,x,y0,cw,ch,fill=RGBColor(0x17,0x33,0x4E),line=AMBER,line_w=1.2,shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+    rect(s,x,y0,cw,Inches(0.1),fill=AMBER,shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+    txt(s,x+Inches(0.25),y0+Inches(0.4),cw-Inches(0.5),Inches(0.9),[[R(t,17,WHITE,True)]])
+    txt(s,x+Inches(0.25),y0+Inches(1.3),cw-Inches(0.5),Inches(1.4),[[R(d,13,RGBColor(0xB9,0xCA,0xDB),False)]])
+page_num(s, 11)
+
+# ----------------------------------------------------------------------------
+# 12. CASOS DE USO NO COI (Inpasa)
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Aplicacao direta", "Como isso aparece no COI da Inpasa", GREEN)
+cases = [
+    ("Tela unica em tempo real", "% de malhas em automatico por planta, lado a lado, atualizado ao vivo.", GREEN),
+    ("Ranking de plantas", "Por indice de alarmes/operador/hora — quem esta dentro e fora da ISA-18.2.", OPTIX),
+    ("Alertas automaticos", "Disparo quando uma planta cruza o limite de 6 alarmes/hora.", RED),
+    ("Comparativo historico", "Identifica qual planta regrediu apos parada ou troca de turno.", AMBER),
+]
+x0=Inches(0.85); y0=Inches(1.75); cw=Inches(5.75); ch=Inches(2.3); gx=Inches(0.35); gy=Inches(0.35)
+for i,(t,d,c) in enumerate(cases):
+    r,col=divmod(i,2); x=x0+col*(cw+gx); y=y0+r*(ch+gy)
+    rect(s,x,y,cw,ch,fill=CARD,line=LINE,line_w=1,shape=MSO_SHAPE.ROUNDED_RECTANGLE,shadow=True)
+    badge=rect(s,x+Inches(0.3),y+Inches(0.3),Inches(0.6),Inches(0.6),fill=c,shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+    badge.adjustments[0]=0.3
+    tfb=badge.text_frame; tfb.paragraphs[0].alignment=PP_ALIGN.CENTER
+    rb=tfb.paragraphs[0].add_run(); rb.text=str(i+1); rb.font.bold=True; rb.font.size=Pt(20); rb.font.color.rgb=WHITE; rb.font.name="Calibri"
+    txt(s,x+Inches(1.1),y+Inches(0.35),cw-Inches(1.45),Inches(0.9),[[R(t,17,NAVY,True)]])
+    txt(s,x+Inches(0.32),y+Inches(1.15),cw-Inches(0.64),Inches(1.0),[[R(d,13.5,SLATE,False)]])
+page_num(s, 12)
+
+# ----------------------------------------------------------------------------
+# 13. ROADMAP / DISPONIBILIDADE
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Roadmap", "Como entra — em fases, comecando pelo ganho rapido", OPTIX)
+phases = [
+    ("Fase 1\nGanho rapido", "Benchmarking de alarmes (VantagePoint) e KPIs sobre o PlantPAx atual. Valor imediato, sem trocar base.", GREEN),
+    ("Fase 2\nPreditivo", "DataMosaix agrega plantas, dashboards comparativos e deteccao precoce de desgaste.", AMBER),
+    ("Fase 3\nPrescritivo + COI", "Optix SCADA multi-site + agentes de IA prescritivos alimentando o COI centralizado.", OPTIX),
+]
+x0=Inches(0.85); y0=Inches(1.9); cw=Inches(3.75); ch=Inches(3.1); gap=Inches(0.18)
+for i,(t,d,c) in enumerate(phases):
+    x=x0+i*(cw+gap)
+    rect(s,x,y0,cw,ch,fill=CARD,line=c,line_w=1.5,shape=MSO_SHAPE.ROUNDED_RECTANGLE,shadow=True)
+    rect(s,x,y0,cw,Inches(0.95),fill=c,shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+    txt(s,x+Inches(0.3),y0+Inches(0.12),cw-Inches(0.6),Inches(0.8),[[R(t.split(chr(10))[0],14,WHITE,False)],[R(t.split(chr(10))[1],20,WHITE,True)]])
+    txt(s,x+Inches(0.32),y0+Inches(1.2),cw-Inches(0.64),Inches(1.8),[[R(d,14,SLATE,False)]])
+    if i<2:
+        rect(s,x+cw-Inches(0.05),y0+ch/2-Inches(0.2),Inches(0.4),Inches(0.4),fill=c,shape=MSO_SHAPE.CHEVRON)
+chip(s, Inches(0.85), Inches(5.45), "ResilientEdge: disponivel global desde 18/06/2026  ·  SCADA multi-site em rollout 2026",
+     fill=NAVY, w=Inches(9.0), h=Inches(0.5), size=13)
+page_num(s, 13)
+
+# ----------------------------------------------------------------------------
+# 14. PROXIMOS PASSOS
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, LIGHT)
+header(s, "Decisao", "O que pedimos para avancar", GREEN)
+steps = [
+    ("Aprovar piloto de Fase 1", "Benchmarking de alarmes (ISA-18.2) sobre o PlantPAx atual, em 1-2 plantas, como prova de valor."),
+    ("Definir plantas-piloto", "Sugestao: Sinop + uma unidade nova, para comparar maturidades."),
+    ("Validar interlocutores Rockwell", "Confirmar nomes/cargos dos apresentadores de Optix e DataMosaix (contato: Dan DeYoung)."),
+    ("Designar squad interno", "Maicon e equipe do Hub de Automacao conduzindo os fluxos no-code do DataMosaix."),
+]
+y0=Inches(1.75); rh=Inches(1.12); x0=Inches(0.85); w=Inches(11.6)
+for i,(t,d) in enumerate(steps):
+    y=y0+i*(rh+Inches(0.1))
+    rect(s,x0,y,w,rh,fill=CARD,line=LINE,line_w=1,shape=MSO_SHAPE.ROUNDED_RECTANGLE,shadow=True)
+    badge=rect(s,x0+Inches(0.3),y+Inches(0.28),Inches(0.55),Inches(0.55),fill=GREEN,shape=MSO_SHAPE.OVAL)
+    tfb=badge.text_frame; tfb.paragraphs[0].alignment=PP_ALIGN.CENTER
+    rb=tfb.paragraphs[0].add_run(); rb.text=str(i+1); rb.font.bold=True; rb.font.size=Pt(18); rb.font.color.rgb=WHITE; rb.font.name="Calibri"
+    txt(s,x0+Inches(1.1),y+Inches(0.16),w-Inches(1.4),Inches(0.5),[[R(t,16.5,NAVY,True)]])
+    txt(s,x0+Inches(1.1),y+Inches(0.62),w-Inches(1.4),Inches(0.45),[[R(d,13,SLATE,False)]])
+page_num(s, 14)
+
+# ----------------------------------------------------------------------------
+# 15. ENCERRAMENTO
+# ----------------------------------------------------------------------------
+s = slide(); bg(s, NAVY)
+rect(s, 0, 0, Inches(0.22), SH, fill=GREEN)
+rect(s, Inches(0.22), 0, Inches(0.08), SH, fill=OPTIX)
+txt(s, Inches(1.0), Inches(2.3), Inches(11.2), Inches(2.2),
+    [[R("O dado ja existe.", 40, WHITE, True)],
+     [R("Falta transforma-lo em decisao.", 40, GREEN, True)]])
+txt(s, Inches(1.02), Inches(4.4), Inches(11.0), Inches(1.0),
+    [[R("Optix + DataMosaix conectam o que a Inpasa ja tem (PlantPAx + TracOS) a um COI unico,", 17, RGBColor(0xCD,0xDA,0xE8), False)],
+     [R("com benchmarking entre plantas e IA prescritiva — comecando pelo ganho rapido.", 17, RGBColor(0xCD,0xDA,0xE8), False)]])
+rect(s, Inches(1.05), Inches(5.7), Inches(5.5), Pt(1.5), fill=RGBColor(0x35,0x52,0x70))
+txt(s, Inches(1.05), Inches(5.9), Inches(11), Inches(0.8),
+    [[R("Gestao Estrategica de Automacao  ·  Inpasa  ·  2026.06.28", 13, GRAY, True)]])
+
+# ----------------------------------------------------------------------------
+import os
+out = "2026.06.28 - MULTI - DataOps na Pratica IA a Servico da Alta Gestao v01.pptx"
+prs.save(out)
+print("OK ->", out, "| slides:", len(prs.slides._sldIdLst))
