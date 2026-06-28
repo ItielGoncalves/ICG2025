@@ -375,7 +375,7 @@ page_num(s)
 # ----------------------------------------------------------------------------
 # 6c. INDUSTRIAL DATAOPS (imagem)
 # ----------------------------------------------------------------------------
-image_slide("Camada de DataOps + IA", "Industrial DataOps — um hub para OT, IT e ET", AMBER, "OT = operação (chão de fábrica) · IT = sistemas corporativos · ET = engenharia (ativos).", "assets/industrial_dataops_hub.png", "Em vez de integrações ponto a ponto, o hub consolida OT, IT e ET com contextualização, modelos, qualidade e catálogo — reutilizáveis por várias aplicações e pela IA.")
+image_slide("Camada de DataOps + IA", "Industrial DataOps — um hub para OT, IT e ET", AMBER, "OT = operação (chão de fábrica) · IT = informação (sistemas corporativos) · ET = engenharia (projeto/ativos).", "assets/industrial_dataops_hub.png", "Em vez de integrações ponto a ponto, o hub consolida OT, IT e ET com contextualização, modelos, qualidade e catálogo — reutilizáveis por várias aplicações e pela IA.")
 
 # ----------------------------------------------------------------------------
 # 7. FACTORYTALK DATAMOSAIX + ATLAS AI
