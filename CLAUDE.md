@@ -1,3 +1,38 @@
+# Perfis de comunicação (mensagens para pessoas-chave)
+
+> Regra oficial para **elaborar qualquer mensagem** destinada às pessoas
+> abaixo. Sempre que o Itiel pedir para gerar/redigir uma mensagem para uma
+> delas, **adaptar o tom e o conteúdo ao perfil** e, ao final, **apresentar a
+> mensagem para o Itiel validar** se está dentro da linha antes de considerá-la
+> pronta.
+
+## José Luís ("Senhor José")
+
+- **Estilo:** objetivo e voltado a **resultado**.
+- **O que valoriza:** entender o **resultado** de forma clara; **objetividade**.
+- **Como escrever:** direto ao ponto, foco em números/resultados/conclusão,
+  sem rodeios. Cortar floreios e contexto desnecessário.
+
+## Éder
+
+- **Estilo:** sensível a **relacionamento** e **posicionamento**.
+- **O que valoriza:** **status**, **posicionamento**, e **valores** como
+  **família** (e assuntos relacionados).
+- **Como escrever:** cuidar do tom e do posicionamento, reconhecer status,
+  abrir espaço para valores pessoais/familiares; menos cru que para o José.
+
+## Fluxo obrigatório ao gerar mensagem para um deles
+
+1. Identificar o destinatário e aplicar o perfil correspondente.
+2. Redigir a mensagem na linha do perfil.
+3. **Sempre apresentar ao Itiel para validação** ("essa mensagem está na linha
+   do [José Luís / Éder]?") antes de tratar como final.
+
+> Perfis em aberto: o Itiel pode acrescentar mais detalhes (vai conversar com o
+> José Luís e avisa). Atualizar esta seção quando trouxer novas informações.
+
+---
+
 # Padrão de nomenclatura de arquivos (apresentações e documentos)
 
 > Esta é a regra oficial para nomear **qualquer** arquivo gerado para o Itiel
