@@ -1,3 +1,16 @@
+# Estilo de escrita (regra global, vale para TODA mensagem e documento)
+
+> **Nunca usar traço/travessão** ("—" ou " - ") como pontuação de frase.
+> **Sempre substituir por vírgula** (ou, quando couber, ponto, dois-pontos ou
+> parênteses). Vale para mensagens, textos, apresentações e qualquer conteúdo
+> gerado para o Itiel, e também para as respostas no chat.
+>
+> Exceção: o separador " - " do **padrão de nomenclatura de arquivos**
+> (`AAAA.MM.DD - UNIDADE - Título`) continua válido, pois ali é separador de
+> nome, não pontuação de frase.
+
+---
+
 # Perfis de comunicação (mensagens para pessoas-chave)
 
 > Regra oficial para **elaborar qualquer mensagem** destinada às pessoas
