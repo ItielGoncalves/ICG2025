@@ -589,7 +589,7 @@ paras(0.9, 1.15, 11.5, 1.7,
       [[R("Ser referência em ", 34, WHITE, True), R("automação inteligente", 34, GREEN, True)],
        [R("na América Latina.", 34, WHITE, True)]], ls=1.1, space_after=4)
 paras(0.92, 3.05, 11.3, 0.8,
-      [[R("Não por status — mas pela vontade de gerar resultado para a companhia com tecnologia de ponta: mais produção, menos perdas e decisão baseada em dado.", 15, COVER_SUB)]])
+      [[R("Nosso objetivo é gerar resultado para a companhia com tecnologia de ponta: mais produção, menos perdas e decisão baseada em dado.", 15, COVER_SUB)]])
 _p=[('Otimizar produção', 'visibilidade e decisão em tempo real'), ('Empoderar pessoas', 'operação e manutenção com apoio de IA'), ('Construir resiliência', 'menos paradas, retomadas mais estáveis'), ('Acelerar a transformação', 'do dado à ação, planta a planta')]
 _x=0.9; _y=3.95; _cw=2.85; _ch=2.25; _g=0.18
 for _i,(_t,_d) in enumerate(_p):

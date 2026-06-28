@@ -639,7 +639,7 @@ txt(s, Inches(0.9), Inches(1.15), Inches(11.5), Inches(1.7),
     [[R("Ser referência em ", 34, WHITE, True), R("automação inteligente", 34, GREEN, True)],
      [R("na América Latina.", 34, WHITE, True)]])
 txt(s, Inches(0.92), Inches(3.05), Inches(11.3), Inches(0.8),
-    [[R("Não por status — mas pela vontade de gerar resultado para a companhia com tecnologia de ponta: mais produção, menos perdas e decisão baseada em dado.", 15, RGBColor(0xCD,0xDA,0xE8), False)]])
+    [[R("Nosso objetivo é gerar resultado para a companhia com tecnologia de ponta: mais produção, menos perdas e decisão baseada em dado.", 15, RGBColor(0xCD,0xDA,0xE8), False)]])
 _p=[('Otimizar produção', 'visibilidade e decisão em tempo real'), ('Empoderar pessoas', 'operação e manutenção com apoio de IA'), ('Construir resiliência', 'menos paradas, retomadas mais estáveis'), ('Acelerar a transformação', 'do dado à ação, planta a planta')]
 _x=Inches(0.9); _y=Inches(3.95); _cw=Inches(2.85); _ch=Inches(2.25); _g=Inches(0.18)
 for _i,(_t,_d) in enumerate(_p):
