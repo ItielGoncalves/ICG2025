@@ -258,9 +258,9 @@ page_num(); c.showPage()
 page_bg(LIGHT)
 header("Diagnóstico", "As 4 lacunas que travam a decisão executiva", RED)
 gaps = [
-    ("Silos por planta", "O dado fica preso em cada PlantPAx. Não existe uma visão única nem ranking entre unidades."),
+    ("Silos por planta", "O dado fica preso no PlantPAx parcial de cada unidade. Não existe visão única nem ranking entre as plantas."),
     ("Sem benchmarking", "Sem comparar entre Sinop, Nova Mutum, Dourados, Balsas e Sidrolândia o índice de alarmes, de malhas em automático, de blocos em programa, de interlocks desativados e de variáveis simuladas."),
-    ("Parcialmente reativa", "TracOS já evita 5–6 falhas/planta em rotativos. Falta cobrir equipamentos não rotativos e dar insight prescritivo para eles."),
+    ("Parcialmente reativa", "TracOS já evita 5–6 falhas/planta em rotativos. Falta cobrir equipamentos não rotativos e dar insight de manutenção prescritiva para eles."),
     ("Excesso de alarmes", "Média do setor: 30+ alarmes/operador/hora (5x acima da ISA-18.2); ~70% são nuisance alarms."),
 ]
 x0=0.85; y0=1.7; cw=5.75; ch=2.35; gx=0.35; gy=0.35
@@ -318,10 +318,10 @@ paras(0.85, 1.5, 11.6, 0.7,
       [[R("De HMI para a ", 16, SLATE), R("base de execução inteligente", 16, OPTIX, True),
         R(" da Rockwell: HMI/SCADA cloud-enabled, projetada e implantada pelo navegador.", 16, SLATE)]])
 feats6 = [
-    ("SCADA multi-site (2026)", "Centraliza o supervisório de todas as plantas em uma plataforma, com redundância de servidor e workstation clients."),
+    ("SCADA multi-site (Optix)", "O próprio FactoryTalk Optix ganha módulo SCADA: centraliza o supervisório de todas as plantas, com redundância de servidor e workstation clients."),
     ("ResilientEdge", "Execução edge resiliente + analytics em nuvem, treino de IA e orquestração corporativa. Disponível global desde 18/06/2026."),
-    ("Acesso remoto", "FactoryTalk Remote Access via VPN: investigar e resolver antes de viajar à planta remota."),
-    ("Aberto / OPC UA", "Comunica nativamente com controladores Rockwell e de terceiros; roda em qualquer hardware."),
+    ("Acesso remoto", "FactoryTalk Remote Access via VPN. Hoje a Inpasa usa Citrix, que pode ser mantido."),
+    ("Aberto / OPC UA", "Comunica com controladores Rockwell e de terceiros e roda em qualquer hardware — integra os equipamentos multimarca da Inpasa, sem lock-in."),
 ]
 x0=0.85; y0=2.35; cw=5.75; ch=1.75; gx=0.35; gy=0.3
 for i,(t,d) in enumerate(feats6):
@@ -360,7 +360,7 @@ paras(0.85, 1.5, 11.6, 0.35,
 feats7 = [
     ("RCA automatizada", "Análise de causa raiz sem precisar de um analista de dados dedicado.",
      "ao parar uma planta, o agente cruza alarmes, malhas e histórico e aponta a causa provável em segundos."),
-    ("Manutenção prescritiva", "Detecta desgaste precoce e recomenda a ação antes da parada custosa.",
+    ("Manutenção prescritiva", "Detecta desgaste precoce e age antes da parada — complementa a Tractian (rotativos), agora para os demais ativos.",
      "a posição real de uma válvula de controle passa a divergir do percentual comandado além do histórico — tendência de desgaste sinalizada antes da falha."),
     ("Agentes de IA contextuais", "Monitoram variáveis de processo e geram alertas contextualizados.",
      "exatamente o que o Hub de Automação está construindo — alerta quando uma malha foge do padrão da planta."),
@@ -462,7 +462,6 @@ page_num(); c.showPage()
 # ----------------------------------------------------------------------------
 # 9b. ALARMES COM IA (imagem)
 # ----------------------------------------------------------------------------
-image_slide("Benchmarking de alarmes · IA", "Análise de alarmes assistida por IA", RED, "A análise histórica de alarmes que propomos já existe nas ferramentas FactoryTalk.", "assets/ftview_ai_alarms.png", "O FactoryTalk View AI responde perguntas como 'os 10 alarmes mais frequentes nos últimos 60 dias' — o tipo de insight que sustenta o ranking ISA-18.2 no COI.")
 
 # ----------------------------------------------------------------------------
 # 10. KPIs (tabela)
@@ -550,7 +549,7 @@ page_num(); c.showPage()
 # ----------------------------------------------------------------------------
 # 12b. EVOLUCAO PLANTPAX (imagem)
 # ----------------------------------------------------------------------------
-image_slide("Modernização · plataforma", "Evolução do PlantPAx — do adaptado ao PlantPAx 2026", GREEN, "Não trocar a base: evoluir o PlantPAx adaptado de hoje para a direção 2026 da Rockwell.", "assets/plantpax_direction.png", "Direção 2026: integração com FactoryTalk Optix, arquitetura multi-node, +20 conectores, design em nuvem e Software Defined Automation — com Provisioning que reduz o deploy a 1–2 semanas.")
+image_slide("Modernização · plataforma", "Evolução do PlantPAx — do adaptado ao PlantPAx 2026", GREEN, "Hoje já há IA que converte plantas com PlantPAx desatualizado para a versão atual; e o padrão ISA-101 (telas em cinza, cor só no que exige atenção) otimiza a operação.", "assets/plantpax_direction.png", "Direção 2026: integração com FactoryTalk Optix, arquitetura multi-node, +20 conectores, design em nuvem e Software Defined Automation — com Provisioning que reduz o deploy a 1–2 semanas.")
 
 # ----------------------------------------------------------------------------
 # 13. ROADMAP
@@ -558,7 +557,7 @@ image_slide("Modernização · plataforma", "Evolução do PlantPAx — do adapt
 page_bg(LIGHT)
 header("Roadmap", "Como evolui — do que já temos ao COI prescritivo", OPTIX)
 phases = [
-    ("Fase 1", "Já implementado", """Benchmarking de alarmes e KPIs já rodam hoje no Grafana — que já temos e está implantado — sobre o PlantPAx adaptado. Base pronta; o equivalente Rockwell (VantagePoint) não é necessário para começar.""", GREEN),
+    ("Fase 1", "Já implementado", """O Grafana já está implantado sobre o PlantPAx adaptado, com os primeiros indicadores (ex.: controles em automático) já em teste. Base pronta — o equivalente Rockwell (VantagePoint) não é necessário para começar.""", GREEN),
     ("Fase 2", "Preditivo", """O DataMosaix estende o monitoramento preditivo aos equipamentos não rotativos — os rotativos já são cobertos pela Tractian — e agrega as plantas em dashboards comparativos.""", AMBER),
     ("Fase 3", "Prescritivo + COI", """Em simulações de paradas em vários sites, com o COI centralizado a retomada das plantas ficou mais estável, rápida e otimizada — operação e manutenção. Com o time central treinando os sites, é possível até evitar desarmes.""", OPTIX),
 ]
@@ -585,20 +584,21 @@ page_num(); c.showPage()
 page_bg(NAVY)
 rect(0, 0, 0.22, PH, fill=GREEN)
 rect(0.22, 0, 0.08, PH, fill=OPTIX)
-paras(0.9, 0.7, 11.6, 0.4, [[R("A AMBIÇÃO DA INPASA", 12, GREEN, True)]])
+paras(0.9, 0.7, 11.6, 0.4, [[R("O OBJETIVO PROPOSTO PELA ALTA GESTÃO", 12, GREEN, True)]])
 paras(0.9, 1.15, 11.5, 1.7,
       [[R("Ser referência em ", 34, WHITE, True), R("automação inteligente", 34, GREEN, True)],
        [R("na América Latina.", 34, WHITE, True)]], ls=1.1, space_after=4)
 paras(0.92, 3.05, 11.3, 0.8,
       [[R("Não por status — mas pela vontade de gerar resultado para a companhia com tecnologia de ponta: mais produção, menos perdas e decisão baseada em dado.", 15, COVER_SUB)]])
 _p=[('Otimizar produção', 'visibilidade e decisão em tempo real'), ('Empoderar pessoas', 'operação e manutenção com apoio de IA'), ('Construir resiliência', 'menos paradas, retomadas mais estáveis'), ('Acelerar a transformação', 'do dado à ação, planta a planta')]
-_x=0.9; _y=4.05; _cw=2.85; _ch=2.45; _g=0.18
+_x=0.9; _y=3.95; _cw=2.85; _ch=2.25; _g=0.18
 for _i,(_t,_d) in enumerate(_p):
     _xx=_x+_i*(_cw+_g)
     rect(_xx,_y,_cw,_ch,fill=NAVY_CARD,line=GREEN,line_w=1.2,rounded=True,radius=8)
     rect(_xx,_y,_cw,0.1,fill=GREEN,rounded=True,radius=3)
     paras(_xx+0.25,_y+0.35,_cw-0.5,0.9,[[R(_t,16,WHITE,True)]])
     paras(_xx+0.25,_y+1.25,_cw-0.5,1.0,[[R(_d,12.5,LAYER_DESC)]])
+paras(0.9, 6.5, 11.5, 0.8, [[R("Onde se encaixa: ", 13, GREEN, True), R("otimizar processos de pequenos ganhos — energia, vapor e outros — que muitas vezes não avaliamos por serem pequenos, mas que a IA consegue otimizar.", 13, COVER_SUB)]])
 c.showPage()
 
 # ----------------------------------------------------------------------------
@@ -610,7 +610,7 @@ steps = [
     ("Aprovar o piloto", """Começar por 1–2 indicadores em todas as plantas (ex.: controles em automático e índice de alarmes/operador·hora), ampliando depois para os demais. Estimativa: ~4–6 semanas para os 2 primeiros, conforme o volume de tags por unidade."""),
     ("Sequência de indicadores", """Controles em automático e índice de alarmes primeiro; depois blocos em programa, interlocks desabilitados e variáveis simuladas."""),
     ("Interlocutores Rockwell", """Time EUA: Andrew D'Souza (Software & Control LATAM), JP Wright (Visualization & Production Data), Brian Widman (Controllers), Chris Stearns (PlantPAx). Time Brasil: Lúcio Granato e Marcel. Anfitrião: Dan DeYoung (VP & GM, Design & Control)."""),
-    ("Designar squad interno", """Gestores e equipe do Hub de Automação conduzindo os fluxos no-code do DataMosaix."""),
+    ("Designar squad interno", """Gestores e equipe do Hub de Automação nos fluxos no-code do DataMosaix, com apoio e patrocínio dos gestores de processo e de automação."""),
 ]
 y0=1.7; rh=1.24; x0=0.85; w=11.6
 for i,(t,d) in enumerate(steps):
