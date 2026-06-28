@@ -150,7 +150,7 @@ paras(0.95, 5.35, 11, 1.2,
       [[R("Apresentado a:  ", 14, GRAY), R("Sr. José  e  Éder", 14, WHITE, True)],
        [R("Centro de Operações Integradas (COI)  ·  Benchmarking entre plantas  ·  Manutenção prescritiva", 13, GRAY)]],
       space_after=5)
-paras(9.6, 6.75, 2.9, 0.4, [[R("2026.06.28  ·  MULTI  ·  vFINAL", 12, GRAY, True)]], align=TA_RIGHT)
+paras(9.6, 6.75, 2.9, 0.4, [[R("2026.06.28  ·  MULTI  ·  v02", 12, GRAY, True)]], align=TA_RIGHT)
 c.showPage()
 
 # ----------------------------------------------------------------------------
@@ -161,12 +161,12 @@ header("Contexto", "Por que olhar para isso agora", GREEN)
 paras(0.85, 1.55, 11.6, 0.9,
       [[R("A Inpasa cresceu de planta única para uma ", 16, SLATE),
         R("operação multi-unidades", 16, NAVY, True),
-        R(" (Sinop, Lucas do Rio Verde, Dourados, Balsas e novas plantas). ", 16, SLATE),
+        R(" (Sinop, Nova Mutum, Dourados, Balsas, Sidrolândia e novas plantas). ", 16, SLATE),
         R("Os dados existem — mas vivem isolados dentro de cada planta.", 16, NAVY, True)]])
 cards2 = [
-    ("Reunião estratégica", "Encontro Inpasa x Rockwell (26/06) sobre parceria de tecnologia e inovação. Contato principal: Dan DeYoung.", OPTIX),
+    ("Reunião estratégica", "Encontro Inpasa x Rockwell (26/06) sobre parceria de tecnologia e inovação. Contato: Dan DeYoung (VP executivo).", OPTIX),
     ("Dados em silos", "Cada unidade tem seu PlantPAx. Não há visão única nem comparação direta entre plantas.", AMBER),
-    ("Decisão reativa", "Manutenção corretiva/preventiva e alarmes acima da norma — ainda sem IA prescritiva.", RED),
+    ("Decisão reativa", "Manutenção parcialmente reativa (TracOS cobre rotativos) e alarmes acima da norma — falta prescritivo e não rotativos.", RED),
     ("Janela de oportunidade", "Optix e DataMosaix amadureceram em 2026 (SCADA multi-site + Industrial DataOps).", GREEN),
 ]
 cw=2.85; gap=0.2; x0=0.85; y0=2.75; ch=3.0
@@ -193,7 +193,7 @@ rect(x0, y0+0.35, cw, 0.35, fill=AMBER)
 paras(x0+0.3, y0+0.13, cw-0.6, 0.5, [[R("PlantPAx", 19, WHITE, True), R("   supervisório por planta", 13, WHITE)]])
 bullets(x0+0.35, y0+0.95, cw-0.7, 2.6, [
     ("DCS/SCADA Rockwell ", "rodando em cada unidade"),
-    ("Blocos de processo ", "P_PID, P_VALVE, P_INTLK, Command Source"),
+    ("PlantPAx parcial ", "diversos blocos (P_PID, P_VALVE, P_INTLK), parte customizados à Inpasa"),
     ("Dados nativos ", "modo Auto/Manual, Operador/Programa, interlocks"),
     ("Alarmes & Events ", "alarmes não reconhecidos já rastreados"),
 ], size=13.5, marker=AMBER, gap=9)
@@ -201,12 +201,12 @@ x1=x0+cw+gap
 card(x1, y0, cw, ch)
 rect(x1, y0, cw, 0.7, fill=SLATE, rounded=True, radius=8)
 rect(x1, y0+0.35, cw, 0.35, fill=SLATE)
-paras(x1+0.3, y0+0.13, cw-0.6, 0.5, [[R("TracOS", 19, WHITE, True), R("   gestão de manutenção", 13, WHITE)]])
+paras(x1+0.3, y0+0.13, cw-0.6, 0.5, [[R("TracOS", 19, WHITE, True), R("   manutenção preditiva", 13, WHITE)]])
 bullets(x1+0.35, y0+0.95, cw-0.7, 2.6, [
-    ("Ordens de serviço ", "e controle de ativos por unidade"),
-    ("Histórico de manutenção ", "corretiva e preventiva"),
-    ("Planejamento ", "de paradas e equipes"),
-    ("Base solida ", "— porem desconectada do dado de processo em tempo real"),
+    ("TracOS (Tractian) ", "monitoramento preditivo de rotativos"),
+    ("Evita falhas ", "em média 5–6 por planta, com antecedência"),
+    ("Ordens de serviço ", "e gestão de ativos por unidade"),
+    ("Lacuna ", "não cobre não rotativos nem prescritivo"),
 ], size=13.5, marker=SLATE, gap=9)
 paras(0.85, 5.7, 11.6, 1.0,
       [[R("Resumo:  ", 15, NAVY, True),
@@ -221,8 +221,8 @@ page_bg(LIGHT)
 header("Diagnóstico", "As 4 lacunas que travam a decisão executiva", RED)
 gaps = [
     ("Silos por planta", "O dado fica preso em cada PlantPAx. Não existe uma visão única nem ranking entre unidades."),
-    ("Sem benchmarking", "Impossível comparar OEE, malhas em auto e alarmes entre Sinop, LRV, Dourados e Balsas de forma direta."),
-    ("Manutenção reativa", "Agimos depois da falha. Sem análise de causa raiz automatizada nem recomendação prescritiva."),
+    ("Sem benchmarking", "Sem comparar entre Sinop, Nova Mutum, Dourados, Balsas e Sidrolândia o índice de alarmes, de malhas em automático, de blocos em programa, de interlocks desativados e de variáveis simuladas."),
+    ("Parcialmente reativa", "TracOS já evita 5–6 falhas/planta em rotativos. Falta cobrir equipamentos não rotativos e dar insight prescritivo para eles."),
     ("Excesso de alarmes", "Média do setor: 30+ alarmes/operador/hora (5x acima da ISA-18.2); ~70% são nuisance alarms."),
 ]
 x0=0.85; y0=1.7; cw=5.75; ch=2.35; gx=0.35; gy=0.35
@@ -246,7 +246,7 @@ layers = [
     ("4", "DECISÃO  ·  COI", "Dashboards únicos, benchmarking entre plantas, alertas e ranking em tempo real", GREEN),
     ("3", "EXECUÇÃO INTELIGENTE  ·  FactoryTalk Optix + ResilientEdge", "HMI/SCADA multi-site, edge resiliente, loop fechado com IA, acesso remoto", OPTIX),
     ("2", "DataOps + IA  ·  FactoryTalk DataMosaix + Atlas AI", "Contextualiza OT/IT/ET, RCA automatizada, agentes no-code, prescritivo", AMBER),
-    ("1", "EDGE / OT  ·  PlantPAx + sensores (o que já temos)", "Controladores, blocos de processo, alarmes, dados em tempo real por planta", SLATE),
+    ("1", "EDGE / OT  ·  PlantPAx + sensores + Tractian (o que já temos)", "Controladores, blocos, alarmes e monitoramento de rotativos (Tractian) por planta", SLATE),
 ]
 y0=1.5; lh=1.18; gap=0.16; x0=1.1; lw=10.2
 for i,(n,t,d,col) in enumerate(layers):
@@ -300,22 +300,27 @@ page_num(6); c.showPage()
 # ----------------------------------------------------------------------------
 page_bg(LIGHT)
 header("Camada de DataOps + IA", "FactoryTalk DataMosaix + Atlas AI", AMBER)
-paras(0.85, 1.5, 11.6, 0.7,
-      [[R("Industrial DataOps do edge à nuvem: ", 16, AMBER_DK, True),
-        R("contextualiza dados de operação, engenharia e TI para casos de uso de IA.", 16, SLATE)]])
+paras(0.85, 1.5, 11.6, 0.35,
+      [[R("Industrial DataOps do edge à nuvem: ", 14.5, AMBER_DK, True),
+        R("contextualiza dados de operação, engenharia e TI para casos de uso de IA.", 14.5, SLATE)]])
 feats7 = [
-    ("RCA automatizada", "Análise de causa raiz sem precisar de um analista de dados dedicado."),
-    ("Agentes de IA contextuais", "Monitoram variáveis de processo e geram alertas — exatamente o que o Hub de Automação está construindo."),
-    ("Manutenção prescritiva", "Detecta desgaste precoce e recomenda a ação antes da parada custosa."),
-    ("No-code", "Maicon e equipe criam fluxos e agentes seguros sem programar."),
+    ("RCA automatizada", "Análise de causa raiz sem precisar de um analista de dados dedicado.",
+     "ao parar uma planta, o agente cruza alarmes, malhas e histórico e aponta a causa provável em segundos."),
+    ("Manutenção prescritiva", "Detecta desgaste precoce e recomenda a ação antes da parada custosa.",
+     "a posição real de uma válvula de controle passa a divergir do percentual comandado além do histórico — tendência de desgaste sinalizada antes da falha."),
+    ("Agentes de IA contextuais", "Monitoram variáveis de processo e geram alertas contextualizados.",
+     "exatamente o que o Hub de Automação está construindo — alerta quando uma malha foge do padrão da planta."),
+    ("No-code", "A equipe de automação cria fluxos e agentes seguros sem programar.",
+     "monta e ajusta os fluxos do DataMosaix sem depender de TI nem de código."),
 ]
-for i,(t,d) in enumerate(feats7):
-    r,cc=divmod(i,2); x=x0+cc*(cw+gx); y=y0+r*(ch+gy)
-    card(x, y, cw, ch)
-    rect(x, y, 0.1, ch, fill=AMBER, rounded=True, radius=3)
-    paras(x+0.32, y+0.2, cw-0.6, 0.5, [[R(t, 16, AMBER_DK, True)]])
-    paras(x+0.32, y+0.72, cw-0.6, 0.95, [[R(d, 13, SLATE)]])
-chip(0.85, 6.35, "Para a Inpasa: integra OT + IT + ET e elimina silos entre as plantas", fill=AMBER_DK, w=7.6, h=0.5, size=13)
+x0d=0.85; wd=11.6; y0d=1.98; rhd=1.12; gapd=0.12
+for i,(t,d,ex) in enumerate(feats7):
+    y=y0d+i*(rhd+gapd)
+    card(x0d, y, wd, rhd)
+    rect(x0d, y, 0.1, rhd, fill=AMBER, rounded=True, radius=3)
+    paras(x0d+0.32, y+0.12, wd-0.7, 0.32, [[R(t, 16, AMBER_DK, True)]])
+    paras(x0d+0.32, y+0.45, wd-0.7, 0.26, [[R(d, 12.5, SLATE)]])
+    paras(x0d+0.32, y+0.72, wd-0.7, 0.40, [[R("Ex. Inpasa:  ", 12, AMBER_DK, True, True), R(ex, 12, SLATE, False, True)]])
 page_num(7); c.showPage()
 
 # ----------------------------------------------------------------------------
@@ -327,10 +332,11 @@ rows = [
     ("Capacidade", "Hoje", "Com Optix + DataMosaix"),
     ("Supervisório", "Por planta, isolado", "Multi-site centralizado (SCADA Optix)"),
     ("Visão entre plantas", "Inexistente / manual", "Dashboards únicos e comparáveis"),
-    ("Manutenção", "Corretiva / preventiva", "Preditiva e prescritiva (IA)"),
+    ("Padrão de HMI", "PlantPAx parcial / customizado", "PlantPAx 2026 + ISA-101"),
+    ("Manutenção", "Preditiva em rotativos (TracOS)", "Prescritiva, incl. não rotativos"),
     ("Causa raiz", "Investigação manual", "RCA automatizada por agente de IA"),
     ("Alarmes", "Acima da ISA-18.2", "Benchmarking e redução de nuisance"),
-    ("Acesso remoto", "Limitado", "Remote Access via VPN"),
+    ("Acesso remoto", "Via VPN (já temos)", "Mantém VPN + Remote Access (Optix)"),
     ("IT / OT / ET", "Silos", "Convergência em plataforma única"),
 ]
 tx=0.85; ty=1.7; rh=0.56; colw=[3.0,4.0,4.6]
@@ -384,7 +390,7 @@ bullets(7.55, 2.65, 5.0, 3.2, [
     "Planta bem gerenciada: < 6 alarmes/operador/hora em operação normal.",
     "Média das plantas: 30+ por operador/hora — cinco vezes o máximo.",
     "~70% dos alarmes em DCS/SCADA típicos são nuisance (não exigem ação).",
-    ("FT VantagePoint ", "identifica nuisance alarms, bad actors e alarm floods — sobre o PlantPAx que já temos."),
+    ("Grafana (já implantado) ", "trata nuisance alarms, bad actors e alarm floods sobre o PlantPAx adaptado — base que já operamos hoje."),
 ], size=13.5, marker=RED, gap=11)
 page_num(9); c.showPage()
 
@@ -395,13 +401,13 @@ page_bg(LIGHT)
 header("Indicadores", "KPIs de benchmarking que o ecossistema já mede", GREEN)
 rows = [
     ("KPI", "Ferramenta", "Disponível hoje?"),
-    ("Alarmes por operador/hora", "FT VantagePoint + DataMosaix", "Sim — com PlantPAx atual"),
+    ("Alarmes por operador/hora", "Grafana (hoje) + DataMosaix", "Sim — sobre PlantPAx adaptado"),
     ("Alarmes não reconhecidos", "FT Alarms & Events", "Nativo"),
     ("Controles em Auto / Manual", "PlantPAx P_PID, P_VALVE", "Dado já no controlador"),
     ("Blocos Operador / Programa", "PlantPAx Command Source", "Campo nativo"),
     ("Interlocks desabilitados", "PlantPAx P_Gate + P_INTLK", "Rastreável"),
     ("Variáveis simuladas", "Tag audit via Studio 5000", "Possível"),
-    ("Bad actors / nuisance", "FT VantagePoint", "Sim — com PlantPAx"),
+    ("Bad actors / nuisance", "Grafana (hoje)", "Sim — PlantPAx adaptado"),
     ("Benchmarking entre plantas", "DataMosaix (multi-site)", "Novidade que entra agora"),
 ]
 tx=0.85; ty=1.62; rh=0.5; colw=[4.3,4.3,3.0]
@@ -436,18 +442,18 @@ paras(0.85, 1.45, 11.6, 0.7,
         R("agrega, contextualiza e compara", 15.5, AMBER, True),
         R(" — uma visão única de toda a operação.", 15.5, COVER_SUB)]])
 adds = [
-    ("OEE comparável", "Por planta, linha e região — em um único dashboard."),
-    ("Planejamento enterprise", "Decisão de produção em nível corporativo, não por silo."),
-    ("Visão multi-site", "Sinop, LRV, Dourados, Balsas e novas plantas lado a lado."),
-    ("Contexto OT+IT+ET", "Dado de processo + manutenção + negócio juntos."),
+    ("Indicadores comparáveis", "Alarmes/operador·hora, % de malhas em automático, blocos em programa, interlocks e variáveis simuladas — além do OEE — por planta, num só painel."),
+    ("Planejamento enterprise", "Decisão de produção, manutenção e ações estratégicas em nível corporativo — visão consolidada da companhia, não por site isolado."),
+    ("Visão multi-site", "Sinop, Nova Mutum, Dourados, Balsas, Sidrolândia e novas plantas, lado a lado, na mesma régua."),
+    ("Contexto OT + IT + ET", "Une OT (processo / chão de fábrica), IT (sistemas corporativos / ERP) e ET (engenharia / ativos) num só contexto pronto para a IA."),
 ]
 x0=0.85; y0=2.45; cw=2.85; ch=2.9; gap=0.2
 for i,(t,d) in enumerate(adds):
     x=x0+i*(cw+gap)
     rect(x, y0, cw, ch, fill=NAVY_CARD, line=AMBER, line_w=1.2, rounded=True, radius=8)
     rect(x, y0, cw, 0.1, fill=AMBER, rounded=True, radius=3)
-    paras(x+0.25, y0+0.4, cw-0.5, 0.9, [[R(t, 17, WHITE, True)]])
-    paras(x+0.25, y0+1.3, cw-0.5, 1.4, [[R(d, 13, LAYER_DESC)]])
+    paras(x+0.25, y0+0.38, cw-0.5, 0.85, [[R(t, 16.5, WHITE, True)]])
+    paras(x+0.25, y0+1.2, cw-0.5, 1.6, [[R(d, 12.5, LAYER_DESC)]])
 page_num(11); c.showPage()
 
 # ----------------------------------------------------------------------------
@@ -456,10 +462,10 @@ page_num(11); c.showPage()
 page_bg(LIGHT)
 header("Aplicação direta", "Como isso aparece no COI da Inpasa", GREEN)
 cases = [
-    ("Tela única em tempo real", "% de malhas em automático por planta, lado a lado, atualizado ao vivo.", GREEN),
-    ("Ranking de plantas", "Por índice de alarmes/operador/hora — quem está dentro e fora da ISA-18.2.", OPTIX),
-    ("Alertas automáticos", "Disparo quando uma planta cruza o limite de 6 alarmes/hora.", RED),
-    ("Comparativo histórico", "Identifica qual planta regrediu após parada ou troca de turno.", AMBER),
+    ("Tela única em tempo real", "Indicadores ao vivo por planta, lado a lado: % de malhas em automático, índice de alarmes/operador·hora, blocos em programa, interlocks e variáveis simuladas.", GREEN),
+    ("Ranking de plantas", "Ordena as unidades pelos mesmos indicadores — quem está dentro e fora da ISA-18.2 — destacando boa prática e quem precisa de atenção.", OPTIX),
+    ("Alertas automáticos", "Disparo ao cruzar o limite (ex.: 6 alarmes/operador·hora) — notificação por WhatsApp, e-mail ou o canal que o gestor preferir.", RED),
+    ("Comparativo histórico", "Revela divergências por turno e antes/depois de parada, além de outros padrões — insights para operação e manutenção.", AMBER),
 ]
 x0=0.85; y0=1.75; cw=5.75; ch=2.3; gx=0.35; gy=0.35
 for i,(t,d,col) in enumerate(cases):
@@ -468,34 +474,34 @@ for i,(t,d,col) in enumerate(cases):
     rect(x+0.3, y+0.3, 0.6, 0.6, fill=col, rounded=True, radius=10)
     paras(x+0.3, y+0.3, 0.6, 0.6, [[R(str(i+1), 20, WHITE, True)]], align=TA_CENTER, anchor='middle')
     paras(x+1.1, y+0.35, cw-1.45, 0.9, [[R(t, 17, NAVY, True)]])
-    paras(x+0.32, y+1.15, cw-0.64, 1.0, [[R(d, 13.5, SLATE)]])
+    paras(x+0.32, y+1.08, cw-0.64, 1.15, [[R(d, 12.5, SLATE)]])
 page_num(12); c.showPage()
 
 # ----------------------------------------------------------------------------
 # 13. ROADMAP
 # ----------------------------------------------------------------------------
 page_bg(LIGHT)
-header("Roadmap", "Como entra — em fases, começando pelo ganho rápido", OPTIX)
+header("Roadmap", "Como evolui — do que já temos ao COI prescritivo", OPTIX)
 phases = [
-    ("Fase 1", "Ganho rápido", "Benchmarking de alarmes (VantagePoint) e KPIs sobre o PlantPAx atual. Valor imediato, sem trocar base.", GREEN),
-    ("Fase 2", "Preditivo", "DataMosaix agrega plantas, dashboards comparativos e detecção precoce de desgaste.", AMBER),
-    ("Fase 3", "Prescritivo + COI", "Optix SCADA multi-site + agentes de IA prescritivos alimentando o COI centralizado.", OPTIX),
+    ("Fase 1", "Já implementado", """Benchmarking de alarmes e KPIs já rodam hoje no Grafana — que já temos e está implantado — sobre o PlantPAx adaptado. Base pronta; o equivalente Rockwell (VantagePoint) não é necessário para começar.""", GREEN),
+    ("Fase 2", "Preditivo", """O DataMosaix estende o monitoramento preditivo aos equipamentos não rotativos — os rotativos já são cobertos pela Tractian — e agrega as plantas em dashboards comparativos.""", AMBER),
+    ("Fase 3", "Prescritivo + COI", """Em simulações de paradas em vários sites, com o COI centralizado a retomada das plantas ficou mais estável, rápida e otimizada — operação e manutenção. Com o time central treinando os sites, é possível até evitar desarmes.""", OPTIX),
 ]
-x0=0.85; y0=1.9; cw=3.75; ch=3.1; gap=0.18
+x0=0.85; y0=1.9; cw=3.75; ch=3.5; gap=0.18
 for i,(l1,l2,d,col) in enumerate(phases):
     x=x0+i*(cw+gap)
     card(x, y0, cw, ch, line=col, line_w=1.5)
     rect(x, y0, cw, 0.95, fill=col, rounded=True, radius=8)
     rect(x, y0+0.5, cw, 0.45, fill=col)
     paras(x+0.3, y0+0.12, cw-0.6, 0.8, [[R(l1, 14, WHITE)],[R(l2, 20, WHITE, True)]], space_after=1)
-    paras(x+0.32, y0+1.2, cw-0.64, 1.8, [[R(d, 14, SLATE)]])
+    paras(x+0.32, y0+1.15, cw-0.62, 2.25, [[R(d, 12.5, SLATE)]])
     if i<2:
         mx=x+cw-0.02; my=y0+ch/2
         pth=c.beginPath()
         pth.moveTo(mx*IN,(PH-(my-0.2))*IN); pth.lineTo(mx*IN,(PH-(my+0.2))*IN)
         pth.lineTo((mx+0.28)*IN,(PH-my)*IN); pth.close()
         c.setFillColor(HexColor(col)); c.drawPath(pth, stroke=0, fill=1)
-chip(0.85, 5.45, "ResilientEdge: disponível global desde 18/06/2026  ·  SCADA multi-site em rollout 2026", fill=NAVY, w=9.0, h=0.5, size=13)
+chip(0.85, 5.7, "ResilientEdge: disponível global desde 18/06/2026  ·  SCADA multi-site em rollout 2026", fill=NAVY, w=9.0, h=0.5, size=13)
 page_num(13); c.showPage()
 
 # ----------------------------------------------------------------------------
@@ -504,19 +510,19 @@ page_num(13); c.showPage()
 page_bg(LIGHT)
 header("Decisão", "O que pedimos para avançar", GREEN)
 steps = [
-    ("Aprovar piloto de Fase 1", "Benchmarking de alarmes (ISA-18.2) sobre o PlantPAx atual, em 1-2 plantas, como prova de valor."),
-    ("Definir plantas-piloto", "Sugestão: Sinop + uma unidade nova, para comparar maturidades."),
-    ("Validar interlocutores Rockwell", "Confirmar nomes/cargos dos apresentadores de Optix e DataMosaix (contato: Dan DeYoung)."),
-    ("Designar squad interno", "Maicon e equipe do Hub de Automação conduzindo os fluxos no-code do DataMosaix."),
+    ("Aprovar o piloto", """Começar por 1–2 indicadores em todas as plantas (ex.: controles em automático e índice de alarmes/operador·hora), ampliando depois para os demais. Estimativa: ~4–6 semanas para os 2 primeiros, conforme o volume de tags por unidade."""),
+    ("Sequência de indicadores", """Controles em automático e índice de alarmes primeiro; depois blocos em programa, interlocks desabilitados e variáveis simuladas."""),
+    ("Interlocutores Rockwell", """Dan DeYoung — VP executivo; Lúcio — gerente de sistemas avançados (Brasil); Devair — gerente de atendimento Inpasa; Marcel — eng. sênior de sistemas avançados."""),
+    ("Designar squad interno", """Gestores e equipe do Hub de Automação conduzindo os fluxos no-code do DataMosaix."""),
 ]
-y0=1.75; rh=1.12; x0=0.85; w=11.6
+y0=1.7; rh=1.24; x0=0.85; w=11.6
 for i,(t,d) in enumerate(steps):
-    y=y0+i*(rh+0.1)
+    y=y0+i*(rh+0.08)
     card(x0, y, w, rh)
-    circle(x0+0.3+0.275, y+0.28+0.275, 0.275, GREEN)
-    paras(x0+0.3, y+0.28, 0.55, 0.55, [[R(str(i+1), 18, WHITE, True)]], align=TA_CENTER, anchor='middle')
-    paras(x0+1.1, y+0.16, w-1.4, 0.5, [[R(t, 16.5, NAVY, True)]])
-    paras(x0+1.1, y+0.62, w-1.4, 0.45, [[R(d, 13, SLATE)]])
+    circle(x0+0.3+0.275, y+0.34+0.275, 0.275, GREEN)
+    paras(x0+0.3, y+0.34, 0.55, 0.55, [[R(str(i+1), 18, WHITE, True)]], align=TA_CENTER, anchor='middle')
+    paras(x0+1.1, y+0.16, w-1.4, 0.45, [[R(t, 16, NAVY, True)]])
+    paras(x0+1.1, y+0.6, w-1.4, 0.6, [[R(d, 12, SLATE)]])
 page_num(14); c.showPage()
 
 # ----------------------------------------------------------------------------
