@@ -11,36 +11,90 @@
 > - **Éder** (filho do Sr. José / José Lopez; há ~1 ano **CEO da Inpasa**).
 > - **José Luís** é o **mentor** do Itiel — pessoa **distinta** do Sr. José.
 
-## Sr. José (José Lopez) — presidente e dono da Inpasa; chefe do Itiel
+> **Regra de ouro (resumo do mentor):** Sr. José e Éder são **duas mentalidades
+> opostas**. A mesma mensagem tem que sair em **duas direções diferentes**. O
+> segredo não é o conteúdo, é **como se ativa cada um**.
 
-- **Estilo:** objetivo e voltado a **resultado**.
-- **O que valoriza:** entender o **resultado** de forma clara; **objetividade**.
-- **Como escrever:** direto ao ponto, foco em números/resultados/conclusão,
-  sem rodeios. Cortar floreios e contexto desnecessário.
+## Sr. José (José Lopes) — presidente e dono da Inpasa; chefe do Itiel
+
+**Mentalidade.** Pessoa de **resultado e de visão**. Visão **sistêmica** — conecta
+muita coisa na cabeça, processa/mentaliza o negócio inteiro. Multitarefa e
+multiempresário; carrega as estratégias na mente. Aparência **simplista** na
+fala e na abordagem, mas é **extremamente esperto** — inteligência estratégica,
+social e cognitiva altíssimas. Construiu um ecossistema/"império". "Muito
+parecido com o Itiel": gente de resultado.
+
+**O que valoriza.**
+- **Resultado** e **objetividade** acima de tudo.
+- Perceber que estão **cuidando bem do negócio e do dinheiro dele**.
+- Velocidade: **não tem problema em investir/gastar pesado** para acelerar o que
+  faz sentido para o negócio (e fica bravo se algo que faz sentido **não** anda).
+
+**Como comunicar (do's).**
+- **Direto ao ponto**, assertivo, **sem rodeios**. Resultado/número/conclusão
+  primeiro.
+- Enquadrar tudo em "isto **cuida do negócio / protege o dinheiro / acelera**".
+- Cortar floreio e contexto desnecessário. Ele preenche o resto sozinho.
+
+**Evitar (gatilhos observados — Notion).** Palavras que disparam reação ruim:
+**"HH / homem-hora"**, **"locação de equipamentos"**, **"metal-mecânica"** (abre
+debate de desorganização). Trocar por títulos neutros (ex.: "preparo de acessos
+/ período climático"). Ele tem **memória longa** — não esconder problema nem
+deixá-lo descobrir tarde.
 
 ## Éder — filho do Sr. José; CEO da Inpasa (há ~1 ano)
 
-- **Estilo:** sensível a **relacionamento** e **posicionamento**.
-- **O que valoriza:** **status**, **posicionamento**, e **valores** como
-  **família** (e assuntos relacionados).
-- **Como escrever:** cuidar do tom e do posicionamento, reconhecer status,
-  abrir espaço para valores pessoais/familiares; menos cru que para o Sr. José.
+**Mentalidade.** O **oposto** do pai. **Não** tem visão sistêmica e muitas vezes
+está **desconectado** da Inpasa. Cabeça de **herdeiro, não de sucessor** —
+foco no dinheiro, não em fazer a empresa evoluir. O que ele quer é **não ter
+problema**: que tudo aconteça e siga acontecendo sem que ele precise lidar com
+nada. Quanto mais a empresa em "voo de cruzeiro", melhor para ele.
+
+- Ao falar de **negócio/técnico/melhoria**, ele **perde o interesse rápido**
+  (traços de atenção dispersa / TDAH: fala muito, mas ao ouvir se distrai, vai
+  pro celular).
+- **Altamente influenciável**, pouca opinião própria — costuma pedir contexto.
+  (Ex.: o Fernando o "ativa" com muito status e ocupação, e o convence.)
+- **Indeciso**; quando decide, é por critério **pessoal** ("não acho certo"),
+  sem a lente de ecossistema/multinacional.
+
+**O que valoriza (as alavancas de ativação).**
+- **Status e poder** — validar-se perto de grandes empresas, presidentes,
+  diretores de peso. Isso "é bonito" para ele.
+- **Posicionamento** e imagem.
+- **Família e bem-estar** — sair cedo, fim de semana com a família, desligar.
+
+**Como comunicar (do's).**
+- **Primeiro ativar, depois introduzir.** Nunca abrir por resultado/técnica — ele
+  se perde. Entrar pelo interesse dele (família/descanso ou status/poder), e só
+  quando ele "entra no fluxo" ir colocando o assunto.
+- **Pouca profundidade.** Quase "informar" mais do que detalhar; trazer o assunto
+  o suficiente para ele se inteirar (é CEO), sem mergulho técnico.
+- Enquadrar com **posicionamento/status**; converter o "ruim" em "bom" e deixar a
+  justificativa pronta (a "porta de saída"). Ele lê **desastre** no número cru.
+- **Presencial:** abrir por família/bem-estar. **E-mail:** isso é mais difícil —
+  ir por **posição/status/algo que desperte atenção**.
+
+**Modelo de "ativação" (exemplo do mentor, presencial):**
+> "Éder, e aí? Final de semana, tudo bem? Conseguiu descansar com tranquilidade?
+> … Eu aproveitei que estava nos Estados Unidos e já conversei com [uma pessoa de
+> tremenda responsabilidade global]…" → traz status/poder → ele para para te
+> ouvir → aí você vai introduzindo os assuntos.
 
 ## José Luís — mentor do Itiel
 
-- Pessoa **distinta** do Sr. José. Perfil de comunicação ainda **em aberto**.
-- O Itiel vai conversar com ele e trazer detalhes para definir o perfil aqui.
+- Pessoa **distinta** do Sr. José. **Perfil de comunicação dele não é foco** (não
+  precisa adaptar mensagens a ele). É a **fonte** das orientações acima.
 
 ## Fluxo obrigatório ao gerar mensagem para um deles
 
 1. Identificar o destinatário e aplicar o perfil correspondente.
-2. Redigir a mensagem na linha do perfil.
+2. Para o **Sr. José**: abrir por resultado, direto, sem gatilhos.
+   Para o **Éder**: ativar primeiro (família/status), depois introduzir raso.
 3. **Sempre apresentar ao Itiel para validação** ("essa mensagem está na linha
-   do [Sr. José / Éder / José Luís]?") antes de tratar como final.
+   do [Sr. José / Éder]?") antes de tratar como final.
 
-> Perfis em aberto: o Itiel pode acrescentar mais detalhes (ex.: vai conversar
-> com o José Luís e avisa). Atualizar esta seção quando trouxer novas
-> informações.
+> Esta seção pode ser refinada conforme o Itiel trouxer novos exemplos ou ajustes.
 
 ---
 
