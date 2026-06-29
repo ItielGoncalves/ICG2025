@@ -1,3 +1,17 @@
+# Estilo de comunicação do Itiel (REGRA PERMANENTE)
+
+> Vale para **toda** comunicação escrita feita para o Itiel ou em nome dele:
+> mensagens de WhatsApp, e-mails, textos de apoio e **o corpo das
+> apresentações/documentos**.
+
+- **NUNCA usar traço/hífen** (`—`, `–`, `-`) como pontuação no meio das frases.
+  Em vez de traço, usar **vírgula, dois-pontos, ponto ou parênteses**, ou
+  reescrever a frase. Isso é regra fixa, não pedir confirmação a cada vez.
+  (Exceção óbvia: hífen interno de palavras compostas, ex.: "dois-pontos",
+  e o separador ` - ` obrigatório do padrão de nome de arquivo abaixo.)
+
+---
+
 # Padrão de nomenclatura de arquivos (apresentações e documentos)
 
 > Esta é a regra oficial para nomear **qualquer** arquivo gerado para o Itiel
