@@ -19,7 +19,7 @@ C = WD_ALIGN_PARAGRAPH.CENTER
 
 # ---------------------------------------------------------------------------
 RAZAO_SOCIAL = "Ribeiro e Gonçalves Ltda."
-NOME_FANTASIA = "NewDerm"
+NOME_FANTASIA = "New Derm"
 CNPJ = "47.607.774/0001-49"
 ENDERECO = "Rua Presidente Vargas, 1695, Sala 912, Vila Progresso, Dourados-MS"
 RT_NOME = "Dra. Paula Alice Rodolfo Ribeiro Gonçalves"
@@ -27,7 +27,7 @@ RT_TITULO = "Farmacêutica – CRF-MS 7048 – Habilitada em Farmácia/Saúde Es
 RECEP_NOME = "Emanoelly Carneiro de Almeida"
 CIDADE = "Dourados-MS"
 DATA_EXTENSO = "30 de junho de 2026"
-VERSAO = "02"
+VERSAO = "03"
 HORARIO = "das 8h00 às 11h30 e das 13h30 às 18h00"
 
 AZUL = RGBColor(0x1F, 0x3A, 0x5F)
@@ -112,7 +112,7 @@ def add_toc():
     instr = OxmlElement("w:instrText"); instr.set(qn("xml:space"), "preserve")
     instr.text = 'TOC \\o "1-2" \\h \\z \\u'
     sep = OxmlElement("w:fldChar"); sep.set(qn("w:fldCharType"), "separate")
-    t = OxmlElement("w:t"); t.text = "Atualize o sumário no Word: clique aqui e pressione F9."
+    t = OxmlElement("w:t"); t.text = "Sumário — será preenchido automaticamente ao abrir no Word (ou tecle F9)."
     e = OxmlElement("w:fldChar"); e.set(qn("w:fldCharType"), "end")
     for x in (b, instr, sep, t, e):
         run._r.append(x)
@@ -973,7 +973,12 @@ p("____________________________________", align=C, space_after=0)
 p(RT_NOME, bold=True, align=C, space_after=0)
 p(f"Responsável Técnica – {RT_TITULO}", size=10, color=CINZA, align=C)
 
+# --- força o Word a atualizar os campos (sumário) ao abrir o documento ------
+upd = OxmlElement("w:updateFields")
+upd.set(qn("w:val"), "true")
+doc.settings.element.append(upd)
+
 # ---------------------------------------------------------------------------
-OUT = "regimento_neuderme/Regimento Interno - NEWDERM - Minuta v02.docx"
+OUT = "regimento_neuderme/Regimento Interno - NEWDERM - Minuta v03.docx"
 doc.save(OUT)
 print("OK ->", OUT)
