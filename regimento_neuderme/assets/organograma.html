@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<style>
+  :root{
+    --navy:#243450;
+    --gold:#C6982F;
+    --gold-lt:#E6C878;
+    --ink:#2b3446;
+    --muted:#7d8598;
+    --cream:#FCF8F1;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:"DejaVu Sans","Segoe UI",system-ui,Arial,sans-serif;
+    background:var(--cream);
+  }
+  .stage{
+    display:inline-block;
+    padding:60px 72px 64px;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, #ffffff 0%, var(--cream) 60%);
+  }
+  .head{ text-align:center; margin-bottom:42px; }
+  .head .kicker{
+    font-size:13px; letter-spacing:.42em; text-transform:uppercase;
+    color:var(--gold); font-weight:700;
+  }
+  .head h1{
+    font-size:30px; letter-spacing:.02em; color:var(--navy);
+    font-weight:800; margin-top:8px;
+  }
+  .head .rule{
+    width:64px;height:3px;margin:16px auto 0;border-radius:3px;
+    background:linear-gradient(90deg,var(--gold-lt),var(--gold));
+  }
+
+  .chart{ display:flex; flex-direction:column; align-items:center; }
+
+  .card{
+    position:relative; border-radius:16px; background:#fff;
+    box-shadow:0 10px 26px rgba(36,52,80,.12);
+    padding:20px 26px 18px; text-align:center;
+    border:1px solid rgba(198,152,47,.28);
+    overflow:hidden;
+  }
+  .card::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:5px;
+    background:linear-gradient(90deg,var(--gold-lt),var(--gold));
+  }
+  .card .t{ color:var(--navy); font-weight:800; font-size:18px; line-height:1.25; }
+  .card .s{ color:var(--muted); font-size:13.5px; margin-top:6px; line-height:1.35; }
+  .card .tag{
+    display:inline-block; margin-bottom:9px; font-size:11px; font-weight:700;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--gold);
+  }
+
+  /* Nível 1 – direção (destaque em navy) */
+  .lvl1 .card{ background:linear-gradient(160deg,#2a3c5c,#20304c);
+    border:none; min-width:360px; }
+  .lvl1 .card .t{ color:#fff; font-size:19px; }
+  .lvl1 .card .s{ color:#c9d3e6; }
+  .lvl1 .card .tag{ color:var(--gold-lt); }
+
+  /* Nível 2 – responsável técnica */
+  .lvl2 .card{ min-width:460px; border:1.5px solid rgba(198,152,47,.5); }
+
+  /* conectores */
+  .vline{ width:2px; height:34px; background:var(--gold); }
+
+  .branch{ position:relative; display:flex; gap:70px; padding-top:34px; }
+  .branch::before{
+    content:""; position:absolute; top:0; left:170px; right:170px; height:2px;
+    background:var(--gold);
+  }
+  .leaf{ width:340px; position:relative; }
+  .leaf::before{
+    content:""; position:absolute; top:-34px; left:50%; width:2px; height:34px;
+    background:var(--gold); transform:translateX(-50%);
+  }
+  .leaf .card{ min-height:104px; display:flex; flex-direction:column; justify-content:center; }
+</style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="head">
+      <div class="kicker">NewDerm · Clínica de Estética</div>
+      <h1>Organograma Funcional</h1>
+      <div class="rule"></div>
+    </div>
+
+    <div class="chart">
+      <div class="lvl1">
+        <div class="card">
+          <span class="tag">Direção</span>
+          <div class="t">Sócios-administradores</div>
+          <div class="s">Ribeiro e Gonçalves Ltda.</div>
+        </div>
+      </div>
+
+      <div class="vline"></div>
+
+      <div class="lvl2">
+        <div class="card">
+          <span class="tag">Responsável Técnica</span>
+          <div class="t">Dra. Paula Alice Rodolfo Ribeiro Gonçalves</div>
+          <div class="s">Farmacêutica · CRF-MS 7048 · Farmácia Estética</div>
+        </div>
+      </div>
+
+      <div class="vline"></div>
+
+      <div class="branch">
+        <div class="leaf">
+          <div class="card">
+            <div class="t">Recepção / Administrativo</div>
+            <div class="s">Emanoelly Carneiro de Almeida</div>
+          </div>
+        </div>
+        <div class="leaf">
+          <div class="card">
+            <div class="t">Equipe de Apoio</div>
+            <div class="s">Limpeza · Serviços gerais · Apoio técnico</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
