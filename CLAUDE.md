@@ -76,12 +76,21 @@ gerar, **perguntar o destino**:
 Quando o Itiel disser que **a versão ficou boa / é a final**:
 
 1. Gerar o arquivo final em **`.pptx`** (editável) **e** exportar o **`.pdf`**
-   correspondente, com o **mesmo nome** e marcado como `vFINAL`.
-2. Manter **no máximo 3 versões distribuídas** por arquivo, **além da
+   correspondente, com o **mesmo nome** e marcado como `vFINAL`. **Sempre
+   manter as duas finais** (`.pptx` e `.pdf`) no diretório — tanto na pasta
+   física quanto no repositório/acervo.
+2. Gerar também a **imagem-resumo (iPhone)**: um resumo **super objetivo** em
+   imagem vertical, porque o Itiel quase sempre encaminha ao **sr. José**, que
+   abre no **iPhone**. Nome:
+   `AAAA.MM.DD - UNIDADE - Título vFINAL (resumo iPhone).png`. Conteúdo: 3 a 5
+   bullets diretos + um destaque opcional (número de impacto).
+3. **Arquivar no acervo** e **registrar no catálogo** (ver "Acervo" abaixo),
+   para que esse material vire consultável por assunto.
+4. Manter **no máximo 3 versões distribuídas** por arquivo, **além da
    `vFINAL`**. Quando houver muitas versões, escolher 3 espalhadas
    **uniformemente** pelo histórico (sempre incluindo a mais recente) e
    **descartar as intermediárias** entre elas.
-3. **Sempre preservar** a **`vFINAL`** (à parte, não conta nas 3) e a versão
+5. **Sempre preservar** a **`vFINAL`** (à parte, não conta nas 3) e a versão
    **mais recente**.
 
 Exemplo de poda (distribuída):
@@ -107,5 +116,39 @@ devem ser salvos diretamente em:
 > **Limitação por superfície:** o salvamento direto nessa pasta só funciona em
 > superfícies **locais** (Cowork / Claude Desktop com acesso a arquivos na
 > máquina do Itiel). No Claude Code na web (container isolado) não há acesso ao
-> disco local — nesse caso, apenas nomeie o arquivo no padrão acima e o Itiel
-> move para a pasta.
+> disco local — nesse caso, o acervo no Google Drive resolve o salvamento e a
+> consulta (ver abaixo).
+
+## Acervo (pesquisa e salvamento nas duas superfícies)
+
+O acervo é o **local único** de salvamento e de **consulta** das apresentações e
+relatórios estratégicos. Ele existe para funcionar **tanto no web quanto no
+local**, e a ponte entre as duas superfícies é o **Google Drive**.
+
+- **Pasta no Drive:** `Acervo Estratégico`
+  (`id 1HF2J6sMMGGY1nvDUEaJH4ypeq0J1ftIs`).
+- **Pasta local (Mac):** a pasta estratégica em "Onde salvar" acima. Se o Itiel
+  quiser convergência automática, ele pode sincronizar essa pasta com a pasta do
+  Drive (Google Drive para Desktop).
+- **Catálogo (o que unifica):** `acervo/catalogo.json` no repositório, espelhado
+  no Drive. Cada `vFINAL` vira uma entrada com data, unidade, título,
+  **assunto/resumo**, palavras-chave e os arquivos (`.pptx`, `.pdf`,
+  `imagem_resumo`). Como só guardamos a `vFINAL`, cada documento aparece **uma
+  vez** (refinalizar **atualiza** a entrada).
+
+**Ao finalizar:**
+
+- **Web (Claude Code):** gerar os artefatos no container, **subir os três** para
+  a pasta `Acervo Estratégico` no Drive (`mcp__Google_Drive__create_file`,
+  `parentId` = id acima, `base64Content` + `contentMimeType` +
+  `disableConversionToGoogleType: true`), **registrar no catálogo**
+  (`python acervo.py registrar …`) e subir o `catalogo.json` atualizado.
+- **Local (Cowork / Desktop):** `python acervo.py arquivar "…vNN.pptx"
+  --assunto "…" --palavras a,b --resumo "…" --resumo "…" --destaque "+12%"` —
+  finaliza (`.pptx`+`.pdf`), gera o resumo iPhone, copia para a pasta
+  estratégica e registra no catálogo, tudo de uma vez.
+
+**Ao ser perguntado sobre um assunto:** consultar o catálogo antes de responder
+e dizer qual documento trata, de quando é e como foi feito —
+`python acervo.py buscar "termo"` (ou `listar`). No web, se o catálogo do repo
+estiver defasado, ler o `catalogo.json` do Drive primeiro.
