@@ -74,6 +74,33 @@ python gestao_arquivos.py prune "/caminho/da/pasta" --apply   # apaga de verdade
 > PDF precisa do LibreOffice (Mac: `brew install --cask libreoffice`), ou defina
 > `LIBREOFFICE_BIN`. A poda só funciona em superfície local.
 
+## Acervo estratégico (pesquisa + salvamento)
+
+O acervo é o local **único** de salvamento e **consulta** das apresentações e
+relatórios finais, funcionando no **web** e no **local**. A ponte entre as duas
+superfícies é o **Google Drive** (pasta `Acervo Estratégico`), e o que unifica
+tudo é o catálogo [`acervo/catalogo.json`](acervo/). Detalhes em
+[`acervo/README.md`](acervo/README.md) e nas regras em [`CLAUDE.md`](CLAUDE.md).
+
+```bash
+# LOCAL: finaliza (.pptx+.pdf), gera o resumo iPhone, copia p/ a pasta e cataloga
+python acervo.py arquivar "2026.06.10 - MULTI - Gestão Tática de Obras v11.pptx" \
+  --assunto "Cadência tática de obras: marcos, riscos e recuperação." \
+  --palavras obras,cronograma \
+  --resumo "Destilaria: 3 marcos recuperados." \
+  --resumo "Risco aberto: estrutura metálica (sem. 25)." \
+  --destaque "+12%" --destaque-rotulo "avanço vs. plano"
+
+# Consulta por assunto (o que temos sobre...?)
+python acervo.py buscar "segurança patrimonial"
+python acervo.py listar
+```
+
+> Ao finalizar, além do `.pptx` e do `.pdf`, é gerada uma **imagem-resumo
+> vertical (iPhone)** — resumo super objetivo para o Itiel encaminhar ao sr.
+> José. A imagem é rasterizada por navegador: no web usa Chromium/Playwright; no
+> Mac usa o **Google Chrome headless** (ou defina `CHROME_BIN`).
+
 ## Testes
 
 ```bash
