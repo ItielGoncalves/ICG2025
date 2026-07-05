@@ -60,6 +60,13 @@ Campo customizado **"Progresso?"** (ID `1dc8c066-c6b5-4723-a651-e8d8a7094f7a`),
 tipo **manual_progress** (0–100).
 Formato do valor: `{"current": N}` (número inteiro).
 
+> **Uso é estritamente pessoal do Itiel** — é controle dele mesmo sobre a
+> gestão das pessoas, não um dado de gestão de projeto compartilhado.
+> **Nunca mencionar "Progresso?", percentual de progresso, ou o card/ClickUp
+> em si nas mensagens geradas para terceiros** (WhatsApp, Teams, e-mail).
+> Mensagens para pessoas falam de ações, prazos e resultados — nunca do
+> mecanismo interno de acompanhamento. Só o Itiel tem acesso ao card.
+
 ### "Relevância" / "urgência"
 Campo customizado **"Relevancia?"** (ID `c3be06f2-1c7b-4134-adaa-c137f63b047b`),
 tipo **labels**:
