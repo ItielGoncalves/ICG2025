@@ -180,15 +180,17 @@ def build_pptx():
     rect(s,Inches(0.55),Inches(1.55),Inches(6.0),Inches(4.75),cCARD,rnd=True)
     txt(s,Inches(0.8),Inches(1.75),Inches(5.5),Inches(0.4),"Levantamento FLEXLAB (jun/2026)",size=15,bold=True,color=cAZUL)
     for i,(t,c) in enumerate([("148 correias auditadas no grupo",cTXT),("102 mantidas em operação",cMUT),
-        ("46 a substituir  →  R$ 6,15 mi",cTXT),("   • 41 reprovadas no ensaio ISO 340",cMUT),("   • 5 por degradação física",cMUT)]):
+        ("46 a substituir  →  R$ 6,15 mi (só correias)",cTXT),("   • 41 reprovadas no ensaio ISO 340",cMUT),("   • 5 por degradação física",cMUT)]):
         txt(s,Inches(0.85),Emu(int(Inches(2.35))+i*int(Inches(0.68))),Inches(5.5),Inches(0.66),("•  " if i in(0,2) else "")+t,size=13,color=c,bold=(i==2))
     rect(s,Inches(6.8),Inches(1.55),Inches(6.0),Inches(4.75),cCARD,rnd=True)
     txt(s,Inches(7.05),Inches(1.75),Inches(5.5),Inches(0.4),"Plano de execução (dashboard atual)",size=15,bold=True,color=cVERDE)
     for i,(t,c) in enumerate([(f"{TOTAL} correias no plano  ✓ bate com as 46",cTXT),(f"   • {CONCL} já concluídas",cMUT),
         (f"   • {TOTAL-CONCL} em execução",cMUT),(f"Conclusão: {fd(GLAST)}",cTXT),("0 correias vencidas",cMUT)]):
         txt(s,Inches(7.1),Emu(int(Inches(2.35))+i*int(Inches(0.68))),Inches(5.5),Inches(0.66),("•  " if i in(0,3) else "")+t,size=13,color=c,bold=(i in(0,3)))
-    txt(s,Inches(0.55),Inches(6.45),Inches(12.3),Inches(0.5),
-        "Obs.: cadastro do dashboard usa NVM/SDL — padronizar p/ os códigos oficiais NMT e SDR · confirmar unidades DRD e LEM · 1 dos 46 é sobressalente em estoque (45 esteiras físicas).",
+    txt(s,Inches(0.55),Inches(6.35),Inches(12.3),Inches(0.6),
+        "Obs.: R$ 6,15 mi = somente as correias (material) — montagem com mão de obra interna, apenas vulcanização externa · "
+        "Dourados (DRD) e LEM sem pendências (fora do escopo) · cadastro do dashboard usa NVM/SDL → padronizar p/ NMT/SDR · "
+        "1 dos 46 é sobressalente em estoque (45 esteiras físicas).",
         size=10.5,color=cTERRA)
     foot(s,4)
 
@@ -206,7 +208,7 @@ def build_pptx():
     for i,pz in enumerate(["PCM acionado para alinhar com TODAS as áreas cuidado reforçado até concluir a substituição das correias.",
         "Priorizar as correias urgentes de julho (biomassa/DDGS).",
         "Reporte quinzenal de avanço por unidade (concluídas x plano).",
-        "Padronizar cadastro (NVM/SDL → NMT/SDR) e confirmar DRD/LEM."]):
+        "Padronizar cadastro na origem (NVM/SDL → NMT/SDR)."]):
         txt(s,Inches(7.1),Emu(int(Inches(2.35))+i*int(Inches(0.95))),Inches(5.4),Inches(0.95),"•  "+pz,size=13,color=cTXT,sp=1.05)
     foot(s,5)
 
@@ -276,14 +278,14 @@ def build_pdf():
     # 4 RECONCILIACAO
     bg(); head("CONSISTÊNCIA DOS NÚMEROS","Reconciliação: levantamento × execução")
     box(0.55,1.55,6.0,4.75,CARDBG,rad=8); text(0.8,1.78,"Levantamento FLEXLAB (jun/2026)",15,AZUL,bold=True)
-    L=[("•  148 correias auditadas no grupo",TXTD),("102 mantidas em operação",MUT),("•  46 a substituir  ->  R$ 6,15 mi",TXTD),
+    L=[("•  148 correias auditadas no grupo",TXTD),("102 mantidas em operação",MUT),("•  46 a substituir  ->  R$ 6,15 mi (só correias)",TXTD),
        ("   - 41 reprovadas ISO 340",MUT),("   - 5 degradação física",MUT)]
     for i,(t,cc) in enumerate(L): text(0.85,2.35+i*0.62,t,13,cc,bold=(i==2))
     box(6.8,1.55,6.0,4.75,CARDBG,rad=8); text(7.05,1.78,"Plano de execução (dashboard atual)",15,VERDE,bold=True)
     R=[(f"•  {TOTAL} correias no plano  (bate com as 46)",TXTD),(f"   - {CONCL} já concluídas",MUT),
        (f"   - {TOTAL-CONCL} em execução",MUT),(f"•  Conclusão: {fd(GLAST)}",TXTD),("   - 0 correias vencidas",MUT)]
     for i,(t,cc) in enumerate(R): text(7.1,2.35+i*0.62,t,13,cc,bold=(i in(0,3)))
-    para(0.55,6.4,12.3,"Obs.: cadastro do dashboard usa NVM/SDL — padronizar p/ os códigos oficiais NMT e SDR · confirmar unidades DRD e LEM · 1 dos 46 é sobressalente em estoque (45 esteiras físicas).",10.5,TERRA); foot(4); c.showPage()
+    para(0.55,6.28,12.3,"Obs.: R$ 6,15 mi = somente as correias (material) — montagem com mão de obra interna, apenas vulcanização externa · Dourados (DRD) e LEM sem pendências (fora do escopo) · cadastro do dashboard usa NVM/SDL -> padronizar p/ NMT/SDR · 1 dos 46 é sobressalente em estoque (45 esteiras).",10,TERRA); foot(4); c.showPage()
     # 5 ACAO
     bg(); head("DECISÃO E AÇÃO","Cuidado especial até concluir a substituição")
     box(0.55,1.55,6.0,4.75,CARDBG,rad=8); text(0.8,1.78,"Pontos de atenção",15,TERRA,bold=True)
@@ -297,7 +299,7 @@ def build_pdf():
     B=["PCM acionado para alinhar com TODAS as áreas cuidado reforçado até concluir a substituição.",
        "Priorizar as correias urgentes de julho (biomassa/DDGS).",
        "Reporte quinzenal de avanço por unidade.",
-       "Padronizar cadastro (NVM/SDL -> NMT/SDR) e confirmar DRD/LEM."]
+       "Padronizar cadastro na origem (NVM/SDL -> NMT/SDR)."]
     ty=2.35
     for r in B: para(7.1,ty,5.4,"•  "+r,12,TXTD,lead=15); ty+=0.88
     foot(5); c.save(); print("PDF:",path)
@@ -321,7 +323,7 @@ def img_escopo():
     h=1080; im,d=new_img(h); brand(d,h)
     d.text((48,150),"Programa de substituição — visão geral",font=F('ExtraBold',44),fill=iAZUL)
     kpis=[("46","correias no plano",iAZUL),("3","já concluídas",iVERDE),("43","em execução",iAZUL),
-          ("0","vencidas",iVERDE),("R$ 6,15 mi","investimento (46)",iAZUL),("7","urgentes (≤30d)",iOURO)]
+          ("0","vencidas",iVERDE),("R$ 6,15 mi","somente correias",iAZUL),("7","urgentes (≤30d)",iOURO)]
     x0,y0,cw,chh,gx,gy=48,260,320,190,24,28
     for i,(v,lb,cc) in enumerate(kpis):
         r,cidx=divmod(i,3); x=x0+cidx*(cw+gx); y=y0+r*(chh+gy)
@@ -330,10 +332,14 @@ def img_escopo():
         vs=60 if len(v)<=3 else (44 if len(v)<=6 else 38)
         d.text((x+30,y+66),v,font=F('ExtraBold',vs),fill=cc,anchor='lm')
         d.text((x+30,y+140),lb,font=F('Medium',24),fill=iMUT,anchor='lm')
-    yb=y0+2*(chh+gy)+30
-    d.rounded_rectangle([48,yb,Wp-48,yb+150],radius=18,fill=iAZUL)
-    d.text((Wp//2,yb+46),"CONCLUSÃO DE TODO O PROGRAMA",font=F('SemiBold',26),fill=hx('#C7D6E6'),anchor='mm')
-    d.text((Wp//2,yb+104),fd(GLAST),font=F('ExtraBold',56),fill=iBR,anchor='mm')
+    yb=y0+2*(chh+gy)+20
+    d.rounded_rectangle([48,yb,Wp-48,yb+140],radius=18,fill=iAZUL)
+    d.text((Wp//2,yb+44),"CONCLUSÃO DE TODO O PROGRAMA",font=F('SemiBold',26),fill=hx('#C7D6E6'),anchor='mm')
+    d.text((Wp//2,yb+100),fd(GLAST),font=F('ExtraBold',54),fill=iBR,anchor='mm')
+    ny=yb+175
+    d.text((Wp//2,ny),"R$ 6,15 mi = apenas as correias (material).",font=F('Medium',21),fill=iMUT,anchor='mm')
+    d.text((Wp//2,ny+32),"Montagem: mão de obra interna · Vulcanização: externa.",font=F('Medium',21),fill=iMUT,anchor='mm')
+    d.text((Wp//2,ny+70),"Escopo: NMT · SNP · SDR · BLS   —   Dourados e LEM sem pendências.",font=F('SemiBold',21),fill=iAZUL,anchor='mm')
     path=os.path.join(OUT,"img_grupo_1_escopo.png"); im.save(path); print("IMG:",path)
 
 def img_unidades():
