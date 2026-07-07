@@ -204,7 +204,7 @@ def build_pptx():
         txt(s,Inches(7.1),Emu(int(Inches(2.35))+i*int(Inches(0.68))),Inches(5.5),Inches(0.66),("•  " if i in(0,3) else "")+t,size=13,color=c,bold=(i in(0,3)))
     txt(s,Inches(0.55),Inches(6.35),Inches(12.3),Inches(0.6),
         "Obs.: R$ 6,15 mi = somente as correias (material) — montagem com mão de obra interna, apenas vulcanização externa · "
-        "Dourados (DRD) e LEM sem pendências (fora do escopo) · cadastro do dashboard usa NVM/SDL → padronizar p/ NMT/SDR · "
+        "Dourados (DRD) e LEM sem itens críticos (reprovados ISO 340) nesta 1ª etapa · cadastro do dashboard usa NVM/SDL → padronizar p/ NMT/SDR · "
         "1 dos 46 é sobressalente em estoque (45 esteiras físicas).",
         size=10.5,color=cTERRA)
     foot(s,5)
@@ -220,7 +220,7 @@ def build_pptx():
         txt(s,Inches(0.85),Emu(int(Inches(2.35))+i*int(Inches(0.95))),Inches(5.4),Inches(0.95),"•  "+r,size=13,color=cTXT,sp=1.05)
     rect(s,Inches(6.8),Inches(1.55),Inches(6.0),Inches(4.75),cCARD,rnd=True)
     txt(s,Inches(7.05),Inches(1.75),Inches(5.5),Inches(0.4),"Encaminhamentos",size=16,bold=True,color=cVERDE)
-    for i,pz in enumerate(["PCM acionado para alinhar com TODAS as áreas cuidado reforçado até concluir a substituição das correias.",
+    for i,pz in enumerate(["Segurança e PCM acionados para alinhar com TODAS as áreas cuidado reforçado até concluir a substituição das correias.",
         "Priorizar as correias urgentes de julho (biomassa/DDGS).",
         "Reporte quinzenal de avanço por unidade (concluídas x plano).",
         "Padronizar cadastro na origem (NVM/SDL → NMT/SDR)."]):
@@ -333,7 +333,7 @@ def build_pdf():
     R=[(f"•  {TOTAL} correias no plano  (bate com as 46)",TXTD),(f"   - {CONCL} já concluídas",MUT),
        (f"   - {TOTAL-CONCL} em execução",MUT),(f"•  Conclusão: {fd(GLAST)}",TXTD),("   - 0 correias vencidas",MUT)]
     for i,(t,cc) in enumerate(R): text(7.1,2.35+i*0.62,t,13,cc,bold=(i in(0,3)))
-    para(0.55,6.28,12.3,"Obs.: R$ 6,15 mi = somente as correias (material) — montagem com mão de obra interna, apenas vulcanização externa · Dourados (DRD) e LEM sem pendências (fora do escopo) · cadastro do dashboard usa NVM/SDL -> padronizar p/ NMT/SDR · 1 dos 46 é sobressalente em estoque (45 esteiras).",10,TERRA); foot(5); c.showPage()
+    para(0.55,6.28,12.3,"Obs.: R$ 6,15 mi = somente as correias (material) — montagem com mão de obra interna, apenas vulcanização externa · Dourados (DRD) e LEM sem itens críticos (reprovados ISO 340) nesta 1ª etapa · cadastro do dashboard usa NVM/SDL -> padronizar p/ NMT/SDR · 1 dos 46 é sobressalente em estoque (45 esteiras).",10,TERRA); foot(5); c.showPage()
     # 5 ACAO
     bg(); head("DECISÃO E AÇÃO","Cuidado especial até concluir a substituição")
     box(0.55,1.55,6.0,4.75,CARDBG,rad=8); text(0.8,1.78,"Pontos de atenção",15,TERRA,bold=True)
@@ -344,7 +344,7 @@ def build_pdf():
     ty=2.35
     for r in A: para(0.85,ty,5.4,"•  "+r,12,TXTD,lead=15); ty+=0.88
     box(6.8,1.55,6.0,4.75,CARDBG,rad=8); text(7.05,1.78,"Encaminhamentos",15,VERDE,bold=True)
-    B=["PCM acionado para alinhar com TODAS as áreas cuidado reforçado até concluir a substituição.",
+    B=["Segurança e PCM acionados para alinhar com TODAS as áreas cuidado reforçado até concluir a substituição.",
        "Priorizar as correias urgentes de julho (biomassa/DDGS).",
        "Reporte quinzenal de avanço por unidade.",
        "Padronizar cadastro na origem (NVM/SDL -> NMT/SDR)."]
@@ -387,7 +387,7 @@ def img_escopo():
     ny=yb+175
     d.text((Wp//2,ny),"R$ 6,15 mi = apenas as correias (material).",font=F('Medium',21),fill=iMUT,anchor='mm')
     d.text((Wp//2,ny+32),"Montagem: mão de obra interna · Vulcanização: externa.",font=F('Medium',21),fill=iMUT,anchor='mm')
-    d.text((Wp//2,ny+70),"Escopo: NMT · SNP · SDR · BLS   —   Dourados e LEM sem pendências.",font=F('SemiBold',21),fill=iAZUL,anchor='mm')
+    d.text((Wp//2,ny+70),"Escopo (1ª etapa): NMT · SNP · SDR · BLS  —  Dourados e LEM sem itens críticos (ISO 340).",font=F('SemiBold',19),fill=iAZUL,anchor='mm')
     path=os.path.join(OUT,"img_grupo_1_escopo.png"); im.save(path); print("IMG:",path)
 
 def img_unidades():
