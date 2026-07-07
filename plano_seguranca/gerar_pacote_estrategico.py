@@ -5,7 +5,7 @@ Ouro #EAA239, Montserrat). Dados do dashboard v6 (46 correias). Codigos oficiais
 Saidas: PPTX, PDF e 3 PNGs para o grupo.
 NOTA: logotipo oficial ainda nao disponivel como arquivo -> area reservada.
 """
-import os
+import os, copy
 from datetime import date
 from pptx import Presentation
 from pptx.util import Inches, Pt, Emu
@@ -21,6 +21,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 OUT = "/home/user/ICG2025/plano_seguranca"
 FONTS = os.path.join(OUT, "fonts")
+SRCPPTX = os.path.join(OUT, "fontes", "mapeamento_correias_v04.pptx")  # deck de origem (mapa 148->46)
 def F(w='Regular', s=40):
     return ImageFont.truetype(os.path.join(FONTS, f"Montserrat-{w}.ttf"), s)
 
@@ -136,7 +137,21 @@ def build_pptx():
     txt(s,Inches(0.9),Inches(6.7),Inches(11.6),Inches(0.4),
         "Base: levantamento FLEXLAB (jun/2026) + plano de execução  |  ref. 02/07/2026",size=11,color=rgb('#9FB4C9'))
 
-    # 2 REGULARIZACAO POR UNIDADE
+    # 2 MAPEAMENTO (copia nativa da pagina 2 do deck de origem) + contorno vermelho nas 46
+    src=Presentation(SRCPPTX); ss=src.slides[1]
+    ms=prs.slides.add_slide(BLANK)
+    for sh in ss.shapes:
+        ms.shapes._spTree.append(copy.deepcopy(sh._element))
+    o=ms.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(8.74),Inches(1.30),Inches(4.44),Inches(5.68))
+    o.fill.background(); o.line.color.rgb=rgb('#E00000'); o.line.width=Pt(3.5); o.shadow.inherit=False
+    # etiqueta "FOCO" como badge vermelho no canto superior do contorno
+    bd=ms.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(11.43),Inches(1.05),Inches(1.75),Inches(0.28))
+    bd.fill.solid(); bd.fill.fore_color.rgb=rgb('#E00000'); bd.line.fill.background(); bd.shadow.inherit=False
+    bp=bd.text_frame.paragraphs[0]; bp.alignment=PP_ALIGN.CENTER
+    br=bp.add_run(); br.text="◄ FOCO AGORA"; br.font.size=Pt(10)
+    br.font.bold=True; br.font.color.rgb=rgb('#FFFFFF'); br.font.name='Montserrat'
+
+    # 3 REGULARIZACAO POR UNIDADE
     s=sl(); head(s,"A PERGUNTA DA DIRETORIA","Quando cada unidade estará regularizada?")
     rect(s,Inches(0.55),Inches(1.45),Inches(12.25),Inches(0.8),cCARD,line=cAZUL,lw=1.25,rnd=True)
     txt(s,Inches(0.8),Inches(1.45),Inches(11.8),Inches(0.8),
@@ -151,7 +166,7 @@ def build_pptx():
         txt(s,Emu(int(x)+Inches(0.2)),Emu(int(cy)+Inches(1.18)),Emu(int(cw)-Inches(0.4)),Inches(0.35),"CONCLUÍDA EM",size=10,bold=True,color=cMUT)
         txt(s,Emu(int(x)+Inches(0.2)),Emu(int(cy)+Inches(1.45)),Emu(int(cw)-Inches(0.4)),Inches(0.55),fd(st['last']),size=22,bold=True,color=COR[u])
         txt(s,Emu(int(x)+Inches(0.2)),Emu(int(cy)+Inches(2.1)),Emu(int(cw)-Inches(0.4)),Inches(1.0),FRASE[u],size=10.5,color=cTXT,sp=1.05)
-    foot(s,2)
+    foot(s,3)
 
     # 3 CRONOGRAMA (jul-dez)
     s=sl(); head(s,"LINHA DO TEMPO","Marcos de conclusão (jul → dez/2026)")
@@ -173,7 +188,7 @@ def build_pptx():
         ry=Emu(int(ry)+int(rowh))
     txt(s,Inches(0.55),Inches(6.5),Inches(12),Inches(0.4),
         f"Conclusão de todo o programa: {fd(GLAST)} (última — Sinop, esteiras de cavacos da biomassa).",size=13,bold=True,color=cAZUL)
-    foot(s,3)
+    foot(s,4)
 
     # 4 RECONCILIACAO
     s=sl(); head(s,"CONSISTÊNCIA DOS NÚMEROS","Reconciliação: levantamento × execução")
@@ -192,7 +207,7 @@ def build_pptx():
         "Dourados (DRD) e LEM sem pendências (fora do escopo) · cadastro do dashboard usa NVM/SDL → padronizar p/ NMT/SDR · "
         "1 dos 46 é sobressalente em estoque (45 esteiras físicas).",
         size=10.5,color=cTERRA)
-    foot(s,4)
+    foot(s,5)
 
     # 5 ACAO / PCM
     s=sl(); head(s,"DECISÃO E AÇÃO","Cuidado especial até concluir a substituição")
@@ -210,7 +225,7 @@ def build_pptx():
         "Reporte quinzenal de avanço por unidade (concluídas x plano).",
         "Padronizar cadastro na origem (NVM/SDL → NMT/SDR)."]):
         txt(s,Inches(7.1),Emu(int(Inches(2.35))+i*int(Inches(0.95))),Inches(5.4),Inches(0.95),"•  "+pz,size=13,color=cTXT,sp=1.05)
-    foot(s,5)
+    foot(s,6)
 
     path=os.path.join(OUT,"Apresentacao_Estrategica_Correias_INPASA.pptx"); prs.save(path)
     print("PPTX:",path,"slides:",len(prs.slides._sldIdLst))
@@ -252,7 +267,40 @@ def build_pdf():
     text(0.9,4.85,"Nova Mutum · Sinop · Sidrolândia · Balsas",15,'#C7D6E6')
     line(0.9,5.7,3.0,0.03,OUROV); text(0.9,5.9,"MAIS QUE ENERGIA",17,OURO,bold=True)
     text(0.9,6.7,"Base: levantamento FLEXLAB (jun/2026) + plano de execução   |   ref. 02/07/2026",11,'#9FB4C9'); c.showPage()
-    # 2 UNIDADES
+    # 2 MAPEAMENTO (reproducao da pagina 2 do levantamento) + contorno vermelho nas 46
+    bg()
+    box(0,0,13.333,0.64,'#124E81'); box(0,0,0.06,0.64,'#EAA239')
+    text(0.2,0.16,"Resultado do Levantamento — 148 Correias · NMT · SNP · SDR · DRD · BLS · LEM",14,BRANCO,bold=True)
+    text(13.1,0.2,"Grupo INPASA · Jun/2026",10,'#C7D6E6',align='r')
+    box(0.2,0.76,12.9,0.5,'#EAF5DC',stroke='#609346',sw=1)
+    text(0.35,0.9,"FLEXLAB 0397/26 · 08/06/2026 · NMT CT-010 (correia do sinistro): ANTICHAMA CONFIRMADA — ISO 340 · inclusa nas 88 antichama 2ª linha",10.5,'#2E5E2A',bold=True)
+    box(0.2,1.38,8.58,0.30,'#609346'); text(4.49,1.44,"MANTER EM OPERAÇÃO — 102 correias",12,BRANCO,bold=True,align='c')
+    box(8.84,1.38,4.26,0.30,'#D97706'); text(10.97,1.44,"SUBSTITUIR — 46 · R$ 6,15M",12,BRANCO,bold=True,align='c')
+    cards=[
+      (0.20,"19","12,8%","1ª Linha","Identificação visual na correia",["ID visual impressa na correia","Conforme exigência normativa","Rastreabilidade completa"],"CONFORME NORMA","#2E7D32"),
+      (2.36,"56","37,8%","2ª Linha","Ev. física + teste aprovado",["Evidência física em campo","Aprovadas — ISO 340 campo","Pendente laudo laboratorial"],"PENDENTE LAUDO","#4E8B3A"),
+      (4.52,"10","6,8%","2ª Linha","Com laudo, sem ID visual",["Laudo ou doc. de conformidade","Sem marcação visual na correia","NMT CT-010 — Flexlab 0397/26"],"REGULARIZAR ID","#609346"),
+      (6.68,"17","11,5%","2ª Linha","Só teste, sem laudo e sem ID",["Aprovadas no teste ISO 340","Sem laudo e sem ID visual","Maior exposição — priorizar doc."],"OBTER LAUDO","#74A83A"),
+      (8.84,"41","27,7%","Reprovadas","Falha no ensaio ISO 340",["SNP: 21 itens · R$ 3,55 mi","NMT: 15 itens · R$ 1,70 mi","SDR/BLS/LEM: 5 itens · R$ 0,90 mi"],"SUBSTITUIÇÃO IMEDIATA","#CC5121"),
+      (11.00,"5","3,4%","Degradação","Antichama 2ª linha",["Aprovadas no ensaio ISO 340","Degradação física prematura","Substituição sendo programada"],"PROG. SUBSTITUIÇÃO","#D97706"),
+    ]
+    for (x,num,pct,cat,sub,bul,btn,col) in cards:
+        w=2.10; top=1.78; h=5.12
+        box(x,top,w,h,'#FFFFFF',stroke='#E2E7EC',sw=1)
+        box(x,top,w,0.56,col)
+        text(x+0.12,top+0.1,num,26,BRANCO,bold=True); text(x+w-0.1,top+0.2,pct,11,BRANCO,align='r')
+        text(x+0.12,top+0.72,cat,12,'#1F2937',bold=True); text(x+0.12,top+1.0,sub,9,'#6B7280')
+        box(x+0.12,top+1.28,w-0.24,0.012,'#E2E7EC')
+        yy=top+1.45
+        for b in bul:
+            c.setFillColor(HexColor(col)); c.circle(PT(x+0.18),H-PT(yy+0.08),2.0,fill=1,stroke=0)
+            para(x+0.3,yy,w-0.4,b,8.3,'#374151',lead=10); yy+=0.52
+        box(x+0.12,top+4.62,w-0.24,0.36,col); text(x+w/2,top+4.71,btn,8.0,BRANCO,bold=True,align='c')
+    c.setStrokeColor(HexColor('#E00000')); c.setLineWidth(3.2)
+    c.roundRect(PT(8.74),H-PT(1.30)-PT(5.68),PT(4.44),PT(5.68),10,fill=0,stroke=1)
+    box(11.43,1.05,1.75,0.28,'#E00000'); text(12.305,1.12,"◄ FOCO AGORA",10,BRANCO,bold=True,align='c')
+    foot(2); c.showPage()
+    # 3 UNIDADES
     bg(); head("A PERGUNTA DA DIRETORIA","Quando cada unidade estará regularizada?")
     box(0.55,1.45,12.25,0.8,CARDBG,rad=8,stroke=AZUL,sw=1.3)
     text(6.9,1.72,f"Programa concluído em {fd(GLAST)}   |   {TOTAL} correias · {CONCL} concluídas · {URG} urgentes · 0 vencidas",12.5,AZUL,bold=True,align='c')
@@ -262,7 +310,7 @@ def build_pdf():
         text(x+0.2,cy+0.32,u,13,COR[u],bold=True); text(x+0.2,cy+0.66,NOMES[u],14,TXTD,bold=True)
         text(x+0.2,cy+1.2,"CONCLUÍDA EM",9,MUT,bold=True); text(x+0.2,cy+1.48,fd(st['last']),21,COR[u],bold=True)
         para(x+0.2,cy+2.1,cw-0.4,FRASE[u],9.5,TXTD,lead=12)
-    foot(2); c.showPage()
+    foot(3); c.showPage()
     # 3 CRONOGRAMA
     bg(); head("LINHA DO TEMPO","Marcos de conclusão (jul -> dez/2026)")
     tl_x=2.6;tl_w=9.9;start=date(2026,7,1);end=date(2026,12,31);span=(end-start).days;top=1.75
@@ -274,7 +322,7 @@ def build_pdf():
         st=ST[u]; text(0.55,ry+0.24,f"{u} · {NOMES[u]}",11,COR[u],bold=True); text(0.55,ry+0.5,f"{st['total']} correias",9,MUT)
         x1=tl_x+((st['last']-start).days/span)*tl_w; box(tl_x,ry+0.22,max(x1-tl_x,0.2),0.42,COR[u],rad=4)
         text(x1+0.1,ry+0.32,fd(st['last']),11,TXTD,bold=True); ry+=rowh
-    text(0.55,6.5,f"Conclusão de todo o programa: {fd(GLAST)} (última — Sinop, esteiras de cavacos).",13,AZUL,bold=True); foot(3); c.showPage()
+    text(0.55,6.5,f"Conclusão de todo o programa: {fd(GLAST)} (última — Sinop, esteiras de cavacos).",13,AZUL,bold=True); foot(4); c.showPage()
     # 4 RECONCILIACAO
     bg(); head("CONSISTÊNCIA DOS NÚMEROS","Reconciliação: levantamento × execução")
     box(0.55,1.55,6.0,4.75,CARDBG,rad=8); text(0.8,1.78,"Levantamento FLEXLAB (jun/2026)",15,AZUL,bold=True)
@@ -285,7 +333,7 @@ def build_pdf():
     R=[(f"•  {TOTAL} correias no plano  (bate com as 46)",TXTD),(f"   - {CONCL} já concluídas",MUT),
        (f"   - {TOTAL-CONCL} em execução",MUT),(f"•  Conclusão: {fd(GLAST)}",TXTD),("   - 0 correias vencidas",MUT)]
     for i,(t,cc) in enumerate(R): text(7.1,2.35+i*0.62,t,13,cc,bold=(i in(0,3)))
-    para(0.55,6.28,12.3,"Obs.: R$ 6,15 mi = somente as correias (material) — montagem com mão de obra interna, apenas vulcanização externa · Dourados (DRD) e LEM sem pendências (fora do escopo) · cadastro do dashboard usa NVM/SDL -> padronizar p/ NMT/SDR · 1 dos 46 é sobressalente em estoque (45 esteiras).",10,TERRA); foot(4); c.showPage()
+    para(0.55,6.28,12.3,"Obs.: R$ 6,15 mi = somente as correias (material) — montagem com mão de obra interna, apenas vulcanização externa · Dourados (DRD) e LEM sem pendências (fora do escopo) · cadastro do dashboard usa NVM/SDL -> padronizar p/ NMT/SDR · 1 dos 46 é sobressalente em estoque (45 esteiras).",10,TERRA); foot(5); c.showPage()
     # 5 ACAO
     bg(); head("DECISÃO E AÇÃO","Cuidado especial até concluir a substituição")
     box(0.55,1.55,6.0,4.75,CARDBG,rad=8); text(0.8,1.78,"Pontos de atenção",15,TERRA,bold=True)
@@ -302,7 +350,7 @@ def build_pdf():
        "Padronizar cadastro na origem (NVM/SDL -> NMT/SDR)."]
     ty=2.35
     for r in B: para(7.1,ty,5.4,"•  "+r,12,TXTD,lead=15); ty+=0.88
-    foot(5); c.save(); print("PDF:",path)
+    foot(6); c.save(); print("PDF:",path)
 
 # =====================================================================
 # IMAGENS (tema claro / marca)
