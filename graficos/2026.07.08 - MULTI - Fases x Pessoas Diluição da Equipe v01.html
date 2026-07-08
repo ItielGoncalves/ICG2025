@@ -1,0 +1,298 @@
+<title>Fases × Pessoas — diluição da equipe</title>
+<style>
+  :root{
+    --surface:#FBFAF8; --card:#F4F2ED; --ink:#26221D; --ink-2:#6B6459; --ink-mute:#948C7F;
+    --line:#E4E0D7; --grid:#ECE8E0; --accent:#B3372B; --accent-soft:rgba(179,55,43,.09);
+    --ref:#8A8378; --tip-bg:#26221D; --tip-ink:#FBFAF8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --surface:#1B1917; --card:#252220; --ink:#EDE9E2; --ink-2:#A9A297; --ink-mute:#7E786D;
+      --line:#38342E; --grid:#2C2925; --accent:#DB6650; --accent-soft:rgba(219,102,80,.12);
+      --ref:#9A9287; --tip-bg:#EDE9E2; --tip-ink:#1B1917;
+    }
+  }
+  :root[data-theme="dark"]{
+    --surface:#1B1917; --card:#252220; --ink:#EDE9E2; --ink-2:#A9A297; --ink-mute:#7E786D;
+    --line:#38342E; --grid:#2C2925; --accent:#DB6650; --accent-soft:rgba(219,102,80,.12);
+    --ref:#9A9287; --tip-bg:#EDE9E2; --tip-ink:#1B1917;
+  }
+  :root[data-theme="light"]{
+    --surface:#FBFAF8; --card:#F4F2ED; --ink:#26221D; --ink-2:#6B6459; --ink-mute:#948C7F;
+    --line:#E4E0D7; --grid:#ECE8E0; --accent:#B3372B; --accent-soft:rgba(179,55,43,.09);
+    --ref:#8A8378; --tip-bg:#26221D; --tip-ink:#FBFAF8;
+  }
+  html,body{background:var(--surface);color:var(--ink)}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:15px; line-height:1.55; margin:0; padding:32px 20px 56px;
+  }
+  .wrap{max-width:980px;margin:0 auto}
+  .eyebrow{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin:0 0 6px}
+  h1{font-size:26px;line-height:1.2;margin:0 0 8px;font-weight:650;text-wrap:balance}
+  .lede{color:var(--ink-2);max-width:64ch;margin:0 0 24px}
+  .lede strong{color:var(--ink);font-weight:600}
+
+  .controls{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 20px}
+  .ctrl{flex:1 1 220px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+  .ctrl label{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+  .ctrl output{font-variant-numeric:tabular-nums;font-size:15px;color:var(--ink);font-weight:650}
+  input[type=range]{width:100%;accent-color:var(--accent);margin:0}
+  input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:0 0 24px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .tile .k{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+  .tile .v{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.15;margin-top:2px}
+  .tile .d{font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+  .tile.hero .v{color:var(--accent)}
+
+  .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:16px}
+  @media (max-width:560px){.charts{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 16px 8px;position:relative}
+  .panel h2{font-size:15px;font-weight:650;margin:0 0 2px}
+  .panel .sub{font-size:13px;color:var(--ink-2);margin:0 0 10px}
+  .legend{display:flex;gap:16px;font-size:12.5px;color:var(--ink-2);margin:0 0 6px;flex-wrap:wrap}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{display:inline-block;width:18px;height:0;border-top:3px solid var(--accent);border-radius:2px}
+  .sw.ref{border-top:2px dashed var(--ref)}
+  svg{display:block;width:100%;height:auto}
+  .tip{
+    position:absolute;pointer-events:none;background:var(--tip-bg);color:var(--tip-ink);
+    border-radius:8px;padding:8px 10px;font-size:12.5px;line-height:1.45;opacity:0;
+    transform:translate(-50%,-100%);white-space:nowrap;font-variant-numeric:tabular-nums;z-index:2;
+    box-shadow:0 4px 14px rgba(0,0,0,.18);
+  }
+  @media (prefers-reduced-motion:no-preference){.tip{transition:opacity .12s ease}}
+  .tip b{font-weight:700}
+
+  details{margin-top:22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  summary{cursor:pointer;padding:12px 16px;font-weight:600;font-size:14px;color:var(--ink-2)}
+  summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:10px}
+  .tblwrap{overflow-x:auto;padding:0 16px 14px}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+  th,td{text-align:right;padding:7px 12px;border-top:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{border-top:none;color:var(--ink-mute);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  td.eco{color:var(--accent);font-weight:600}
+
+  .note{margin-top:20px;font-size:13px;color:var(--ink-mute);max-width:70ch}
+  .note b{color:var(--ink-2)}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Estudo · Equipes por fase</p>
+  <h1>Fases × pessoas: diluindo a equipe a cada fase</h1>
+  <p class="lede">A ideia do rascunho: ao aumentar o número de fases, a equipe <strong>não cresce linear</strong> —
+  cada fase adicional dilui o time e reduz <strong>parcialmente</strong> as pessoas por fase.
+  Ajuste os controles para ver como a curva se comporta.</p>
+
+  <div class="controls">
+    <div class="ctrl">
+      <label for="base">Equipe base (1ª fase) <output id="baseOut">18 pessoas</output></label>
+      <input type="range" id="base" min="6" max="30" step="1" value="18">
+    </div>
+    <div class="ctrl">
+      <label for="dil">Diluição por fase adicional <output id="dilOut">15%</output></label>
+      <input type="range" id="dil" min="0" max="35" step="1" value="15">
+    </div>
+    <div class="ctrl">
+      <label for="nf">Número de fases <output id="nfOut">4 fases</output></label>
+      <input type="range" id="nf" min="2" max="6" step="1" value="4">
+    </div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile hero">
+      <div class="k">Pessoas na última fase</div>
+      <div class="v" id="tLast">—</div>
+      <div class="d" id="tLastD">—</div>
+    </div>
+    <div class="tile">
+      <div class="k">Total com diluição</div>
+      <div class="v" id="tTot">—</div>
+      <div class="d">somando todas as fases</div>
+    </div>
+    <div class="tile">
+      <div class="k">Total sem diluição</div>
+      <div class="v" id="tLin">—</div>
+      <div class="d">se replicasse a equipe base</div>
+    </div>
+    <div class="tile">
+      <div class="k">Economia</div>
+      <div class="v" id="tEco">—</div>
+      <div class="d" id="tEcoD">—</div>
+    </div>
+  </div>
+
+  <div class="charts">
+    <div class="panel" id="p1">
+      <h2>Pessoas por fase</h2>
+      <p class="sub">quantas pessoas cada fase recebe</p>
+      <div class="legend">
+        <span><i class="sw"></i>com diluição</span>
+        <span><i class="sw ref"></i>sem diluição (equipe base)</span>
+      </div>
+      <svg id="c1" viewBox="0 0 460 300" role="img" aria-label="Gráfico de linhas: pessoas alocadas em cada fase, com e sem diluição"></svg>
+      <div class="tip" id="tip1"></div>
+    </div>
+    <div class="panel" id="p2">
+      <h2>Total de pessoas × nº de fases</h2>
+      <p class="sub">tamanho total da equipe conforme o projeto ganha fases</p>
+      <div class="legend">
+        <span><i class="sw"></i>com diluição</span>
+        <span><i class="sw ref"></i>linear (sem diluição)</span>
+      </div>
+      <svg id="c2" viewBox="0 0 460 300" role="img" aria-label="Gráfico de linhas: total de pessoas em função do número de fases, com diluição versus crescimento linear"></svg>
+      <div class="tip" id="tip2"></div>
+    </div>
+  </div>
+
+  <details>
+    <summary>Ver em tabela</summary>
+    <div class="tblwrap">
+      <table id="tbl">
+        <thead><tr><th>Fase</th><th>Pessoas na fase</th><th>Total acumulado</th><th>Linear</th><th>Economia</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </details>
+
+  <p class="note"><b>Modelo:</b> pessoas na fase <i>k</i> = equipe base × (1 − diluição)<sup>k−1</sup>.
+  Com os valores do rascunho (18 pessoas na 1ª fase e ~15% de diluição por fase), a 4ª fase opera com ~11 pessoas
+  — uma redução de <b>≈38%</b> por fase, como anotado no papel — e o total fica em ~57 pessoas contra 72 do
+  crescimento linear (economia de ~15 pessoas, −20%).</p>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const fmt = x => (Math.abs(x - Math.round(x)) < .05 ? Math.round(x).toString() : x.toFixed(1).replace('.', ','));
+
+  const state = { base: 18, dil: .15, n: 4 };
+
+  function series(){
+    const per = [], tot = [], lin = [];
+    let s = 0;
+    for (let k = 1; k <= state.n; k++){
+      const p = state.base * Math.pow(1 - state.dil, k - 1);
+      s += p;
+      per.push(p); tot.push(s); lin.push(state.base * k);
+    }
+    return { per, tot, lin };
+  }
+
+  // ---------- generic line chart ----------
+  const M = { t: 14, r: 30, b: 34, l: 40 }, W = 460, H = 300;
+  const X = i => M.l + (W - M.l - M.r) * (state.n === 1 ? .5 : i / (state.n - 1));
+  const yScale = max => v => H - M.b - (H - M.t - M.b) * (v / max);
+
+  function axis(max){
+    const raw = max / 4;
+    const step = [1, 2, 5, 10, 20, 25, 50, 100].find(s => s >= raw) || Math.ceil(raw / 100) * 100;
+    const out = [];
+    for (let t = 0; t <= max; t += step) out.push(t);
+    return out;
+  }
+
+  function draw(svg, main, ref, opts){
+    const max = Math.max(...ref, ...main) * 1.12;
+    const y = yScale(max);
+    const accent = css('--accent'), refC = css('--ref'), grid = css('--grid'),
+          ink2 = css('--ink-2'), mute = css('--ink-mute'), card = css('--card');
+    let s = '';
+    // grid + y labels
+    for (const t of axis(max)){
+      s += `<line x1="${M.l}" x2="${W - M.r}" y1="${y(t)}" y2="${y(t)}" stroke="${grid}" stroke-width="1"/>`;
+      s += `<text x="${M.l - 8}" y="${y(t) + 4}" text-anchor="end" font-size="11" fill="${mute}">${t}</text>`;
+    }
+    // x labels
+    for (let i = 0; i < state.n; i++)
+      s += `<text x="${X(i)}" y="${H - M.b + 20}" text-anchor="middle" font-size="11.5" fill="${ink2}">${opts.xlab(i + 1)}</text>`;
+    // reference (dashed neutral)
+    const pts = a => a.map((v, i) => `${X(i)},${y(v)}`).join(' ');
+    s += `<polyline points="${pts(ref)}" fill="none" stroke="${refC}" stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round"/>`;
+    s += `<text x="${X(state.n - 1)}" y="${y(ref[state.n - 1]) - 8}" text-anchor="end" font-size="11" fill="${refC}">${opts.refLab}</text>`;
+    // main series
+    s += `<polyline points="${pts(main)}" fill="none" stroke="${accent}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+    main.forEach((v, i) => {
+      s += `<circle cx="${X(i)}" cy="${y(v)}" r="4" fill="${accent}" stroke="${card}" stroke-width="2"/>`;
+      s += `<text x="${X(i)}" y="${y(v) - 10}" text-anchor="middle" font-size="12" font-weight="700" fill="${accent}">${fmt(v)}</text>`;
+    });
+    svg.innerHTML = s;
+    return y;
+  }
+
+  function hover(panel, svg, tip, get){
+    function move(e){
+      const r = svg.getBoundingClientRect();
+      const mx = (e.clientX - r.left) * W / r.width;
+      let best = 0, bd = 1e9;
+      for (let i = 0; i < state.n; i++){ const d = Math.abs(X(i) - mx); if (d < bd){ bd = d; best = i; } }
+      const { html, yv } = get(best);
+      tip.innerHTML = html;
+      const pr = panel.getBoundingClientRect();
+      tip.style.left = (r.left - pr.left + X(best) * r.width / W) + 'px';
+      tip.style.top  = (r.top - pr.top + yv * r.height / H - 10) + 'px';
+      tip.style.opacity = 1;
+      svg.querySelector('.xh')?.remove();
+      const ln = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      ln.setAttribute('class', 'xh');
+      ln.setAttribute('x1', X(best)); ln.setAttribute('x2', X(best));
+      ln.setAttribute('y1', M.t); ln.setAttribute('y2', H - M.b);
+      ln.setAttribute('stroke', css('--ink-mute')); ln.setAttribute('stroke-width', '1');
+      ln.setAttribute('stroke-dasharray', '2 3');
+      svg.prepend(ln);
+    }
+    function leave(){ tip.style.opacity = 0; svg.querySelector('.xh')?.remove(); }
+    svg.addEventListener('mousemove', move);
+    svg.addEventListener('mouseleave', leave);
+  }
+
+  let cache = null;
+  function render(){
+    const d = cache = series();
+    $('baseOut').textContent = state.base + ' pessoas';
+    $('dilOut').textContent = Math.round(state.dil * 100) + '%';
+    $('nfOut').textContent = state.n + ' fases';
+
+    const last = d.per[state.n - 1], tot = d.tot[state.n - 1], lin = d.lin[state.n - 1];
+    const red = (1 - last / state.base) * 100, eco = lin - tot, ecoP = (eco / lin) * 100;
+    $('tLast').textContent = fmt(last);
+    $('tLastD').textContent = '−' + Math.round(red) + '% vs. equipe base';
+    $('tTot').textContent = fmt(tot);
+    $('tLin').textContent = fmt(lin);
+    $('tEco').textContent = fmt(eco) + ' pessoas';
+    $('tEcoD').textContent = '−' + Math.round(ecoP) + '% vs. linear';
+
+    y1 = draw($('c1'), d.per, d.per.map(() => state.base), { xlab: i => 'Fase ' + i, refLab: 'equipe base' });
+    y2 = draw($('c2'), d.tot, d.lin, { xlab: i => i + (i === 1 ? ' fase' : ' fases'), refLab: 'linear' });
+
+    const tb = $('tbl').tBodies[0];
+    tb.innerHTML = d.per.map((p, i) =>
+      `<tr><td>Fase ${i + 1}</td><td>${fmt(p)}</td><td>${fmt(d.tot[i])}</td><td>${d.lin[i]}</td><td class="eco">−${fmt(d.lin[i] - d.tot[i])}</td></tr>`
+    ).join('');
+  }
+
+  let y1, y2;
+  hover($('p1'), $('c1'), $('tip1'), i => ({
+    html: `<b>Fase ${i + 1}</b><br>com diluição: <b>${fmt(cache.per[i])}</b> pessoas<br>sem diluição: ${state.base} pessoas`,
+    yv: y1(cache.per[i])
+  }));
+  hover($('p2'), $('c2'), $('tip2'), i => ({
+    html: `<b>${i + 1} ${i ? 'fases' : 'fase'}</b><br>com diluição: <b>${fmt(cache.tot[i])}</b> pessoas<br>linear: ${cache.lin[i]} pessoas`,
+    yv: y2(cache.tot[i])
+  }));
+
+  $('base').addEventListener('input', e => { state.base = +e.target.value; render(); });
+  $('dil').addEventListener('input', e => { state.dil = +e.target.value / 100; render(); });
+  $('nf').addEventListener('input', e => { state.n = +e.target.value; render(); });
+
+  // re-render on theme change so SVG picks up new token colors
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  render();
+})();
+</script>
